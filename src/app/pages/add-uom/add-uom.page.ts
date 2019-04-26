@@ -29,6 +29,7 @@ export class AddUomPage implements OnInit {
     this.commandResourceService.createUOMUsingPOST(this.uom)
     .subscribe(result => {
       
+        this.dismiss();
     });
   }
 }
