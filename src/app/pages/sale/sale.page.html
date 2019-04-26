@@ -1,0 +1,38 @@
+<app-header></app-header>
+
+
+<ion-content>
+
+  <!-- <ion-row>
+    <ion-col>
+      <ion-card color="danger">
+        <ion-card-content>
+          <div class="position-start">
+            <ion-label margin-top><strong>{{numberOfItems}} Items | {{total}}</strong></ion-label>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>  -->
+  <super-tabs padding-top>
+    <super-tabs-toolbar color="danger">
+      <super-tab-button>
+        <ion-icon name="apps"></ion-icon>
+        <ion-label>Categories</ion-label>
+      </super-tab-button>
+      <super-tab-button>
+        <ion-icon name="eye"></ion-icon>
+        <ion-label>Recently Viewed</ion-label>
+      </super-tab-button>
+    </super-tabs-toolbar>
+    <super-tabs-container>
+      <super-tab>
+        <ion-nav [root]="categories"></ion-nav>
+      </super-tab>
+      <super-tab>
+        <ion-nav [root]="recentlyViewed"></ion-nav>
+      </super-tab>
+    </super-tabs-container>
+  </super-tabs>
+
+</ion-content>

@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-toolbar color="danger">
+      <ion-buttons  (click)="dismiss()" slot="start">
+          <ion-icon name="arrow-back" class="icon-size" ></ion-icon>  &nbsp;&nbsp;
+          <ion-title text-center><strong>Create New UOM</strong></ion-title> 
+     </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <form margin>
+        <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input type="text" [(ngModel)]="uom.name" name="name"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="floating">Description</ion-label>
+          <ion-textarea  [(ngModel)]="uom.description" name="description"></ion-textarea>
+        
+        </ion-item>
+      <ion-button type="submit" (click)="save()" margin mode="ios" expand="block" fill="solid" color="danger">Save</ion-button>
+    </form>
+  </div>
+</ion-content>

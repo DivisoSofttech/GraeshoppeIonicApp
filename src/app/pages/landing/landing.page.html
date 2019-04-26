@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title text-center><strong>Your Shopping Zone</strong></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="welcome-card">
+    <ion-img src="/assets/Graeshoppe.png"></ion-img>
+    <ion-card-content>
+      <ion-button (click)="login()" color="danger" class="size" expand="block" class="align">Login
+        Now</ion-button><br>
+      <ion-button (click)="signup()" class="size" color="danger" expand="block" class="align">Register
+        Now</ion-button>
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>

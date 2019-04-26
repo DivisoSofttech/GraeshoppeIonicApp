@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="danger">
+      <ion-buttons >
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title><strong>Customers</strong></ion-title>
+        <ion-icon name="notifications" class="larger"></ion-icon>
+      </ion-buttons>
+  <ion-buttons slot="end">
+  </ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-searchbar padding placeholder="Search customers"  class="border" (ionChange)="onSearch()" [(ngModel)]="searchTerm"></ion-searchbar>
+  <ion-list>
+    <ion-item  *ngFor="let customer of customers?.content" slot="start">
+      <ion-avatar>
+        <ion-img src="data:image/png;base64,{{customer.photo}}"></ion-img>
+      </ion-avatar>
+      &nbsp;&nbsp;&nbsp;<ion-label><strong>{{customer.name}}</strong></ion-label><br>
+      <ion-icon name="ribbon"></ion-icon>
+      <ion-label color="secondary">56 Points</ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-fab vertical="bottom" horizontal="end" >
+    <ion-fab-button (click)="presentModal()" color="danger">
+      <ion-icon name="person-add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

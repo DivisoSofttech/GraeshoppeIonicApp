@@ -1,0 +1,7 @@
+{
+  "name": "graeshoppe",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

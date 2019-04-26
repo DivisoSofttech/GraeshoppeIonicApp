@@ -1,0 +1,20 @@
+<ion-header>
+   <ion-toolbar color="danger">
+    <ion-buttons  (click)="dismiss()" slot="start">
+      <ion-icon name="arrow-back" class="icon-size" ></ion-icon>  &nbsp;&nbsp;
+      <ion-title text-center><strong>Create New Customer</strong></ion-title> 
+ </ion-buttons>
+  </ion-toolbar> 
+</ion-header>
+
+<ion-content><br><br>
+<ion-item>
+  <ion-icon name="person"></ion-icon>&nbsp;&nbsp;&nbsp;
+  <ion-input placeholder="Name" [(ngModel)]="name"></ion-input>
+</ion-item>
+<ion-item>
+    <ion-icon name="call"></ion-icon>&nbsp;&nbsp;&nbsp;
+    <ion-input placeholder="Phone" [(ngModel)]="phone" type="number"></ion-input>
+  </ion-item><br>
+  <ion-button expand="block" (click)="save()" color="danger">Save</ion-button>
+</ion-content>

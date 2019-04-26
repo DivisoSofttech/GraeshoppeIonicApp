@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="danger">
+      <ion-buttons  (click)="dismiss()" slot="start">
+          <ion-icon name="arrow-back" class="icon-size" ></ion-icon>  &nbsp;&nbsp;
+          <ion-title text-center><strong>Create New Item</strong></ion-title> 
+     </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <div margin>
+      <ion-item>
+        <ion-label position="floating">Barcode</ion-label>
+        <ion-input type="text" [(ngModel)]="product.barcodeId"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input type="text" [(ngModel)]="product.name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Image</ion-label>
+        <ion-input type="file" accept="image/*" color="primary" (change)="onSelectFile($event)"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Category</ion-label>
+        <ion-select [(ngModel)]="product.categories">
+          <ion-select-option *ngFor="let category of categories" value="{{category.id}}" required>{{category.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+          <ion-label position="floating">UOM</ion-label>
+          <ion-select ngModel>
+            <ion-select-option *ngFor="let um of uom" value="{{um.name}}" required>{{um.name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      <ion-item>
+        <ion-label position="floating">Sell Price Inc</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Sell Price exc</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Buy Price exc</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+      <ion-button (click)="save()" margin mode="ios" expand="block" fill="solid" color="danger">Save</ion-button>
+    </div>
+  </div>
+</ion-content>
