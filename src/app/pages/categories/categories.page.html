@@ -17,7 +17,11 @@
 
     <ion-item *ngFor="let category of categories">
       <ion-avatar>
-        <img src="{{'data:' + category.imageContentType + ';base64,' + category.image}}" /> -->
+        <img [src]="'data:' +  category
+        . imageContentType
+        + ';base64,' + category
+        . image
+        ">
       </ion-avatar>
       <ion-grid>
         <ion-row>

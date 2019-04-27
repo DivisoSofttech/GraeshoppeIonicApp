@@ -53,7 +53,9 @@ export class AddItemsPage implements OnInit {
     this.product.image = this.fileUrl.substring(this.fileUrl.indexOf(',') + 1);
     this.product.imageContentType = this.fileToUpload.type;
     console.log(this.product);
-    this.commandResourceService.createProductUsingPOST(this.product);
+    this.commandResourceService.createProductUsingPOST(this.product).subscribe(result => {
+      console.log("saved")
+    });
     this.dismiss();
   }
 
