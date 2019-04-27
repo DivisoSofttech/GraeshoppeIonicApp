@@ -30,8 +30,8 @@ export class AddCategoriesPage implements OnInit {
 
   save() {
 
-    // this.category.image = this.fileUrl;
-    // this.category.imageContentType = this.fileToUpload.type;
+    this.category.image = this.fileUrl.substring(this.fileUrl.indexOf(',') + 1);
+    this.category.imageContentType = this.fileToUpload.type;
     console.log(this.category);
     this.commandResourceService.createProductCategoryUsingPOST(this.category)
     .subscribe(result => {
