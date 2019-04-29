@@ -1,3 +1,6 @@
+import { ProductQuantityModalComponent } from './../../components/product-quantity-modal/product-quantity-modal.component';
+import { MakePaymentPage } from './../make-payment/make-payment.page';
+import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,15 +12,33 @@ export class CurrentReceiptPage implements OnInit {
 
   orders = [
 
-    {name:"Burger Meal Chicken Burger 7" , price:"5.95"},
-    {name:"Burger Meal Chicken Burger" , price:"5.95"},
-    {name:"Burger Meal Chicken Burger" , price:"5.95"}
-
+    {name:"Burger Meal Chicken Burger 7" , price: 5.95},
+    {name:"Burger Meal Chicken Burger 7" , price: 5.95},
+    {name:"Burger Meal Chicken Burger 7" , price: 5.95}
   ];
   
-  constructor() { }
+  constructor(
+    private modalController: ModalController
+  ) { }
 
   ngOnInit() {
+  }
+
+  async checkout() {
+      const modal = await this.modalController.create({
+        component: MakePaymentPage,
+        componentProps: { value: 123 }
+      });
+      return await modal.present();
+  }
+
+  async productQuantity() {
+
+    const modal = await this.modalController.create({
+      component: ProductQuantityModalComponent
+    });
+
+    return await modal.present();
   }
 
 }

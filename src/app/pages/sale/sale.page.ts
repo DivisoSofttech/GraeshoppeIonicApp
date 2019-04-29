@@ -1,11 +1,8 @@
-import { ReceiptsPage } from './../receipts/receipts.page';
-import { CustomersPage } from './../customers/customers.page';
-import { DashboardPage } from './../dashboard/dashboard.page';
+import { RecentlyUsedPage } from './../recently-used/recently-used.page';
+import { CategoriesListPage } from './../categories-list/categories-list.page';
+
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { SuperTabs } from '@ionic-super-tabs/angular';
-import { AddCustomerPage } from '../add-customer/add-customer.page';
-import { CategoriesListPage } from '../categories-list/categories-list.page';
-import { RecentlyUsedPage } from '../recently-used/recently-used.page';
 import { ActionSheetController, NavController } from '@ionic/angular';
 
 @Component({

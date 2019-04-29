@@ -25,6 +25,7 @@ export class CategoriesPage implements OnInit {
     });
   }
 
+  
   async presentModal() {
     const modal = await this.modalController.create({
       component: AddCategoriesPage,

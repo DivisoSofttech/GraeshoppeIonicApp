@@ -5,18 +5,20 @@
 </ion-header>
 
 <ion-content>
-
+   
   <ion-row>
-    <ion-col>
-      <ion-card class="size">
-        <ion-img src="/assets/biriyani.jpg"></ion-img>
-        <div class="myOverlay" >
-          <div class="card-title"><strong>Biriyani</strong></div>
-          <div class="card-subtitle"><strong>72 Listings</strong></div>
-        </div>
-      </ion-card>
-    </ion-col>
-    <ion-col>
+    
+        <ion-col *ngFor='let category of categoriesList'>
+        <ion-card class="size" [routerLink]="'/product-list/'+category.id">
+          <img [src]="'data:' + category.imageContentType + ';base64,' + category.image"/>
+          <div class="myOverlay">
+            <div class="card-title"><strong>{{category.name}}</strong></div>
+            <div class="card-subtitle"><strong>{{category.products.length}}</strong></div>
+          </div>
+        </ion-card>
+      </ion-col>
+    
+     <!-- <ion-col>
       <ion-card class="size">
         <ion-img src="/assets/drinks.jpeg"></ion-img>
         <div class="myOverlay">
@@ -25,8 +27,8 @@
         </div>
       </ion-card>
     </ion-col>
-  </ion-row>
-  <ion-row>
+  </ion-row> -->
+     <!-- <ion-row>
     <ion-col>
       <ion-card class="size">
         <ion-img src="/assets/chinese.jpg"></ion-img>
@@ -64,7 +66,6 @@
           <div class="card-subtitle"><strong>4 Listings</strong></div>
         </div>
       </ion-card>
-    </ion-col>
+    </ion-col>  -->
   </ion-row>
-
 </ion-content>
