@@ -109,12 +109,6 @@ const routes: Routes = [
 
   },
   {
-    path: 'add-product',
-    loadChildren: './pages/add-product/add-product.module#AddProductPageModule',
-    canActivate: [AuthGuardService]
-
-  },
-  {
     path: 'add-categories',
     loadChildren: './pages/add-categories/add-categories.module#AddCategoriesPageModule',
     canActivate: [AuthGuardService]

@@ -18,16 +18,16 @@ export class AddItemsPage implements OnInit {
 
   stockLine: StockLine;
 
-  product: ProductDTO = { name: '', searchkey: '', reference: '' , categories:[{id:1 , name:''}]};
+  product: ProductDTO = { name: '', searchkey: '', reference: '' , categories:[]};
 
   fileToUpload: File;
 
   fileUrl = null;
 
   productUOM: UomDTO;
-  productCategory: Category;
+  productCategory: CategoryDTO;
 
-  categories: Category[] = [];
+  categories: CategoryDTO[] = [];
 
   uom: UomDTO[] = [];
 
@@ -41,7 +41,7 @@ export class AddItemsPage implements OnInit {
 
     this.queryResourceService.findAllCategoriesUsingGET({})
     .subscribe(result => {
-        this.categories = result.content;
+        this.categories = result;
     });
   }
 
@@ -53,6 +53,9 @@ export class AddItemsPage implements OnInit {
 
     this.product.image = this.fileUrl.substring(this.fileUrl.indexOf(',') + 1);
     this.product.imageContentType = this.fileToUpload.type;
+    if (this.productCategory != null) {
+      this.product.categories.push(this.productCategory);
+    }
     console.log(this.product);
     // const stockLine: StockLine = {
     //   product: this.product,
