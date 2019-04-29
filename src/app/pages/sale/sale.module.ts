@@ -1,4 +1,4 @@
-import { HeaderComponent } from './../../components/header/header.component';
+import { ComponentsModule } from './../../components/components.module';
 import { DashboardPage } from './../dashboard/dashboard.page';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -15,6 +15,7 @@ import { CategoriesListPage } from '../categories-list/categories-list.page';
 import { RecentlyUsedPageModule } from '../recently-used/recently-used.module';
 import { RecentlyUsedPage } from '../recently-used/recently-used.page';
 import { CategoriesListPageModule } from '../categories-list/categories-list.module';
+import { HeaderComponent } from 'src/app/components/header/header.component';
 
 const routes: Routes = [
   {
@@ -29,9 +30,10 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    SuperTabsModule
+    SuperTabsModule,
+    ComponentsModule
       ],
-  declarations: [SalePage , HeaderComponent],
-  entryComponents:[]
+  declarations: [SalePage],
+  entryComponents: [HeaderComponent]
 })
 export class SalePageModule {}

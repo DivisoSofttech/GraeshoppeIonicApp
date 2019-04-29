@@ -8,10 +8,10 @@ import { IonicModule } from '@ionic/angular';
 import { MakePaymentPage } from './make-payment.page';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: MakePaymentPage
-  }
+  // {
+  //   path: '',
+  //   component: MakePaymentPage
+  // }
 ];
 
 @NgModule({

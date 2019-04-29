@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: 'sale',
     loadChildren: './pages/sale/sale.module#SalePageModule',
-    //canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService]
 
   },
   {
@@ -160,7 +160,8 @@ const routes: Routes = [
   { path: 'receipt-detail', loadChildren: './pages/receipt-detail/receipt-detail.module#ReceiptDetailPageModule' },
   { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
   { path: 'reports', loadChildren: './pages/reports/reports.module#ReportsPageModule' },
-  { path: 'receipts/:id', loadChildren: './pages/receipt-detail/receipt-detail.module#ReceiptDetailPageModule' }
+  { path: 'receipts/:id', loadChildren: './pages/receipt-detail/receipt-detail.module#ReceiptDetailPageModule' },
+  { path: 'product-list/:id', loadChildren: './pages/product-list/product-list.module#ProductListPageModule' }
 
 
 ];

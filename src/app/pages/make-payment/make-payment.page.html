@@ -1,9 +1,52 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>make-payment</ion-title>
+<ion-header >
+  <ion-toolbar color="danger">
+    <ion-buttons>
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button>Split</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+    <ion-row class="ion-margin-vertical">
+      <ion-col text-center>
+        <ion-text>
+          <h1>{{cashRecieved  | number:'1.2-2'}}</h1>
+          <p >Total amount Due</p>
+        </ion-text>
+      </ion-col>
+    </ion-row>
 
+  </ion-grid>
+
+  <ion-item class="ion-margin-vertical">
+    <ion-label position="floating" color="danger">Cash Recieved</ion-label>
+    <ion-input type="number" [ngModel]="cashRecieved | number:'1.2-2'">
+    </ion-input>
+  </ion-item>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+          <ion-button expand="block" text-center color="light" class="ion-padding-vertical">
+              <ion-icon name="cash" margin></ion-icon>
+              <p>CASH</p>  
+          </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-margin-vertical">
+      <ion-col>
+          <ion-button expand="full" text-center color="light" class="ion-padding-vertical">
+              <ion-icon name="card" margin></ion-icon>
+              <p>CARD</p>  
+          </ion-button>    
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
 </ion-content>

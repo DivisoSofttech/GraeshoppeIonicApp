@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-make-payment',
@@ -7,8 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MakePaymentPage implements OnInit {
 
-  constructor() { }
+  cashRecieved: Number = 22;
 
+  constructor(
+    private modalController: ModalController
+  ) { }
+
+  dismiss() {
+    this.modalController.dismiss();
+  }
   ngOnInit() {
   }
 

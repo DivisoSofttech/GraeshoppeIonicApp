@@ -1,5 +1,3 @@
-import { Category } from './../../api/models/category';
-import { QueryResourceService } from 'src/app/api/services';
 import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import {AddCategoriesPage} from '../add-categories/add-categories.page'
@@ -11,20 +9,12 @@ import {AddCategoriesPage} from '../add-categories/add-categories.page'
 })
 export class CategoriesPage implements OnInit {
 
-  categories: Category[] = [];
-
-  constructor(
-    private modalController: ModalController,
-    private queryResourceService: QueryResourceService
-  ) { }
+  constructor(private modalController:ModalController) { }
 
   ngOnInit() {
-    this.queryResourceService.findAllCategoriesUsingGET({})
-    .subscribe(result => {
-      this.categories = result.content;
-    });
   }
 
+  
   async presentModal() {
     const modal = await this.modalController.create({
       component: AddCategoriesPage,

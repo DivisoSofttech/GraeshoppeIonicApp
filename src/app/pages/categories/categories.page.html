@@ -14,27 +14,4 @@
         <ion-icon name="copy"></ion-icon>   
          </ion-fab-button>
     </ion-fab>
-
-    <ion-item *ngFor="let category of categories">
-      <ion-avatar>
-        <img [src]="'data:' +  category
-        . imageContentType
-        + ';base64,' + category
-        . image
-        ">
-      </ion-avatar>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-label class="ion-margin-horizontal">{{category.name}}</ion-label>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-label class="ion-margin-horizontal">{{category.description}}</ion-label>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
-
 </ion-content>

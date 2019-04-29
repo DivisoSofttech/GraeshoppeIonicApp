@@ -1,3 +1,7 @@
+import { ProductQuantityModalComponent } from './../../components/product-quantity-modal/product-quantity-modal.component';
+import { ComponentsModule } from './../../components/components.module';
+import { MakePaymentPage } from './../make-payment/make-payment.page';
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,6 +10,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { CurrentReceiptPage } from './current-receipt.page';
+import { MakePaymentPageModule } from '../make-payment/make-payment.module';
 
 const routes: Routes = [
   {
@@ -19,8 +24,11 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    MakePaymentPageModule,
+    ComponentsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [CurrentReceiptPage]
+  declarations: [CurrentReceiptPage],
+  entryComponents: [MakePaymentPage , ProductQuantityModalComponent]
 })
 export class CurrentReceiptPageModule {}

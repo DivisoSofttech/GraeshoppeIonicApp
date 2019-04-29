@@ -11,13 +11,17 @@ import { AccountResourceService } from 'src/app/api/services';
 })
 export class AddCustomerPage implements OnInit {
 
-  constructor(private modalController:ModalController,private customerCommandResourceService:CommandResourceService,private accountService:AccountResourceService) { }
+  constructor(
+    private modalController: ModalController,
+    private customerCommandResourceService: CommandResourceService,
+    private accountService: AccountResourceService
+  ) { }
 
-  customer:CustomerAggregator={};
-  name:string;
-  phone:string;
+  customer: CustomerAggregator = {};
+  name: string;
+  phone: string;
 
-  dismiss(){
+  dismiss() {
     this.modalController.dismiss();
   }
 
