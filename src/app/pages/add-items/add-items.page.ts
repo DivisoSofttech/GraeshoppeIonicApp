@@ -3,7 +3,7 @@ import {
   CommandResourceService,
   QueryResourceService
 } from "src/app/api/services";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { ProductDTO, StockLine, Barcode, CategoryDTO, UomDTO } from "src/app/api/models";
 
@@ -22,7 +22,10 @@ export class AddItemsPage implements OnInit {
 
   fileToUpload: File;
 
-  fileUrl: string;
+  fileUrl = null;
+
+  productUOM: UomDTO;
+  productCategory: Category;
 
   categories: Category[] = [];
 
@@ -40,8 +43,6 @@ export class AddItemsPage implements OnInit {
     .subscribe(result => {
         this.categories = result.content;
     });
-
-
   }
 
   dismiss() {
@@ -53,8 +54,12 @@ export class AddItemsPage implements OnInit {
     this.product.image = this.fileUrl.substring(this.fileUrl.indexOf(',') + 1);
     this.product.imageContentType = this.fileToUpload.type;
     console.log(this.product);
+    // const stockLine: StockLine = {
+    //   product: this.product,
+    //   uom: this.productUOM
+    // };
     this.commandResourceService.createProductUsingPOST(this.product).subscribe(result => {
-      console.log("saved")
+      console.log('saved');
     });
     this.dismiss();
   }
@@ -69,5 +74,9 @@ export class AddItemsPage implements OnInit {
     };
 
     freader.readAsDataURL(this.fileToUpload);
+  }
+
+  triggerUpload(ev: Event) {
+    document.getElementById('image').click();
   }
 }

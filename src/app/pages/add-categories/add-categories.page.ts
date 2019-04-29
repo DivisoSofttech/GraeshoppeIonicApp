@@ -14,7 +14,7 @@ export class AddCategoriesPage implements OnInit {
 
   fileToUpload: File;
 
-  fileUrl: string = "./assets/picture.svg";
+  fileUrl = null;
 
   constructor(
     private modalController: ModalController,
@@ -23,6 +23,10 @@ export class AddCategoriesPage implements OnInit {
 
   dismiss(){
     this.modalController.dismiss();
+  }
+
+  triggerUpload(ev: Event) {
+    document.getElementById('image').click();
   }
 
   ngOnInit() {
