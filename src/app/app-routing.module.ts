@@ -155,7 +155,6 @@ const routes: Routes = [
   { path: 'receipts/:id', loadChildren: './pages/receipt-detail/receipt-detail.module#ReceiptDetailPageModule' },
   { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
   { path: 'reports', loadChildren: './pages/reports/reports.module#ReportsPageModule' },
-  { path: 'product-list', loadChildren: './pages/product-list/product-list.module#ProductListPageModule' },
   { path: 'refund/:id', loadChildren: './pages/refund/refund.module#RefundPageModule' },
 
 
