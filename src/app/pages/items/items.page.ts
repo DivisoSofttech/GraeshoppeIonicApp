@@ -29,16 +29,21 @@ export class ItemsPage implements OnInit {
     this.queryResourceservice.findAllCategoriesUsingGET({})
     .subscribe(result => {
 
-      for(let category of result.content) {
+      for (const category of result) {
         console.log(category.id);
-        this.queryResourceservice.findProductByCategoryIdUsingGET({categoryId:category.id})
+        this.queryResourceservice.findProductByCategoryIdUsingGET({categoryId: category.id})
         .subscribe(res => {
 
 
-          console.log(res);
-          res.content.forEach(p =>{
-            this.products.push(p);
-          })
+          console.log('product' , res.content);
+          // res.content.forEach(p => {
+          //   this.products.push(p);
+          //   console.log('product2' , p);
+          // });
+          for (const product of res.content) {
+            this.products.push(product);
+            console.log('product2' , product);
+          }
         });
       }
 

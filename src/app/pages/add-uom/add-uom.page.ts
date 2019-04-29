@@ -28,7 +28,6 @@ export class AddUomPage implements OnInit {
     console.log(this.uom);
     this.commandResourceService.createUOMUsingPOST(this.uom)
     .subscribe(result => {
-      
         this.dismiss();
     });
   }

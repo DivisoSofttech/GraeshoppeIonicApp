@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuardService } from './pages/security';
+import { HeaderComponent } from './components/header/header.component';
 
 const routes: Routes = [
   {
@@ -108,12 +109,6 @@ const routes: Routes = [
 
   },
   {
-    path: 'add-items',
-    loadChildren: './pages/add-items/add-items.module#AddItemsPageModule',
-    canActivate: [AuthGuardService]
-
-  },
-  {
     path: 'add-categories',
     loadChildren: './pages/add-categories/add-categories.module#AddCategoriesPageModule',
     canActivate: [AuthGuardService]
@@ -157,11 +152,13 @@ const routes: Routes = [
   },
   { path: 'category-detail', loadChildren: './pages/category-detail/category-detail.module#CategoryDetailPageModule' },
   { path: 'product-detail', loadChildren: './pages/product-detail/product-detail.module#ProductDetailPageModule' },
-  { path: 'receipt-detail', loadChildren: './pages/receipt-detail/receipt-detail.module#ReceiptDetailPageModule' },
+  { path: 'receipts/:id', loadChildren: './pages/receipt-detail/receipt-detail.module#ReceiptDetailPageModule' },
   { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
   { path: 'reports', loadChildren: './pages/reports/reports.module#ReportsPageModule' },
   { path: 'receipts/:id', loadChildren: './pages/receipt-detail/receipt-detail.module#ReceiptDetailPageModule' },
-  { path: 'product-list/:id', loadChildren: './pages/product-list/product-list.module#ProductListPageModule' }
+  { path: 'product-list/:id', loadChildren: './pages/product-list/product-list.module#ProductListPageModule' },
+  { path: 'refund/:id', loadChildren: './pages/refund/refund.module#RefundPageModule' },
+
 
 
 ];
@@ -170,6 +167,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }

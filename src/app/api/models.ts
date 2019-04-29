@@ -12,7 +12,6 @@ export { CustomerDTO } from './models/customer-dto';
 export { Label } from './models/label';
 export { LabelDTO } from './models/label-dto';
 export { Note } from './models/note';
-export { PageOfCategory } from './models/page-of-category';
 export { PageOfCustomer } from './models/page-of-customer';
 export { PageOfProduct } from './models/page-of-product';
 export { Product } from './models/product';

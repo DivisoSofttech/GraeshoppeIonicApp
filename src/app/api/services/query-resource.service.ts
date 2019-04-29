@@ -7,8 +7,9 @@ import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-respo
 import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
-import { PageOfCategory } from '../models/page-of-category';
+import { CategoryDTO } from '../models/category-dto';
 import { PageOfCustomer } from '../models/page-of-customer';
+import { UomDTO } from '../models/uom-dto';
 import { PageOfProduct } from '../models/page-of-product';
 
 /**
@@ -18,8 +19,9 @@ import { PageOfProduct } from '../models/page-of-product';
   providedIn: 'root',
 })
 class QueryResourceService extends __BaseService {
-  static readonly findAllCategoriesUsingGETPath = '/api/query/findAllCategories';
+  static readonly findAllCategoriesUsingGETPath = '/api/query/findAllCateogories';
   static readonly findAllCustomersUsingGETPath = '/api/query/findAllCustomer/{searchTerm}';
+  static readonly findAllUomUsingGETPath = '/api/query/findAllUom';
   static readonly findProductByCategoryIdUsingGETPath = '/api/query/findProductByCategoryId/{categoryId}';
 
   constructor(
@@ -32,15 +34,15 @@ class QueryResourceService extends __BaseService {
   /**
    * @param params The `QueryResourceService.FindAllCategoriesUsingGETParams` containing the following parameters:
    *
-   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   * - `sort`: sort
    *
-   * - `size`: Size of a page
+   * - `size`: size
    *
-   * - `page`: Page number of the requested page
+   * - `page`: page
    *
    * @return OK
    */
-  findAllCategoriesUsingGETResponse(params: QueryResourceService.FindAllCategoriesUsingGETParams): __Observable<__StrictHttpResponse<PageOfCategory>> {
+  findAllCategoriesUsingGETResponse(params: QueryResourceService.FindAllCategoriesUsingGETParams): __Observable<__StrictHttpResponse<Array<CategoryDTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -49,7 +51,7 @@ class QueryResourceService extends __BaseService {
     if (params.page != null) __params = __params.set('page', params.page.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/query/findAllCategories`,
+      this.rootUrl + `/api/query/findAllCateogories`,
       __body,
       {
         headers: __headers,
@@ -60,24 +62,24 @@ class QueryResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<PageOfCategory>;
+        return _r as __StrictHttpResponse<Array<CategoryDTO>>;
       })
     );
   }
   /**
    * @param params The `QueryResourceService.FindAllCategoriesUsingGETParams` containing the following parameters:
    *
-   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   * - `sort`: sort
    *
-   * - `size`: Size of a page
+   * - `size`: size
    *
-   * - `page`: Page number of the requested page
+   * - `page`: page
    *
    * @return OK
    */
-  findAllCategoriesUsingGET(params: QueryResourceService.FindAllCategoriesUsingGETParams): __Observable<PageOfCategory> {
+  findAllCategoriesUsingGET(params: QueryResourceService.FindAllCategoriesUsingGETParams): __Observable<Array<CategoryDTO>> {
     return this.findAllCategoriesUsingGETResponse(params).pipe(
-      __map(_r => _r.body as PageOfCategory)
+      __map(_r => _r.body as Array<CategoryDTO>)
     );
   }
 
@@ -135,6 +137,58 @@ class QueryResourceService extends __BaseService {
   findAllCustomersUsingGET(params: QueryResourceService.FindAllCustomersUsingGETParams): __Observable<PageOfCustomer> {
     return this.findAllCustomersUsingGETResponse(params).pipe(
       __map(_r => _r.body as PageOfCustomer)
+    );
+  }
+
+  /**
+   * @param params The `QueryResourceService.FindAllUomUsingGETParams` containing the following parameters:
+   *
+   * - `sort`: sort
+   *
+   * - `size`: size
+   *
+   * - `page`: page
+   *
+   * @return OK
+   */
+  findAllUomUsingGETResponse(params: QueryResourceService.FindAllUomUsingGETParams): __Observable<__StrictHttpResponse<Array<UomDTO>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/findAllUom`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<UomDTO>>;
+      })
+    );
+  }
+  /**
+   * @param params The `QueryResourceService.FindAllUomUsingGETParams` containing the following parameters:
+   *
+   * - `sort`: sort
+   *
+   * - `size`: size
+   *
+   * - `page`: page
+   *
+   * @return OK
+   */
+  findAllUomUsingGET(params: QueryResourceService.FindAllUomUsingGETParams): __Observable<Array<UomDTO>> {
+    return this.findAllUomUsingGETResponse(params).pipe(
+      __map(_r => _r.body as Array<UomDTO>)
     );
   }
 
@@ -204,17 +258,17 @@ module QueryResourceService {
   export interface FindAllCategoriesUsingGETParams {
 
     /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * sort
      */
     sort?: Array<string>;
 
     /**
-     * Size of a page
+     * size
      */
     size?: number;
 
     /**
-     * Page number of the requested page
+     * page
      */
     page?: number;
   }
@@ -241,6 +295,27 @@ module QueryResourceService {
 
     /**
      * Page number of the requested page
+     */
+    page?: number;
+  }
+
+  /**
+   * Parameters for findAllUomUsingGET
+   */
+  export interface FindAllUomUsingGETParams {
+
+    /**
+     * sort
+     */
+    sort?: Array<string>;
+
+    /**
+     * size
+     */
+    size?: number;
+
+    /**
+     * page
      */
     page?: number;
   }

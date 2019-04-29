@@ -1,10 +1,11 @@
+import { ProductQuantityModalComponent } from './product-quantity-modal/product-quantity-modal.component';
 import { ReceiptDetailPopoverComponent } from './receipt-detail-popover/receipt-detail-popover.component';
 import { HeaderComponent } from './header/header.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
-import { ProductQuantityModalComponent } from './product-quantity-modal/product-quantity-modal.component';
+import { RefundQuantityModalComponent } from './refund-quantity-modal/refund-quantity-modal.component';
 
 @NgModule({
     imports: [
@@ -12,7 +13,7 @@ import { ProductQuantityModalComponent } from './product-quantity-modal/product-
         FormsModule,
         IonicModule
     ],
-    declarations: [HeaderComponent , ReceiptDetailPopoverComponent , ProductQuantityModalComponent],
-    exports : [HeaderComponent , ReceiptDetailPopoverComponent , ProductQuantityModalComponent]
+    declarations: [ReceiptDetailPopoverComponent, RefundQuantityModalComponent, ProductQuantityModalComponent],
+    exports : [ReceiptDetailPopoverComponent, RefundQuantityModalComponent, ProductQuantityModalComponent]
     })
 export class ComponentsModule { }

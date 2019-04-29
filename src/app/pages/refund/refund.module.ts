@@ -1,5 +1,5 @@
+import { RefundQuantityModalComponent } from './../../components/refund-quantity-modal/refund-quantity-modal.component';
 import { ComponentsModule } from './../../components/components.module';
-import { ReceiptDetailPopoverComponent } from './../../components/receipt-detail-popover/receipt-detail-popover.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,12 +7,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ReceiptDetailPage } from './receipt-detail.page';
+import { RefundPage } from './refund.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ReceiptDetailPage
+    component: RefundPage
   }
 ];
 
@@ -24,7 +24,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ComponentsModule
   ],
-  declarations: [ReceiptDetailPage],
-  entryComponents: [ReceiptDetailPopoverComponent]
+  declarations: [RefundPage],
+  entryComponents: [RefundQuantityModalComponent]
 })
-export class ReceiptDetailPageModule {}
+export class RefundPageModule {}

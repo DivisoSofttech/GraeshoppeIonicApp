@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss(true)">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+        <ion-button (click)="dismiss(false)">
+          SAVE
+        </ion-button>
+      </ion-buttons>
+    <ion-title>{{name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <ion-text class="small-text">Quantity</ion-text>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button color="light" (click)="remove()">
+          <ion-icon slot="icon-only" name="remove"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-input (keyup)="setValid()" text-center type="number" [(ngModel)]="requiredQuantity" ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-button color="light" (click)="add()" >
+          <ion-icon slot="icon-only" name="add"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

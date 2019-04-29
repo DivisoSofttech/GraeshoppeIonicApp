@@ -1,3 +1,5 @@
+import { CategoryDTO } from './../../api/models/category-dto';
+import { QueryResourceService } from 'src/app/api/services';
 import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import {AddCategoriesPage} from '../add-categories/add-categories.page'
@@ -9,9 +11,18 @@ import {AddCategoriesPage} from '../add-categories/add-categories.page'
 })
 export class CategoriesPage implements OnInit {
 
-  constructor(private modalController:ModalController) { }
+  categories: CategoryDTO[] = [];
+
+  constructor(
+    private modalController: ModalController,
+    private queryResourceService: QueryResourceService
+  ) { }
 
   ngOnInit() {
+    this.queryResourceService.findAllCategoriesUsingGET({})
+    .subscribe(result => {
+      this.categories = result;
+    });
   }
 
   
