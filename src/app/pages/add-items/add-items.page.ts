@@ -25,7 +25,14 @@ export class AddItemsPage implements OnInit {
   fileUrl = null;
 
   productUOM: UomDTO;
-  productCategory: CategoryDTO;
+  productCategory: CategoryDTO = {
+    id: 0,
+    description: '',
+    image: '',
+    imageContentType: '',
+    name: '',
+    visible: true
+  };
 
   categories: CategoryDTO[] = [];
 
@@ -53,16 +60,17 @@ export class AddItemsPage implements OnInit {
 
     this.product.image = this.fileUrl.substring(this.fileUrl.indexOf(',') + 1);
     this.product.imageContentType = this.fileToUpload.type;
-    // if (this.productCategory != null) {
-    //   this.product.categories.push(this.productCategory);
-    // }
+    if (this.productCategory != null) {
+      console.log('category' , this.productCategory);
+      this.product.categories.push(this.productCategory);
+    }
     console.log(this.product);
     // const stockLine: StockLine = {
     //   product: this.product,
     //   uom: this.productUOM
     // };
     this.commandResourceService.createProductUsingPOST(this.product).subscribe(result => {
-      console.log('saved');
+      console.log('saved', result);
     });
     this.dismiss();
   }
