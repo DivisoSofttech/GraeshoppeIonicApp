@@ -53,9 +53,9 @@ export class AddItemsPage implements OnInit {
 
     this.product.image = this.fileUrl.substring(this.fileUrl.indexOf(',') + 1);
     this.product.imageContentType = this.fileToUpload.type;
-    if (this.productCategory != null) {
-      this.product.categories.push(this.productCategory);
-    }
+    // if (this.productCategory != null) {
+    //   this.product.categories.push(this.productCategory);
+    // }
     console.log(this.product);
     // const stockLine: StockLine = {
     //   product: this.product,
