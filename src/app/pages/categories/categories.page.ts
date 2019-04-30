@@ -22,10 +22,10 @@ export class CategoriesPage implements OnInit {
     this.queryResourceService.findAllCategoriesUsingGET({})
     .subscribe(result => {
       this.categories = result;
+      console.log('---------', this.categories);
     });
   }
 
-  
   async presentModal() {
     const modal = await this.modalController.create({
       component: AddCategoriesPage,

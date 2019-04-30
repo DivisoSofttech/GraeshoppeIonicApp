@@ -4,12 +4,12 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/api/models';
 
 @Component({
-  selector: 'app-categories',
+  selector: 'app-categories-list',
   templateUrl: './categories-list.page.html',
   styleUrls: ['./categories-list.page.scss'],
 })
 export class CategoriesListPage implements OnInit {
-  categoriesList: Category [] = [];
+  categoriesList: CategoryDTO[] = [];
 
   constructor(
     private queryResourceService: QueryResourceService
@@ -18,8 +18,8 @@ export class CategoriesListPage implements OnInit {
   ngOnInit() {
     this.queryResourceService.findAllCategoriesUsingGET({})
     .subscribe(result => {
-      this.categoriesList = result.content;
-    })
+      this.categoriesList = result;
+    });
   }
 
 }

@@ -13,7 +13,7 @@ import { RefundQuantityModalComponent } from './refund-quantity-modal/refund-qua
         FormsModule,
         IonicModule
     ],
-    declarations: [ReceiptDetailPopoverComponent, RefundQuantityModalComponent, ProductQuantityModalComponent],
-    exports : [ReceiptDetailPopoverComponent, RefundQuantityModalComponent, ProductQuantityModalComponent]
+    declarations: [HeaderComponent, ReceiptDetailPopoverComponent, RefundQuantityModalComponent, ProductQuantityModalComponent],
+    exports : [HeaderComponent, ReceiptDetailPopoverComponent, RefundQuantityModalComponent, ProductQuantityModalComponent]
     })
 export class ComponentsModule { }
