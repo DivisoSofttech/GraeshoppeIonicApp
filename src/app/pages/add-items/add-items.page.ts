@@ -1,3 +1,4 @@
+import { RESIZE_OPTIONS } from '../../image-resize-options';
 import { Category } from './../../api/models/category';
 import {
   CommandResourceService,
@@ -6,6 +7,9 @@ import {
 import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ProductDTO, StockLine, Barcode, CategoryDTO, UomDTO } from 'src/app/api/models';
+import { HttpClient } from '@angular/common/http';
+import { ImageCompressService, IImage } from 'ng2-image-compress';
+import { BarcodeScanner,BarcodeScanResult } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
   selector: 'app-add-items',
@@ -40,14 +44,16 @@ export class AddItemsPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private commandResourceService: CommandResourceService,
-    private queryResourceService: QueryResourceService
-  ) {}
+    private queryResourceService: QueryResourceService,
+    private http: HttpClient,
+    private barcodeScanner: BarcodeScanner
+  ) { }
 
   ngOnInit() {
     this.queryResourceService.findAllCategoriesWithOutImageUsingGET({})
     .subscribe(result => {
         this.categories = result;
-    });
+      });
   }
 
   dismiss() {
@@ -79,10 +85,41 @@ export class AddItemsPage implements OnInit {
       this.fileUrl = ev.target.result;
     };
 
-    freader.readAsDataURL(this.fileToUpload);
+    //Array to store the converted source images 
+    let images: Array<IImage> = [];
+
+    //Method which compresses the image and read by the filereader as blob
+    ImageCompressService.filesArrayToCompressedImageSourceEx([this.fileToUpload], RESIZE_OPTIONS)
+      .then(observableImages => {
+        observableImages.subscribe((image) => {
+          images.push(image);
+        }, (error) => {
+          console.log("Error while converting");
+        }, () => {
+          //converts the encoded compressed file to blob for file reader to read
+          fetch(images.pop().compressedImage.imageDataUrl)
+            .then(data => {
+              data.blob()
+                .then(blob => {
+                  console.log("blob", blob);
+                  freader.readAsDataURL(blob);
+                })
+            });
+        });
+      });
   }
 
   triggerUpload(ev: Event) {
     document.getElementById('image').click();
+  }
+
+  scanBarcode() {
+    this.barcodeScanner.scan().then(barcodeData => {
+      console.log('Barcode data', barcodeData);
+      this.barcode.barcodeTypes[0].barcodeType=barcodeData.format;
+      this.barcode.code=barcodeData.text;
+     }).catch(err => {
+         console.log('Error', err);
+     });
   }
 }
