@@ -13,7 +13,27 @@ export class EditProductModalComponent implements OnInit {
 
   @Input()
   id;
-  productDTO: ProductDTO;
+  productDTO: ProductDTO = {
+    maximumStockLevel: null,
+    barcodeId: null,
+    dateOfExpiry: '',
+    dateOfMfd: '',
+    description:'',
+    id: null,
+    image: '',
+    imageContentType: '',
+    labels:null,
+    categories:null,
+    mpn: '',
+    name: '',
+    reOrderLevel: null,
+    reference:'',
+    searchkey: '',
+    sku: '',
+    statusId: null,
+    taxCategoryId: null,
+    visible: true,
+  };
   categories: CategoryDTO[];
   fileToUpload: File;
   fileUrl = null;
@@ -22,12 +42,21 @@ export class EditProductModalComponent implements OnInit {
     private modalController: ModalController) { }
 
   ngOnInit() {
+    console.log(' finding product  with id '+this.id);
     this.queryResourceService.findAllCategoriesWithOutImageUsingGET({}).subscribe(result => {
       this.categories = result;
     });
-  }
+ this.queryResourceService.findProductUsingGET(this.id).subscribe(result => {console.log('sucess finding product '+result);
+      this.productDTO = result;
+  },
+  err=>{console.log('error in finding product '+err);});
+}
 
-  save() { }
+  save() { 
+    this.commandResourceService.updateProductUsingPUT(this.productDTO).subscribe(sucess =>{console.log('updating product sucess ' +sucess);
+        this.dismiss();},err=>{console.log('error updating product '+err);});
+ 
+  }
 
   dismiss() {
     this.modalController.dismiss();
