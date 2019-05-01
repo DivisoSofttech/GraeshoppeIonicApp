@@ -3,31 +3,25 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title><strong> GraeShoppe</strong></ion-title>
+    <ion-title><strong>Login</strong></ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-card class="welcome-card">
-    <ion-img src="/assets/shapes.svg"></ion-img>
-    <ion-card-header>
-      <ion-card-title text-center><strong>Login</strong></ion-card-title>
-    </ion-card-header>
-    <ion-card-content  no-padding>
-      <ion-card-subtitle *ngIf="message" text-center>
-          {{message}} !
-      </ion-card-subtitle>
-      <ion-item lines="none" no-padding  class="item-inner" >
-        <ion-input    placeholder="Username or Email" [(ngModel)]="username" (ionFocus)="clearMessage()"></ion-input>
+<ion-content padding>
+  <ion-card class="welcome-card" text-center>
+    <ion-img class="base-image" src="/assets/Graeshoppe.png"></ion-img>
+    <ion-card-content padding-left padding-right>
+      <ion-item  class="item-inner" >
+        <ion-label color="medium" position="floating">Username or Email</ion-label>
+        <ion-input [(ngModel)]="username"></ion-input>
       </ion-item>
-      <ion-item lines="none" no-padding class="item-inner">
-        <ion-input placeholder="Password" type="password" [(ngModel)]="password" (ionFocus)="clearMessage()"></ion-input>
+      <ion-item class="item-inner">
+        <ion-label color="medium" position="floating">Passsword</ion-label>
+        <ion-input type="password" [(ngModel)]="password"></ion-input>
       </ion-item>
-        <ion-button (click)="login()" expand="block">Login</ion-button>
-        <div center>
-        <ion-label>Dont have an Account ?</ion-label>
-        <ion-label routerLink="/sign-up" > Register</ion-label>
-      </div>
+      <ion-button color="danger" (click)="login()" expand="block">Login</ion-button>
+      <ion-text>Dont have an Account? </ion-text>
+      <ion-text routerLink="/sign-up" class="cursor">Register</ion-text>
     </ion-card-content>
   </ion-card>
 </ion-content>

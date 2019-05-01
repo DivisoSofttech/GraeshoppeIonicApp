@@ -2,15 +2,15 @@ import { Category } from './../../api/models/category';
 import {
   CommandResourceService,
   QueryResourceService
-} from "src/app/api/services";
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
-import { ModalController } from "@ionic/angular";
-import { ProductDTO, StockLine, Barcode, CategoryDTO, UomDTO } from "src/app/api/models";
+} from 'src/app/api/services';
+import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { ProductDTO, StockLine, Barcode, CategoryDTO, UomDTO } from 'src/app/api/models';
 
 @Component({
-  selector: "app-add-items",
-  templateUrl: "./add-items.page.html",
-  styleUrls: ["./add-items.page.scss"]
+  selector: 'app-add-items',
+  templateUrl: './add-items.page.html',
+  styleUrls: ['./add-items.page.scss']
 })
 export class AddItemsPage implements OnInit {
 
@@ -18,7 +18,7 @@ export class AddItemsPage implements OnInit {
 
   stockLine: StockLine;
 
-  product: ProductDTO = { name: '', searchkey: '', reference: '' , categories:[]};
+  product: ProductDTO = { name: '', searchkey: '', reference: '' , categories: []};
 
   fileToUpload: File;
 
@@ -45,8 +45,7 @@ export class AddItemsPage implements OnInit {
   ) {}
 
   ngOnInit() {
-
-    this.queryResourceService.findAllCategoriesUsingGET({})
+    this.queryResourceService.findAllCategoriesWithOutImageUsingGET({})
     .subscribe(result => {
         this.categories = result;
     });

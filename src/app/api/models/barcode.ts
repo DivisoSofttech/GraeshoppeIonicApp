@@ -2,7 +2,7 @@
 import { BarcodeType } from './barcode-type';
 export interface Barcode {
   barcodeTypes?: Array<BarcodeType>;
-  code?: string;
+  code: string;
   description?: string;
   id?: number;
 }
