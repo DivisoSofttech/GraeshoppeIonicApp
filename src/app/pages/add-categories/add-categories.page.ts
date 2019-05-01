@@ -21,8 +21,9 @@ export class AddCategoriesPage implements OnInit {
     private commandResourceService: CommandResourceService
   ) { }
 
-  dismiss(){
-    this.modalController.dismiss();
+  dismiss() {
+    console.log('>>>>>>>>>>>>>dismiss working');
+    this.modalController.dismiss({'newCategory' : this.category});
   }
 
   triggerUpload(ev: Event) {
@@ -33,9 +34,10 @@ export class AddCategoriesPage implements OnInit {
   }
 
   save() {
-
+    if (this.fileUrl != null) {
     this.category.image = this.fileUrl.substring(this.fileUrl.indexOf(',') + 1);
     this.category.imageContentType = this.fileToUpload.type;
+    }
     console.log(this.category);
     this.commandResourceService.createProductCategoryUsingPOST(this.category)
     .subscribe(result => {
