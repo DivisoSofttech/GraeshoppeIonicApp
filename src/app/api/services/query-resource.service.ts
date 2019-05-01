@@ -28,6 +28,7 @@ class QueryResourceService extends __BaseService {
   static readonly findAllUomUsingGETPath = '/api/query/findAllUom';
   static readonly findProductByCategoryIdUsingGETPath = '/api/query/findProductByCategoryId/{categoryId}';
   static readonly findAllProductUsingGETPath = '/api/query/products';
+  static readonly findProductUsingGETPath = '/api/query/products/{id}';
   static readonly findAllTicketlinesUsingGETPath = '/api/query/ticket-lines';
   static readonly findOneTicketLinesUsingGETPath = '/api/query/ticket-lines/{id}';
 
@@ -409,6 +410,42 @@ class QueryResourceService extends __BaseService {
   findAllProductUsingGET(params: QueryResourceService.FindAllProductUsingGETParams): __Observable<Array<ProductDTO>> {
     return this.findAllProductUsingGETResponse(params).pipe(
       __map(_r => _r.body as Array<ProductDTO>)
+    );
+  }
+
+  /**
+   * @param id id
+   * @return OK
+   */
+  findProductUsingGETResponse(id: number): __Observable<__StrictHttpResponse<ProductDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/products/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<ProductDTO>;
+      })
+    );
+  }
+  /**
+   * @param id id
+   * @return OK
+   */
+  findProductUsingGET(id: number): __Observable<ProductDTO> {
+    return this.findProductUsingGETResponse(id).pipe(
+      __map(_r => _r.body as ProductDTO)
     );
   }
 

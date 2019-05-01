@@ -5,7 +5,7 @@
       <ion-menu-button slot="start" auto-hide="false"></ion-menu-button>
       <ion-title><strong>Graeshoppe</strong></ion-title>
       <ion-icon name="cart" class="cursor" slot="icon-only" (click)="onSelectCart()"></ion-icon>
-      <ion-badge class="badge" color="danger" *ngIf="total">{{total}}</ion-badge>
+      <ion-badge class="badge" color="danger">{{total}}</ion-badge>
       &nbsp;&nbsp;&nbsp;&nbsp;
       <ion-icon name="notifications" slot="icon-only" class="cursor" (click)="presentActionSheet()"></ion-icon>
     </ion-buttons>
