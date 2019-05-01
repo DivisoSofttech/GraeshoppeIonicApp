@@ -1,3 +1,4 @@
+import { Customer } from './../../api/models/customer';
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import {AddCustomerPage} from '../add-customer/add-customer.page';
@@ -12,23 +13,28 @@ import { PageOfCustomer } from 'src/app/api/models';
 export class CustomersPage implements OnInit {
   constructor(private modalController: ModalController, private queryResource: QueryResourceService) { }
 
-  customers: PageOfCustomer;
+  customers: Customer[];
 
   searchTerm = '';
   params: QueryResourceService.FindAllCustomersUsingGETParams = {searchTerm: undefined};
 
   ngOnInit() {
+    this.queryResource.findAllCustomersWithoutSearchUsingGET({}).subscribe(result => {
+        this.customers = result.content;
+    });
   }
   onSearch() {
     console.log('Search Term is ' + this.searchTerm);
     this.params.searchTerm = this.searchTerm;
     if (this.searchTerm === '') {
-      this.params.searchTerm = 'a';
+      this.queryResource.findAllCustomersWithoutSearchUsingGET({}).subscribe(result => {
+        this.customers = result.content;
+    });
     }
     this.queryResource.findAllCustomersUsingGET(this.params).subscribe(
       result => {
       console.log('result is ' + result);
-      this.customers = result;
+      this.customers = result.content;
     });
   }
 
