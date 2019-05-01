@@ -1,9 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons>
-        <ion-back-button>
-  
-        </ion-back-button>    
+        <ion-back-button></ion-back-button>    
         <ion-title>Basket</ion-title>
     </ion-buttons>
 
@@ -18,13 +16,13 @@
         <ion-label>
           Order total
         </ion-label>
-        <ion-text cl>(3 items)</ion-text>
+        <ion-text cl>{{'(' +ticketLines.length +' items)'}}</ion-text>
 
       </ion-col>
     </ion-row>
     <ion-row justify-content-center>
       <ion-col size="12" text-center>
-          <p class="price">&#x20b9;17.45</p>
+          <p class="price">&#x20b9;{{total + deliveryFee}}</p>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -33,11 +31,6 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
-  <ion-item lines="none">
-      <ion-icon class="info-icon" name="information-circle"></ion-icon>
-      <p class="line-height-medium">If you or someone you're ordering for has a food allergy or intolerance, tap here</p>
-  </ion-item>
 
   <ion-grid margin>
 
@@ -50,13 +43,13 @@
         </ion-col>
       </ion-row>
 
-      <ion-row *ngFor="let order of orders" class="border-top ion-margin-vertical ion-padding-vertical"
+      <ion-row *ngFor="let ticket of ticketLines" class="border-top ion-margin-vertical ion-padding-vertical"
       (click)="productQuantity()">
           <ion-col size="8" text-left>
-            <ion-label>{{order.name}}</ion-label>
+            <ion-label>{{getProduct(ticket).name}}</ion-label>
           </ion-col>
           <ion-col size="4" text-right>
-            <ion-label>&#x20b9;{{order.price}}</ion-label>
+            <ion-label>{{'x' +ticket.quantity}}</ion-label>
           </ion-col>
       </ion-row>
 
@@ -69,7 +62,7 @@
               <ion-label>SUBTOTAL</ion-label>
             </ion-col>
             <ion-col text-right>
-              <ion-label>&#x20b9;14.95</ion-label>
+              <ion-label>&#x20b9;{{total}}</ion-label>
             </ion-col>
           </ion-row>
 
@@ -78,7 +71,7 @@
                 <ion-label>Delivery fee</ion-label>
               </ion-col>
               <ion-col text-right>
-                <ion-label>&#x20b9;2.95</ion-label>
+                <ion-label>&#x20b9;{{deliveryFee}}</ion-label>
               </ion-col>
             </ion-row>  
 
@@ -92,18 +85,18 @@
           </ion-col>
           <ion-col size="4" text-right>
             <ion-label class="bold">
-                &#x20b9;17.45
+                &#x20b9;{{total + deliveryFee}}
             </ion-label>
           </ion-col>
         </ion-row>
 
-        <ion-row>
+        <!-- <ion-row>
           <ion-col>
               <ion-label>
                   <address>Bridgewater Hall Summer Hill,Dublin, DUBLIN 1</address>
                 </ion-label>
           </ion-col>
-        </ion-row>
+        </ion-row> -->
   </ion-grid>
 
 

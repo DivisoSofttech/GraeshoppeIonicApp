@@ -1,7 +1,11 @@
+import { QueryResourceService } from 'src/app/api/services';
+import { CartService } from './../../services/cart.service';
+import { TicketLineDTO } from './../../api/models/ticket-line-dto';
 import { ProductQuantityModalComponent } from './../../components/product-quantity-modal/product-quantity-modal.component';
 import { MakePaymentPage } from './../make-payment/make-payment.page';
 import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
+import { ProductDTO } from 'src/app/api/models';
 
 @Component({
   selector: 'app-current-receipt',
@@ -10,18 +14,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CurrentReceiptPage implements OnInit {
 
-  orders = [
+  ticketLines: TicketLineDTO[] = [];
+  products: ProductDTO[] = [];
+  total = 0;
+  deliveryFee = 50;
 
-    {name:"Burger Meal Chicken Burger 7" , price: 5.95},
-    {name:"Burger Meal Chicken Burger 7" , price: 5.95},
-    {name:"Burger Meal Chicken Burger 7" , price: 5.95}
-  ];
-  
   constructor(
-    private modalController: ModalController
+    private modalController: ModalController,
+    private cartService: CartService,
+    private queryResourceService: QueryResourceService
   ) { }
 
   ngOnInit() {
+    this.ticketLines = this.cartService.ticketLines;
+    this.ticketLines.forEach(ticket => {
+      this.total += ticket.total;
+      this.queryResourceService.findProductUsingGET(ticket.productId).subscribe(result => {
+        this.products.push(result);
+        console.log(result);
+      });
+    });
   }
 
   async checkout() {
@@ -39,6 +51,10 @@ export class CurrentReceiptPage implements OnInit {
     });
 
     return await modal.present();
+  }
+
+  getProduct(ticket: TicketLineDTO): ProductDTO {
+    return this.products[this.ticketLines.indexOf(ticket)];
   }
 
 }
