@@ -1,5 +1,5 @@
 import { Customer } from './../../api/models/customer';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import {AddCustomerPage} from '../add-customer/add-customer.page';
 import { QueryResourceService } from 'src/app/api/services';
@@ -12,8 +12,10 @@ import { PageOfCustomer } from 'src/app/api/models';
 })
 export class CustomersPage implements OnInit {
   constructor(private modalController: ModalController, private queryResource: QueryResourceService) { }
-
+  @Input()
+  asModal = false;
   customers: Customer[];
+  selectedCustomer: Customer;
 
   searchTerm = '';
   params: QueryResourceService.FindAllCustomersUsingGETParams = {searchTerm: undefined};
@@ -43,5 +45,20 @@ export class CustomersPage implements OnInit {
       component: AddCustomerPage,
     });
     return await modal.present();
+  }
+
+  dismiss(force: boolean) {
+    if (force) {
+      this.modalController.dismiss();
+    } else {
+      this.modalController.dismiss({'selectedCustomer': this.selectedCustomer});
+    }
+  }
+
+  selectCustomer(cust: Customer) {
+    this.selectedCustomer = cust;
+    if (this.asModal) {
+      this.dismiss(false);
+    }
   }
 }

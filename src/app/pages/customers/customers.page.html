@@ -1,31 +1,42 @@
-<ion-header>
-  <ion-toolbar color="danger">
-      <ion-buttons >
-        <ion-menu-button slot="start"></ion-menu-button>
-        <ion-title><strong>Customers</strong></ion-title>
-        <ion-icon name="download" class="larger"></ion-icon>
-        <ion-icon name="notifications" class="larger"></ion-icon>
-      </ion-buttons>
-  <ion-buttons slot="end">
-  </ion-buttons>
-</ion-toolbar>
+<ion-header *ngIf="!asModal">
+    <ion-toolbar color="danger">
+        <ion-buttons>
+            <ion-menu-button slot="start"></ion-menu-button>
+            <ion-title>Customers</ion-title>
+            <ion-icon name="download" class="larger"></ion-icon>
+            <ion-icon name="notifications" class="larger"></ion-icon>
+        </ion-buttons>
+        <ion-buttons slot="end">
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-header *ngIf="asModal">
+    <ion-toolbar>
+        <ion-title>Customers</ion-title>
+        <ion-buttons slot="start" (click)="dismiss(true)">
+            <ion-icon name="close" slot="icon-only"></ion-icon>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-searchbar padding placeholder="Search customers"  class="border" (ionChange)="onSearch()" [(ngModel)]="searchTerm"></ion-searchbar>
-  <ion-list>
-    <ion-item  *ngFor="let customer of customers" slot="start">
-      <ion-avatar>
-        <ion-img src="/assets/user.png"></ion-img>
-      </ion-avatar>
-      <ion-label class="indent"><strong>{{customer.name}}</strong></ion-label><br>
-      <ion-label color="secondary" text-end><ion-icon color="dark" class="icon" slot="icon-only" name="ribbon"></ion-icon>56 Points</ion-label>
-    </ion-item>
-  </ion-list>
-  <ion-fab vertical="bottom" horizontal="end" >
-    <ion-fab-button (click)="presentModal()" color="danger">
-      <ion-icon name="person-add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
+    <ion-searchbar padding placeholder="Search customers" class="border" (ionChange)="onSearch()"
+        [(ngModel)]="searchTerm"></ion-searchbar>
+    <ion-list>
+        <ion-item *ngFor="let customer of customers" slot="start" (click)="selectCustomer(customer)">
+            <ion-avatar>
+                <ion-img src="/assets/user.png"></ion-img>
+            </ion-avatar>
+            <ion-label class="indent"><strong>{{customer.name}}</strong></ion-label><br>
+            <ion-label color="secondary" text-end>
+                <ion-icon color="dark" class="icon" slot="icon-only" name="ribbon"></ion-icon>56 Points
+            </ion-label>
+        </ion-item>
+    </ion-list>
+    <ion-fab vertical="bottom" horizontal="end">
+        <ion-fab-button (click)="presentModal()" color="danger">
+            <ion-icon name="person-add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 </ion-content>
