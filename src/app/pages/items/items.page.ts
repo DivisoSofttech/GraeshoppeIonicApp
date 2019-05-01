@@ -13,7 +13,6 @@ import { EditProductModalComponent } from 'src/app/components/edit-product-modal
   styleUrls: ['./items.page.scss'],
 })
 export class ItemsPage implements OnInit {
-
   products: Product[] = [];
 
   constructor(
@@ -30,21 +29,28 @@ export class ItemsPage implements OnInit {
   }
 
   async editProductModal(product: Product) {
+    console.log(' editProductModal method working with product id ='+product.id);
     const modal = await this.modalController.create({
       component: EditProductModalComponent,
-      componentProps: [{id: product.id}]
+      componentProps: {id: product.id}
     });
-    return await modal.present();
+   await modal.present();
+  await modal.onDidDismiss();
+  console.log('...............[][][][]');
+  this.getproducts();
   }
-
+getproducts()
+{
+  this.queryResourceservice.findAllProductUsingGET({}).subscribe(result => {
+    console.log('-----', result);
+    this.products = result;
+  },
+  err => {
+    console.log('error getting products');
+  });
+}
   ngOnInit() {
-    this.queryResourceservice.findAllProductUsingGET({}).subscribe(result => {
-      console.log('-----', result);
-      this.products = result;
-    },
-    err => {
-      console.log('error getting products');
-    });
+  this.getproducts();
   }
 
   delete(product: Product) {

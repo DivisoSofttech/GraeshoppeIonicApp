@@ -21,6 +21,7 @@ import { AuthInterceptor } from './pages/security/auth-interceptor';
 import { AddCategoriesPageModule } from './pages/add-categories/add-categories.module';
 import { AddItemsPageModule } from './pages/add-items/add-items.module';
 import { AddUomPageModule } from './pages/add-uom/add-uom.module';
+import { DashboardPageModule } from './pages/dashboard/dashboard.module';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { AddUomPageModule } from './pages/add-uom/add-uom.module';
     AddCategoriesPageModule,
     AddItemsPageModule,
     AddUomPageModule,
+    DashboardPageModule,
     ApiModule.forRoot({rootUrl: 'http://34.73.191.107:9080'})
 
 
