@@ -11,18 +11,20 @@
 <ion-content padding>
   <ion-row>
     <ion-col *ngFor='let category of categories' size="6">
-      <ion-card class="size" [routerLink]="'/product-list/'+category.id">
-        <img [src]="'data:' + category.imageContentType + ';base64,' + category.image" />
-        <div class="myOverlay">
+      
+      <ion-card class="size" >
+        <ion-icon name="more" class="optionPostion" slot="icon-only" (click)="presentActionSheet(category)"></ion-icon>
+        <img [src]="'data:' + category.imageContentType + ';base64,' + category.image" [routerLink]="'/product-list/'+category.id"/>
+        <div class="myOverlay" [routerLink]="'/product-list/'+category.id">
           <div class="card-title"><strong>{{category.name}}</strong></div>
           <!-- <div class="card-subtitle"><strong>{{category.products.length}}</strong></div> -->
+          
         </div>
       </ion-card>
     </ion-col>
   </ion-row>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" margin>
     <ion-fab-button color="primary" (click)="presentModal()" color="danger">
-      <ion-icon name="copy"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>

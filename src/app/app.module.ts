@@ -46,9 +46,9 @@ import { AddUomPageModule } from './pages/add-uom/add-uom.module';
     CustomersPageModule,
     AddCategoriesPageModule,
     AddItemsPageModule,
-    AddUomPageModule
+    AddUomPageModule,
 
-    //ApiModule.forRoot({rootUrl: 'http://35.231.213.38:9080'})
+    ApiModule.forRoot({rootUrl: 'http://34.73.191.107:9080'})
 
   ],
   providers: [

@@ -1,3 +1,4 @@
+import { EditCategoryComponent } from './edit-category/edit-category.component';
 import { EditUOMModalComponent } from './edit-uommodal/edit-uommodal.component';
 import { EditProductModalComponent } from './edit-product-modal/edit-product-modal.component';
 import { ProductQuantityModalComponent } from './product-quantity-modal/product-quantity-modal.component';
@@ -20,14 +21,16 @@ import { RefundQuantityModalComponent } from './refund-quantity-modal/refund-qua
                     HeaderComponent,
                     ReceiptDetailPopoverComponent,
                     RefundQuantityModalComponent,
-                    ProductQuantityModalComponent
+                    ProductQuantityModalComponent,
+                    EditCategoryComponent
                     ],
     exports : [ EditProductModalComponent,
                 EditUOMModalComponent,
                 HeaderComponent,
                 ReceiptDetailPopoverComponent,
                 RefundQuantityModalComponent,
-                ProductQuantityModalComponent
+                ProductQuantityModalComponent,
+                EditCategoryComponent
                 ]
     })
 export class ComponentsModule { }
