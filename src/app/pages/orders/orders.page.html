@@ -1,9 +1,105 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>orders</ion-title>
+  <ion-toolbar color="danger">
+    <ion-buttons>
+      <ion-menu-button slot="start"></ion-menu-button>
+      <ion-title><strong>Orders</strong></ion-title>
+      <ion-icon name="notifications" class="larger"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  
+  <ion-item lines="none" class="border-bottom">
+    <ion-icon name="search" class="search-icon"></ion-icon>
+    <ion-input class="ion-margin-start" clearInput="true" placeholder="Enter Order Number"></ion-input>
+  </ion-item>
+  
+  <ion-item lines="none" class="border-bottom">
+    <ion-label class="date">Wednesday, May 1, 2019</ion-label>
+  </ion-item>
+
+  <div>
+    <ion-grid >
+      <ion-row (click)="navigateToDetails()" >
+        <ion-col size="2" class="vertical-align-center">
+            <ion-icon name="basket" class="fs-20"></ion-icon>
+        </ion-col>
+        <ion-col size="6" class="border-bottom">
+          <ion-grid>
+            <ion-row>
+                <ion-label>002</ion-label>
+            </ion-row>
+            <ion-row>
+                <ion-label class="time">9.48 AM</ion-label>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+        <ion-col size="4" text-right class="border-bottom ">
+          <ion-label class="order-id">{{id}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+  <div  class="vertical-align-center" *ngIf="test">
+      <ion-grid>
+
+          <ion-row>
+            <ion-col text-center>
+              <ion-icon class="no-receipt-icon" src="./assets/receipt.svg"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-center class="ion-padding-top">
+              <ion-label class="fs-20">You have no orders yet</ion-label>
+            </ion-col>
+          </ion-row>
+      
+        </ion-grid>
+  </div>
+
+  <div>
+    <ion-grid >
+      <ion-row (click)="navigateToDetails()" >
+        <ion-col size="2" class="vertical-align-center">
+            <ion-icon name="basket" class="fs-20"></ion-icon>
+        </ion-col>
+        <ion-col size="6" class="border-bottom">
+          <ion-grid>
+            <ion-row>
+                <ion-label>001</ion-label>
+            </ion-row>
+            <ion-row>
+                <ion-label class="time">9.48 AM</ion-label>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+        <ion-col size="4" text-right class="border-bottom ">
+          <ion-label class="order-id">{{id}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+  <div  class="vertical-align-center" *ngIf="test">
+      <ion-grid>
+
+          <ion-row>
+            <ion-col text-center>
+              <ion-icon class="no-receipt-icon" src="./assets/receipt.svg"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-center class="ion-padding-top">
+              <ion-label class="fs-20">You have no orders yet</ion-label>
+            </ion-col>
+          </ion-row>
+      
+        </ion-grid>
+  </div>
+
 
 </ion-content>
