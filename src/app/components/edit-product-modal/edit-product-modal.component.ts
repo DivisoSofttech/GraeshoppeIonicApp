@@ -12,6 +12,7 @@ import { Product, ProductDTO } from 'src/app/api/models';
 export class EditProductModalComponent implements OnInit {
 
   @Input()
+  id;
   productDTO: ProductDTO;
   categories: CategoryDTO[];
   fileToUpload: File;

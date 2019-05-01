@@ -26,7 +26,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">Category</ion-label>
-        <ion-select [(ngModel)]="productCategory.id">
+        <ion-select [(ngModel)]="product.categories[0].id">
           <ion-select-option *ngFor="let category of categories" value="{{category.id}}" required>{{category.name}}
           </ion-select-option>
         </ion-select>
