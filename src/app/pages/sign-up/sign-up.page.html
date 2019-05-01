@@ -11,7 +11,7 @@
 <ion-content padding>
   <ion-card>
     <ion-card-header>
-      <ion-img src="/assets/shapes.svg"></ion-img>
+      <ion-img class="base-image" src="/assets/Graeshoppe.png"></ion-img>
     </ion-card-header>
     <ion-card-content>
       <ion-item>
@@ -26,17 +26,17 @@
           type="password"></ion-input>
       </ion-item>
       <ion-item lines="none">
-        <ion-checkbox slot="start"  (ionChange)="dataChanged(true)"></ion-checkbox>
+        <ion-checkbox slot="start" color="danger" (ionChange)="dataChanged(true)"></ion-checkbox>
         <ion-label class="size">By clicking signup your agree to ayoos's
           useragreement </ion-label>
 
       </ion-item>
 
-      <ion-button expand="block" (click)="signup()" *ngIf="agreement===true" >Signup</ion-button>
-      <ion-button expand="block"  *ngIf="agreement===false"  color="secondary">Signup</ion-button>
+      <ion-button expand="block" (click)="signup()" color="danger" *ngIf="agreement===true" >Signup</ion-button>
+      <ion-button expand="block"  *ngIf="agreement===false" color="light" disable="true">Signup</ion-button>
 
       <br>
-      <ion-label class="center"><strong>Sign in with </strong></ion-label><br><br>
+      <ion-label class="center"><strong>Signup with </strong></ion-label><br><br>
       <ion-fab>
         <ion-item lines="none">
           <ion-fab-button slot="start">
