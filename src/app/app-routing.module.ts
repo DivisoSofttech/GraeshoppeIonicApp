@@ -158,6 +158,7 @@ const routes: Routes = [
   { path: 'receipts/:id', loadChildren: './pages/receipt-detail/receipt-detail.module#ReceiptDetailPageModule' },
   { path: 'product-list/:id', loadChildren: './pages/product-list/product-list.module#ProductListPageModule' },
   { path: 'refund/:id', loadChildren: './pages/refund/refund.module#RefundPageModule' },
+  { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
 
 
 
