@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import {AddItemsPage} from '../add-items/add-items.page';
 import { ProductDTO } from 'src/app/api/models';
+import { EditProductModalComponent } from 'src/app/components/edit-product-modal/edit-product-modal.component';
 
 
 @Component({
@@ -28,9 +29,10 @@ export class ItemsPage implements OnInit {
     return await modal.present();
   }
 
-  async editProductModal() {
+  async editProductModal(product: Product) {
     const modal = await this.modalController.create({
-      component: AddItemsPage,
+      component: EditProductModalComponent,
+      componentProps: [{id: product.id}]
     });
     return await modal.present();
   }

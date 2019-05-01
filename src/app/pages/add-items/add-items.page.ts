@@ -18,21 +18,20 @@ export class AddItemsPage implements OnInit {
 
   stockLine: StockLine;
 
-  product: ProductDTO = { name: '', searchkey: '', reference: '' , categories: []};
-
-  fileToUpload: File;
-
-  fileUrl = null;
-
-  productUOM: UomDTO;
-  productCategory: CategoryDTO = {
+  product: ProductDTO = { name: '', searchkey: '', reference: '' , categories: [ {
     id: 0,
     description: '',
     image: '',
     imageContentType: '',
     name: '',
     visible: true
-  };
+  }]};
+
+  fileToUpload: File;
+
+  fileUrl = null;
+
+  productUOM: UomDTO;
 
   categories: CategoryDTO[] = [];
 
@@ -56,13 +55,9 @@ export class AddItemsPage implements OnInit {
   }
 
   save(): void {
-    if (this.fileUrl === null) {
+    if (this.fileUrl != null) {
       this.product.image = this.fileUrl.substring(this.fileUrl.indexOf(',') + 1);
       this.product.imageContentType = this.fileToUpload.type;
-    }
-    if (this.productCategory != null) {
-      console.log('category' , this.productCategory);
-      this.product.categories.push(this.productCategory);
     }
     console.log(this.product);
     // const stockLine: StockLine = {
