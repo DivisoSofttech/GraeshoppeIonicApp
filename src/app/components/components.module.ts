@@ -1,3 +1,6 @@
+import { EditCategoryComponent } from './edit-category/edit-category.component';
+import { EditUOMModalComponent } from './edit-uommodal/edit-uommodal.component';
+import { EditProductModalComponent } from './edit-product-modal/edit-product-modal.component';
 import { ProductQuantityModalComponent } from './product-quantity-modal/product-quantity-modal.component';
 import { ReceiptDetailPopoverComponent } from './receipt-detail-popover/receipt-detail-popover.component';
 import { HeaderComponent } from './header/header.component';
@@ -13,7 +16,21 @@ import { RefundQuantityModalComponent } from './refund-quantity-modal/refund-qua
         FormsModule,
         IonicModule
     ],
-    declarations: [HeaderComponent, ReceiptDetailPopoverComponent, RefundQuantityModalComponent, ProductQuantityModalComponent],
-    exports : [HeaderComponent, ReceiptDetailPopoverComponent, RefundQuantityModalComponent, ProductQuantityModalComponent]
+    declarations: [ EditProductModalComponent,
+                    EditUOMModalComponent,
+                    HeaderComponent,
+                    ReceiptDetailPopoverComponent,
+                    RefundQuantityModalComponent,
+                    ProductQuantityModalComponent,
+                    EditCategoryComponent
+                    ],
+    exports : [ EditProductModalComponent,
+                EditUOMModalComponent,
+                HeaderComponent,
+                ReceiptDetailPopoverComponent,
+                RefundQuantityModalComponent,
+                ProductQuantityModalComponent,
+                EditCategoryComponent
+                ]
     })
 export class ComponentsModule { }

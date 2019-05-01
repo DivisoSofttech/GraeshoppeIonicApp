@@ -1,8 +1,11 @@
 import { Product } from './../../api/models/product';
-import { QueryResourceService } from 'src/app/api/services';
+import { QueryResourceService, CommandResourceService } from 'src/app/api/services';
 import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import {AddItemsPage} from '../add-items/add-items.page'
+import {AddItemsPage} from '../add-items/add-items.page';
+import { ProductDTO } from 'src/app/api/models';
+import { EditProductModalComponent } from 'src/app/components/edit-product-modal/edit-product-modal.component';
+
 
 @Component({
   selector: 'app-items',
@@ -15,7 +18,8 @@ export class ItemsPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private queryResourceservice: QueryResourceService
+    private queryResourceservice: QueryResourceService,
+    private commandResource: CommandResourceService
   ) { }
 
   async presentModal() {
@@ -25,30 +29,30 @@ export class ItemsPage implements OnInit {
     return await modal.present();
   }
 
-  ngOnInit() {
-    this.queryResourceservice.findAllCategoriesUsingGET({})
-    .subscribe(result => {
-
-      for (const category of result) {
-        console.log(category.id);
-        this.queryResourceservice.findProductByCategoryIdUsingGET({categoryId: category.id})
-        .subscribe(res => {
-
-
-          console.log('product' , res.content);
-          // res.content.forEach(p => {
-          //   this.products.push(p);
-          //   console.log('product2' , p);
-          // });
-          for (const product of res.content) {
-            this.products.push(product);
-            console.log('product2' , product);
-          }
-        });
-      }
-
+  async editProductModal(product: Product) {
+    const modal = await this.modalController.create({
+      component: EditProductModalComponent,
+      componentProps: [{id: product.id}]
     });
-
+    return await modal.present();
   }
 
+  ngOnInit() {
+    this.queryResourceservice.findAllProductUsingGET({}).subscribe(result => {
+      console.log('-----', result);
+      this.products = result;
+    },
+    err => {
+      console.log('error getting products');
+    });
+  }
+
+  delete(product: Product) {
+    this.commandResource.deleteProductUsingDELETE(product.id).subscribe(res => {
+      this.products.splice(this.products.indexOf(product), 1);
+    },
+    err => {
+      console.log('Error deleting product ', product);
+    });
+  }
 }

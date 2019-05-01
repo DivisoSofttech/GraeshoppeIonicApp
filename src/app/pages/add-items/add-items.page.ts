@@ -1,20 +1,20 @@
-import { ImageResizeService, RESIZE_OPTIONS } from './../../image-resize.service';
+import { RESIZE_OPTIONS } from '../../image-resize-options';
 import { Category } from './../../api/models/category';
 import {
   CommandResourceService,
   QueryResourceService
-} from "src/app/api/services";
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
-import { ModalController } from "@ionic/angular";
-import { ProductDTO, StockLine, Barcode, CategoryDTO, UomDTO } from "src/app/api/models";
+} from 'src/app/api/services';
+import { Component, OnInit, ElementRef, ViewChild, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { ProductDTO, StockLine, Barcode, CategoryDTO, UomDTO } from 'src/app/api/models';
 import { HttpClient } from '@angular/common/http';
 import { ImageCompressService, IImage } from 'ng2-image-compress';
 import { BarcodeScanner,BarcodeScanResult } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
-  selector: "app-add-items",
-  templateUrl: "./add-items.page.html",
-  styleUrls: ["./add-items.page.scss"]
+  selector: 'app-add-items',
+  templateUrl: './add-items.page.html',
+  styleUrls: ['./add-items.page.scss']
 })
 export class AddItemsPage implements OnInit {
 
@@ -22,21 +22,20 @@ export class AddItemsPage implements OnInit {
 
   stockLine: StockLine;
 
-  product: ProductDTO = { name: '', searchkey: '', reference: '', categories: [] };
-
-  fileToUpload: File;
-
-  fileUrl = null;
-
-  productUOM: UomDTO;
-  productCategory: CategoryDTO = {
+  product: ProductDTO = { name: '', searchkey: '', reference: '' , categories: [ {
     id: 0,
     description: '',
     image: '',
     imageContentType: '',
     name: '',
     visible: true
-  };
+  }]};
+
+  fileToUpload: File;
+
+  fileUrl = null;
+
+  productUOM: UomDTO;
 
   categories: CategoryDTO[] = [];
 
@@ -46,15 +45,13 @@ export class AddItemsPage implements OnInit {
     private modalController: ModalController,
     private commandResourceService: CommandResourceService,
     private queryResourceService: QueryResourceService,
-    private imageResizer: ImageResizeService,
     private http: HttpClient,
     private barcodeScanner: BarcodeScanner
   ) { }
 
   ngOnInit() {
-
-    this.queryResourceService.findAllCategoriesUsingGET({})
-      .subscribe(result => {
+    this.queryResourceService.findAllCategoriesWithOutImageUsingGET({})
+    .subscribe(result => {
         this.categories = result;
       });
   }
@@ -64,12 +61,9 @@ export class AddItemsPage implements OnInit {
   }
 
   save(): void {
-
-    this.product.image = this.fileUrl.substring(this.fileUrl.indexOf(',') + 1);
-    this.product.imageContentType = this.fileToUpload.type;
-    if (this.productCategory != null) {
-      console.log('category', this.productCategory);
-      this.product.categories.push(this.productCategory);
+    if (this.fileUrl != null) {
+      this.product.image = this.fileUrl.substring(this.fileUrl.indexOf(',') + 1);
+      this.product.imageContentType = this.fileToUpload.type;
     }
     console.log(this.product);
     // const stockLine: StockLine = {

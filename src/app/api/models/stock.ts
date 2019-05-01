@@ -5,7 +5,7 @@ export interface Stock {
   dateOfStockUpdated?: string;
   deliveryNoteRef?: number;
   id?: number;
-  reference?: string;
+  reference: string;
   status?: Status;
   stockLines?: Array<StockLine>;
   storageCost?: number;

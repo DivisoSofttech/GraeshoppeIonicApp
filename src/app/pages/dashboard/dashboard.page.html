@@ -1,12 +1,40 @@
 <ion-header>
   <ion-toolbar color="danger">
-      <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-    <ion-title><strong>Dashboard</strong></ion-title>
+    <ion-buttons>
+      <ion-menu-button slot="start"></ion-menu-button>
+      <ion-title><strong>Dashboard</strong></ion-title>
+      <ion-icon name="notifications" class="larger"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="ion-padding">
+    <ion-card>
+      <ion-card-header>
+        Stock Level
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #barCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
 
+    <ion-card>
+      <ion-card-header>
+        Sale Per Product
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #doughnutCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+ 
+    <ion-card>
+      <ion-card-header>
+        Sales Ratio
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #lineCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

@@ -1,4 +1,4 @@
-import { QueryResourceService } from 'src/app/api/services';
+import { QueryResourceService, CommandResourceService } from 'src/app/api/services';
 import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import {AddUomPage} from '../add-uom/add-uom.page';
@@ -15,7 +15,8 @@ export class UomPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private queryResourceService: QueryResourceService
+    private queryResourceService: QueryResourceService,
+    private commandResourceService: CommandResourceService
 
   ) { }
 
@@ -28,6 +29,16 @@ export class UomPage implements OnInit {
   }
 
   ngOnInit() {
+    this.queryResourceService.findAllUomUsingGET({}).subscribe(result => {
+      this.uoms = result;
+    });
+  }
+
+  delete() {
+
+  }
+
+  edit(uom: UomDTO) {
 
   }
 

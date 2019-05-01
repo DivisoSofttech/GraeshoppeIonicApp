@@ -1,3 +1,5 @@
+import { EditProductModalComponent } from './../../components/edit-product-modal/edit-product-modal.component';
+import { ComponentsModule } from './../../components/components.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -21,9 +23,10 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    ComponentsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ItemsPage]
-  
+  declarations: [ItemsPage],
+  entryComponents: [EditProductModalComponent]
 })
 export class ItemsPageModule {}

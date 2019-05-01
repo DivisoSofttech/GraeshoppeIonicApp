@@ -2,5 +2,5 @@
 export interface Label {
   description?: string;
   id?: number;
-  name?: string;
+  name: string;
 }

@@ -26,7 +26,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">Category</ion-label>
-        <ion-select [(ngModel)]="productCategory.id">
+        <ion-select [(ngModel)]="product.categories[0].id">
           <ion-select-option *ngFor="let category of categories" value="{{category.id}}" required>{{category.name}}
           </ion-select-option>
         </ion-select>
@@ -39,15 +39,7 @@
           </ion-select>
         </ion-item> -->
       <ion-item>
-        <ion-label position="floating">Sell Price Inc</ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Sell Price exc</ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Buy Price exc</ion-label>
+        <ion-label position="floating">Price</ion-label>
         <ion-input type="text"></ion-input>
       </ion-item>
       <ion-button (click)="save()" margin mode="ios" expand="block" fill="solid" color="danger">Save</ion-button>

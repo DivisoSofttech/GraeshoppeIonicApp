@@ -23,6 +23,8 @@ import { AddItemsPageModule } from './pages/add-items/add-items.module';
 import { AddUomPageModule } from './pages/add-uom/add-uom.module';
 import { ImageCompressService } from 'ng2-image-compress';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { DashboardPageModule } from './pages/dashboard/dashboard.module';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -47,9 +49,10 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
     CustomersPageModule,
     AddCategoriesPageModule,
     AddItemsPageModule,
-    AddUomPageModule
+    AddUomPageModule,
+    DashboardPageModule,
+    ApiModule.forRoot({rootUrl: 'http://34.73.191.107:9080'})
 
-    //ApiModule.forRoot({rootUrl: 'http://35.231.213.38:9080'})
 
   ],
   providers: [

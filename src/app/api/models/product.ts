@@ -17,12 +17,12 @@ export interface Product {
   imageContentType?: string;
   labels?: Array<Label>;
   maximumStockLevel?: number;
-  category?: Category;
-  name?: string;
+  categories?: Array<Category>;
+  name: string;
   notes?: Array<Note>;
   reOrderLevel?: number;
-  reference?: string;
-  searchkey?: string;
+  reference: string;
+  searchkey: string;
   sku?: string;
   status?: Status;
   stockLines?: Array<StockLine>;

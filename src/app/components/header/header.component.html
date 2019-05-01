@@ -1,18 +1,16 @@
 <ion-header>
-    <ion-toolbar color="danger">
-      
-      <ion-buttons margin-top>
-        <ion-menu-button slot="start"></ion-menu-button>
-        <ion-title><strong>Graeshoppe</strong></ion-title>
-          <ion-icon src="./assets/split-call-arrows.svg"></ion-icon>
-          <ion-icon name="cart" class="larger" (click)="onSelectCart()"></ion-icon>
-          <ion-badge class="badge" color="danger" *ngIf="total">{{total}}</ion-badge>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <ion-icon name="notifications" class="larger"
-          (click)="presentActionSheet()"></ion-icon>
-      </ion-buttons>
-  
-      <ion-searchbar placeholder="Search products,categories" class="border" ></ion-searchbar>
-    
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="danger">
+
+    <ion-buttons margin-top>
+      <ion-menu-button slot="start" auto-hide="false"></ion-menu-button>
+      <ion-title><strong>Graeshoppe</strong></ion-title>
+      <ion-icon name="cart" class="cursor" slot="icon-only" (click)="onSelectCart()"></ion-icon>
+      <ion-badge class="badge" color="danger" *ngIf="total">{{total}}</ion-badge>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <ion-icon name="notifications" slot="icon-only" class="cursor" (click)="presentActionSheet()"></ion-icon>
+    </ion-buttons>
+
+    <ion-searchbar placeholder="Search products,categories" class="border"></ion-searchbar>
+
+  </ion-toolbar>
+</ion-header>

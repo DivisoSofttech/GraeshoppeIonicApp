@@ -1,13 +1,10 @@
 <app-header></app-header>
 <ion-content>
-<ion-card class="ion-text-center">
-    <ion-title >Products</ion-title>
-</ion-card>
 <ion-row>
     <div *ngFor='let product of products'>
     <ion-col>
     <ion-card class="size" [routerLink]="'/product-list/'+product.id">
-        <ion-img src="{{product.image}}"></ion-img>
+        <img [src]="'data:' + product.imageContentType + ';base64,' + product.image">
         <div class="myOverlay">
           <div class="card-title"><strong>{{product.name}}</strong></div>
         </div>
