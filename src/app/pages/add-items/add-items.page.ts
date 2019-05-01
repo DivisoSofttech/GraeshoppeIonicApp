@@ -56,9 +56,10 @@ export class AddItemsPage implements OnInit {
   }
 
   save(): void {
-
-    this.product.image = this.fileUrl.substring(this.fileUrl.indexOf(',') + 1);
-    this.product.imageContentType = this.fileToUpload.type;
+    if (this.fileUrl === null) {
+      this.product.image = this.fileUrl.substring(this.fileUrl.indexOf(',') + 1);
+      this.product.imageContentType = this.fileToUpload.type;
+    }
     if (this.productCategory != null) {
       console.log('category' , this.productCategory);
       this.product.categories.push(this.productCategory);
