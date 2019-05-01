@@ -1,3 +1,4 @@
+import { ImageResizeService, RESIZE_OPTIONS } from './../../image-resize.service';
 import { Category } from './../../api/models/category';
 import {
   CommandResourceService,
@@ -6,6 +7,8 @@ import {
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { ProductDTO, StockLine, Barcode, CategoryDTO, UomDTO } from "src/app/api/models";
+import { HttpClient } from '@angular/common/http';
+import { ImageCompressService, IImage } from 'ng2-image-compress';
 
 @Component({
   selector: "app-add-items",
@@ -18,7 +21,7 @@ export class AddItemsPage implements OnInit {
 
   stockLine: StockLine;
 
-  product: ProductDTO = { name: '', searchkey: '', reference: '' , categories:[]};
+  product: ProductDTO = { name: '', searchkey: '', reference: '', categories: [] };
 
   fileToUpload: File;
 
@@ -41,15 +44,17 @@ export class AddItemsPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private commandResourceService: CommandResourceService,
-    private queryResourceService: QueryResourceService
-  ) {}
+    private queryResourceService: QueryResourceService,
+    private imageResizer: ImageResizeService,
+    private http: HttpClient
+  ) { }
 
   ngOnInit() {
 
     this.queryResourceService.findAllCategoriesUsingGET({})
-    .subscribe(result => {
+      .subscribe(result => {
         this.categories = result;
-    });
+      });
   }
 
   dismiss() {
@@ -61,7 +66,7 @@ export class AddItemsPage implements OnInit {
     this.product.image = this.fileUrl.substring(this.fileUrl.indexOf(',') + 1);
     this.product.imageContentType = this.fileToUpload.type;
     if (this.productCategory != null) {
-      console.log('category' , this.productCategory);
+      console.log('category', this.productCategory);
       this.product.categories.push(this.productCategory);
     }
     console.log(this.product);
@@ -84,7 +89,28 @@ export class AddItemsPage implements OnInit {
       this.fileUrl = ev.target.result;
     };
 
-    freader.readAsDataURL(this.fileToUpload);
+    //Array to store the converted source images 
+    let images: Array<IImage> = [];
+
+    //Method which compresses the image and read by the filereader as blob
+    ImageCompressService.filesArrayToCompressedImageSourceEx([this.fileToUpload], RESIZE_OPTIONS)
+      .then(observableImages => {
+        observableImages.subscribe((image) => {
+          images.push(image);
+        }, (error) => {
+          console.log("Error while converting");
+        }, () => {
+          //converts the encoded compressed file to blob for file reader to read
+          fetch(images.pop().compressedImage.imageDataUrl)
+            .then(data => {
+              data.blob()
+                .then(blob => {
+                  console.log("blob", blob);
+                  freader.readAsDataURL(blob);
+                })
+            });
+        });
+      });
   }
 
   triggerUpload(ev: Event) {

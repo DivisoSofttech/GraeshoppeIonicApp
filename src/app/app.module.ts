@@ -9,19 +9,19 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import {  OAuthModule } from 'angular-oauth2-oidc';
+import { OAuthModule } from 'angular-oauth2-oidc';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SuperTabsModule } from '@ionic-super-tabs/angular';
-import {CategoriesListPageModule} from './pages/categories-list/categories-list.module'
-import {SalePageModule} from './pages/sale/sale.module'
+import { CategoriesListPageModule } from './pages/categories-list/categories-list.module'
+import { SalePageModule } from './pages/sale/sale.module'
 import { RecentlyUsedPageModule } from './pages/recently-used/recently-used.module';
 import { AddCustomerPageModule } from './pages/add-customer/add-customer.module';
-import {ApiModule} from './api/api.module';
+import { ApiModule } from './api/api.module';
 import { AuthInterceptor } from './pages/security/auth-interceptor';
 import { AddCategoriesPageModule } from './pages/add-categories/add-categories.module';
 import { AddItemsPageModule } from './pages/add-items/add-items.module';
 import { AddUomPageModule } from './pages/add-uom/add-uom.module';
-
+import { ImageCompressService, ResizeOptions, ImageUtilityService } from 'ng2-image-compress';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,12 +31,12 @@ import { AddUomPageModule } from './pages/add-uom/add-uom.module';
     IonicModule.forRoot(),
     AppRoutingModule,
     OAuthModule.forRoot(),
-  //   OAuthModule.forRoot({
-  //     resourceServer: {
-  //         allowedUrls: ['http://35.231.213.38:9080/api'],
-  //         sendAccessToken: true
-  //     }
-  // }),
+    //   OAuthModule.forRoot({
+    //     resourceServer: {
+    //         allowedUrls: ['http://35.231.213.38:9080/api'],
+    //         sendAccessToken: true
+    //     }
+    // }),
     HttpClientModule,
     SuperTabsModule.forRoot(),
     CategoriesListPageModule,
@@ -60,8 +60,9 @@ import { AddUomPageModule } from './pages/add-uom/add-uom.module';
       useClass: AuthInterceptor,
       multi: true
 
-}
+    },
+    ImageCompressService, ResizeOptions
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

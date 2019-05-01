@@ -1,0 +1,10 @@
+{
+  "info.protonet.imageresizer": {
+    "source": {
+      "type": "registry",
+      "id": "info.protonet.imageresizer"
+    },
+    "is_top_level": true,
+    "variables": {}
+  }
+}
