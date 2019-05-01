@@ -21,7 +21,8 @@ import { AuthInterceptor } from './pages/security/auth-interceptor';
 import { AddCategoriesPageModule } from './pages/add-categories/add-categories.module';
 import { AddItemsPageModule } from './pages/add-items/add-items.module';
 import { AddUomPageModule } from './pages/add-uom/add-uom.module';
-import { ImageCompressService, ResizeOptions, ImageUtilityService } from 'ng2-image-compress';
+import { ImageCompressService } from 'ng2-image-compress';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -61,7 +62,8 @@ import { ImageCompressService, ResizeOptions, ImageUtilityService } from 'ng2-im
       multi: true
 
     },
-    ImageCompressService, ResizeOptions
+    ImageCompressService, 
+    BarcodeScanner
   ],
   bootstrap: [AppComponent]
 })

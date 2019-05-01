@@ -37,6 +37,7 @@
     "core-js": "^2.5.4",
     "info.protonet.imageresizer": "0.1.1",
     "ng2-image-compress": "^7.0.7",
+    "phonegap-plugin-barcodescanner": "8.0.1",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.29"
   },
@@ -79,7 +80,8 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
       "cordova-plugin-ionic-keyboard": {},
-      "info.protonet.imageresizer": {}
+      "info.protonet.imageresizer": {},
+      "phonegap-plugin-barcodescanner": {}
     },
     "platforms": [
       "android"

@@ -9,6 +9,7 @@ import { ModalController } from "@ionic/angular";
 import { ProductDTO, StockLine, Barcode, CategoryDTO, UomDTO } from "src/app/api/models";
 import { HttpClient } from '@angular/common/http';
 import { ImageCompressService, IImage } from 'ng2-image-compress';
+import { BarcodeScanner,BarcodeScanResult } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
   selector: "app-add-items",
@@ -46,7 +47,8 @@ export class AddItemsPage implements OnInit {
     private commandResourceService: CommandResourceService,
     private queryResourceService: QueryResourceService,
     private imageResizer: ImageResizeService,
-    private http: HttpClient
+    private http: HttpClient,
+    private barcodeScanner: BarcodeScanner
   ) { }
 
   ngOnInit() {
@@ -115,5 +117,15 @@ export class AddItemsPage implements OnInit {
 
   triggerUpload(ev: Event) {
     document.getElementById('image').click();
+  }
+
+  scanBarcode() {
+    this.barcodeScanner.scan().then(barcodeData => {
+      console.log('Barcode data', barcodeData);
+      this.barcode.barcodeTypes[0].barcodeType=barcodeData.format;
+      this.barcode.code=barcodeData.text;
+     }).catch(err => {
+         console.log('Error', err);
+     });
   }
 }
