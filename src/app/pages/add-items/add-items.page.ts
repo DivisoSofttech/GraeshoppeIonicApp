@@ -66,8 +66,9 @@ export class AddItemsPage implements OnInit {
     // };
     this.commandResourceService.createProductUsingPOST(this.product).subscribe(result => {
       console.log('saved', result);
+      this.dismiss();
     });
-    this.dismiss();
+   
   }
 
   onSelectFile(event) {
