@@ -25,7 +25,9 @@ export class ItemsPage implements OnInit {
     const modal = await this.modalController.create({
       component: AddItemsPage,
     });
-    return await modal.present();
+   await modal.present();
+   await modal.onDidDismiss();
+   this.getproducts();
   }
 
   async editProductModal(product: Product) {

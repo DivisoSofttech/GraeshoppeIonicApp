@@ -9,17 +9,17 @@
 
 <ion-content>
   <ion-grid>
-    <ion-row justify-content-center>
-      <ion-col size-sm="12" size-md="8" size-lg="6">
-        <ion-card text-center>
-          <ion-img class="base-image" src="/assets/Graeshoppe.png"></ion-img>
-          <ion-card-content>
-            <ion-button (click)="login()" color="danger" class="size" expand="block" class="align">Login
-              Now</ion-button><br>
-            <ion-button (click)="signup()" class="size" color="danger" expand="block" class="align">Register
-              Now</ion-button>
-          </ion-card-content>
-        </ion-card>
+    <ion-row>
+      <ion-col>
+        <ion-img class="base-image" src="/assets/Graeshoppe.png"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col  size-md="6" align-self-center offset="2" offset-md="3" size="8">
+        <ion-button (click)="login()" color="danger" class="size" expand="block" class="align">Login
+          Now</ion-button><br>
+        <ion-button (click)="signup()" class="size" color="danger" expand="block" class="align">Register
+          Now</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
