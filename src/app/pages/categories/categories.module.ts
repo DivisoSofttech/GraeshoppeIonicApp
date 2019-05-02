@@ -1,3 +1,4 @@
+import { HeaderComponent } from 'src/app/components/header/header.component';
 import { ComponentsModule } from './../../components/components.module';
 import { EditCategoryComponent } from './../../components/edit-category/edit-category.component';
 import { NgModule } from '@angular/core';
@@ -29,6 +30,6 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [CategoriesPage],
-  entryComponents: [EditCategoryComponent]
+  entryComponents: [EditCategoryComponent,HeaderComponent]
 })
 export class CategoriesPageModule {}

@@ -2,7 +2,7 @@ import { CategoryDTO } from './../../api/models/category-dto';
 import { ModalController } from '@ionic/angular';
 import { CommandResourceService, QueryResourceService } from 'src/app/api/services';
 import { Component, OnInit, Input } from '@angular/core';
-import { Product, ProductDTO } from 'src/app/api/models';
+import { ProductDTO } from 'src/app/api/models/product-dto';
 
 @Component({
   selector: 'app-edit-product-modal',
@@ -13,27 +13,7 @@ export class EditProductModalComponent implements OnInit {
 
   @Input()
   id;
-  productDTO: ProductDTO = {
-    maximumStockLevel: null,
-    barcodeId: null,
-    dateOfExpiry: '',
-    dateOfMfd: '',
-    description:'',
-    id: null,
-    image: '',
-    imageContentType: '',
-    labels:null,
-    categories:null,
-    mpn: '',
-    name: '',
-    reOrderLevel: null,
-    reference:'',
-    searchkey: '',
-    sku: '',
-    statusId: null,
-    taxCategoryId: null,
-    visible: true,
-  };
+  productDTO: ProductDTO;
   categories: CategoryDTO[];
   fileToUpload: File;
   fileUrl = null;

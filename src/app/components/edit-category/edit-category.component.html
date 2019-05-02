@@ -2,7 +2,7 @@
   <ion-toolbar color="danger" >
     <ion-buttons  (click)="dismiss()" slot="start">
       <ion-icon name="arrow-back" class="icon-size" ></ion-icon>
-      <ion-title text-center><strong>Create New Category</strong></ion-title> 
+      <ion-title text-center><strong>Edit Category</strong></ion-title> 
  </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -15,10 +15,10 @@
         <ion-input type="text" [(ngModel)]="category.name"></ion-input>
       </ion-item>
       <ion-item>
+          <ion-button fill="none" (click)="triggerUpload($event)" >
+              <ion-icon name="camera" slot="icon-only"></ion-icon>
+            </ion-button>
         <img *ngIf="category.image != null"  [src]="'data:' + category.imageContentType + ';base64,' + category.image"/>
-        <ion-button fill="none" (click)="triggerUpload($event)" >
-          <ion-icon name="camera" slot="icon-only"></ion-icon>
-        </ion-button>
         <input hidden id="image" type="file" accept="image/*" color="danger" (change)="onSelectFile($event)"/>
       </ion-item>
       <ion-item>

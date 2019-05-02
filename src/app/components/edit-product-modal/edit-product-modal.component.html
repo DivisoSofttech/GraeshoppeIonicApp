@@ -10,7 +10,7 @@
                 SAVE
             </ion-button>
         </ion-buttons>
-        <ion-input [(ngModel)]="productDTO.name"></ion-input>
+        <ion-input *ngIf="productDTO!=null" [(ngModel)]="productDTO.name"></ion-input>
     </ion-toolbar>
 </ion-header>
 
@@ -19,7 +19,7 @@
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <img *ngIf="productDTO.image != null"  [src]="'data:' + productDTO.imageContentType + ';base64,' + productDTO.image" class="image"/>
+                    <img *ngIf="productDTO!=null && productDTO.image != null"  [src]="'data:' + productDTO.imageContentType + ';base64,' + productDTO.image" class="image"/>
                     <input hidden id="image" type="file" accept="image/*" color="primary"
                         (change)="onSelectFile($event)">
                     <ion-button fill="none" (click)="triggerUpload($event)">
@@ -31,16 +31,16 @@
                 </ion-item>
                 <ion-item>
                     <!-- <ion-label position="floating">Name</ion-label> -->
-                    <ion-input type="text" [(ngModel)]="productDTO.name"></ion-input>
+                    <ion-input *ngIf="productDTO!=null"   type="text" [(ngModel)]="productDTO.name"></ion-input>
                 </ion-item>
-                <!-- <ion-item>
+            <ion-item>
                     <ion-label position="floating">Category</ion-label>
-                    <ion-select [(ngModel)]="productDTO.categories[0].id">
+                    <ion-select  *ngIf="productDTO!=null"  [(ngModel)]="productDTO.categories[0].id">
                         <ion-select-option *ngFor="let category of categories" value="{{category.id}}" required>
                             {{category.name}}
                         </ion-select-option>
                     </ion-select>
-                </ion-item> -->
+                </ion-item> 
                 <!-- <ion-item>
                     <ion-label position="floating">UOM</ion-label>
                     <ion-select>

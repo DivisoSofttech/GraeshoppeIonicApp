@@ -35,7 +35,7 @@ export class UomPage implements OnInit {
   }
 
   delete() {
-
+  //  this.commandResourceService.deleteUOMUsingDELETE()
   }
 
   edit(uom: UomDTO) {
