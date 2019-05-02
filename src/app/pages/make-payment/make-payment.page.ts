@@ -1,3 +1,4 @@
+import { TicketLineDTO } from './../../api/models/ticket-line-dto';
 import { CommandResourceService } from 'src/app/api/services';
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
@@ -10,6 +11,8 @@ import { SaleDTO } from 'src/app/api/models';
 })
 export class MakePaymentPage implements OnInit {
   @Input()
+  ticketLines: TicketLineDTO[] = [];
+  @Input()
   toBePaid;
   @Input()
   customerId;
@@ -18,7 +21,7 @@ export class MakePaymentPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private commandResourceService: CommandResourceService
+    private commandResourceService: CommandResourceService,
   ) { }
 
   dismiss() {
@@ -32,8 +35,15 @@ export class MakePaymentPage implements OnInit {
 
   save() {
     if (this.cashRecieved >= this.toBePaid) {
-      this.commandResourceService.createSaleUsingPOST(this.sale).subscribe(result => {
-        console.log(result);
+      this.commandResourceService.createSaleUsingPOST(this.sale).subscribe(res => {
+        console.log(res);
+        this.sale = res;
+        this.ticketLines.forEach(ticket => {
+          ticket.saleId =  this.sale.id;
+          this.commandResourceService.createTickerLineUsingPOST(ticket).subscribe(result => {
+            ticket =  result;
+          });
+        });
       });
     }
   }
