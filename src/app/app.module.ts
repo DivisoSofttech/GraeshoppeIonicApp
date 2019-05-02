@@ -25,10 +25,11 @@ import { ImageCompressService } from 'ng2-image-compress';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { DashboardPageModule } from './pages/dashboard/dashboard.module';
 import { ChartsModule } from 'ng2-charts';
+import { UserComponent } from './user/user.component';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,UserComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
