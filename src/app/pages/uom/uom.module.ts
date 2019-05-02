@@ -1,3 +1,4 @@
+import { ComponentsModule } from './../../components/components.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import {AddUomPage} from '../add-uom/add-uom.page';
 import { AddUomPageModule } from '../add-uom/add-uom.module';
 import { UomPage } from './uom.page';
+import { HeaderComponent } from 'src/app/components/header/header.component';
 
 const routes: Routes = [
   {
@@ -17,11 +19,13 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    ComponentsModule,
     CommonModule,
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes)
     ],
-  declarations: [UomPage]
+  declarations: [UomPage],
+  entryComponents: [HeaderComponent]
 })
 export class UomPageModule {}

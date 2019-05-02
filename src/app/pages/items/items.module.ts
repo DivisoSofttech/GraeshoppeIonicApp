@@ -10,6 +10,7 @@ import {AddItemsPageModule} from '../add-items/add-items.module'
 import { IonicModule } from '@ionic/angular';
 
 import { ItemsPage } from './items.page';
+import { HeaderComponent } from 'src/app/components/header/header.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    ComponentsModule,
     CommonModule,
     FormsModule,
     IonicModule,
@@ -27,6 +29,7 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [ItemsPage],
-  entryComponents: [EditProductModalComponent]
+  entryComponents: [EditProductModalComponent,
+    HeaderComponent]
 })
 export class ItemsPageModule {}
