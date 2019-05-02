@@ -187,7 +187,9 @@ const routes: Routes = [
     path: 'refund/:id',
     loadChildren: './pages/refund/refund.module#RefundPageModule',
     canActivate: [AuthGuardService]
-  }
+  },
+  { path: 'stock-management', loadChildren: './stock-management/stock-management.module#StockManagementPageModule' },
+  { path: 'add-stock', loadChildren: './add-stock/add-stock.module#AddStockPageModule' }
 ];
 
 @NgModule({

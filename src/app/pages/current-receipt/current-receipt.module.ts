@@ -11,6 +11,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { CurrentReceiptPage } from './current-receipt.page';
 import { MakePaymentPageModule } from '../make-payment/make-payment.module';
+import { CustomersPageModule } from '../customers/customers.module';
+import { CustomersPage } from '../customers/customers.page';
 
 const routes: Routes = [
   {
@@ -26,6 +28,7 @@ const routes: Routes = [
     IonicModule,
     MakePaymentPageModule,
     ComponentsModule,
+    // CustomersPageModule,
     RouterModule.forChild(routes)
   ],
   declarations: [CurrentReceiptPage],

@@ -1,5 +1,7 @@
+import { CartService } from './../../services/cart.service';
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, NavController } from '@ionic/angular';
+import { Subscription, Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -8,16 +10,11 @@ import { ActionSheetController, NavController } from '@ionic/angular';
 })
 export class HeaderComponent implements OnInit {
 
-  total: number;
+  total = 0;
   numberOfItems: number;
+  private subscription: Subscription;
 
-  calculateTotal() {
-    this.total = 30.00;
-    this.numberOfItems = 8;
-  }
-
- 
-  onSelectCart(){
+  onSelectCart() {
     this.navctrl.navigateForward('/current-receipt');
   }
 
@@ -35,11 +32,13 @@ export class HeaderComponent implements OnInit {
     await actionSheet.present();
   }
 
-  constructor(private actionSheetController: ActionSheetController,private navctrl:NavController) {
-    this.calculateTotal();
+  constructor(private actionSheetController: ActionSheetController,
+    private navctrl: NavController,
+    private cartService: CartService) {
   }
 
   ngOnInit() {
-
+    this.subscription = this.cartService.observableTickets.subscribe(ticketLines => this.total = ticketLines.length);
+    // this.total = this.cartService.ticketLines.length;
   }
 }

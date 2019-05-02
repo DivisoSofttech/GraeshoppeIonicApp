@@ -1,8 +1,8 @@
-<ion-header >
+<ion-header>
   <ion-toolbar color="danger">
     <ion-buttons>
       <ion-button (click)="dismiss()">
-        <ion-icon name="close"></ion-icon>
+        <ion-icon name="close" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
@@ -16,8 +16,8 @@
     <ion-row class="ion-margin-vertical">
       <ion-col text-center>
         <ion-text>
-          <h1>{{cashRecieved  | number:'1.2-2'}}</h1>
-          <p >Total amount Due</p>
+          <h1>{{toBePaid  | number:'1.2-2'}}</h1>
+          <p>Total amount Due</p>
         </ion-text>
       </ion-col>
     </ion-row>
@@ -30,23 +30,23 @@
     </ion-input>
   </ion-item>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-          <ion-button expand="block" text-center color="light" class="ion-padding-vertical">
-              <ion-icon name="cash" margin></ion-icon>
-              <p>CASH</p>  
-          </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-margin-vertical">
-      <ion-col>
-          <ion-button expand="full" text-center color="light" class="ion-padding-vertical">
-              <ion-icon name="card" margin></ion-icon>
-              <p>CARD</p>  
-          </ion-button>    
-      </ion-col>
-    </ion-row>
 
-  </ion-grid>
+  <ion-button expand="block" margin-bottom text-center color="light" class="ion-padding-vertical" (click)="save()" >
+    <ion-icon name="cash" slot="icon-only" margin></ion-icon>
+    <p>CASH</p>
+  </ion-button>
+
+  <ion-button expand="full" margin-top text-center color="light" class="ion-padding-vertical" (click)="save()">
+    <ion-icon name="card" slot="icon-only" margin></ion-icon>
+    <p>CARD</p>
+  </ion-button>
+  <br>
+  <br>
+  <br>
+
+  <ion-button color="danger" expand="full" margin-top text-center class="ion-padding-vertical" (click)="returnToSale()">
+    <ion-icon name="add" slot="icon-only" margin></ion-icon>
+    <p>NEW SALE</p>
+  </ion-button>
+
 </ion-content>

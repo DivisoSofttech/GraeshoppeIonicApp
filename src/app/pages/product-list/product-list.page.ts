@@ -1,3 +1,4 @@
+import { CartService } from './../../services/cart.service';
 import { ActivatedRoute } from '@angular/router';
 import { ProductDTO, Product } from 'src/app/api/models';
 import { Component, OnInit } from '@angular/core';
@@ -10,7 +11,9 @@ import { GatewayResourceService, QueryResourceService } from 'src/app/api/servic
 export class ProductListPage implements OnInit {
   id;
   products: Product[] =  [];
-  constructor(private queryResourceService: QueryResourceService, private route: ActivatedRoute) { }
+  constructor(private queryResourceService: QueryResourceService,
+    private route: ActivatedRoute,
+    private  cartService: CartService) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -22,5 +25,10 @@ export class ProductListPage implements OnInit {
       this.products = result.content;
       console.log(this.products);
     });
+  }
+
+  addTicketLine(product: Product) {
+    console.log('added');
+    this.cartService.addProduct(product);
   }
 }
