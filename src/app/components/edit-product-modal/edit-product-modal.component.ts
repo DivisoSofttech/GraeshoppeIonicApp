@@ -2,6 +2,7 @@ import { CategoryDTO } from './../../api/models/category-dto';
 import { ModalController } from '@ionic/angular';
 import { CommandResourceService, QueryResourceService } from 'src/app/api/services';
 import { Component, OnInit, Input } from '@angular/core';
+import { ProductDTO } from 'src/app/api/models/product-dto';
 
 @Component({
   selector: 'app-edit-product-modal',
