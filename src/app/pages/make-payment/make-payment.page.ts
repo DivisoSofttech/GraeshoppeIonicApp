@@ -1,7 +1,7 @@
 import { TicketLineDTO } from './../../api/models/ticket-line-dto';
 import { CommandResourceService } from 'src/app/api/services';
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { SaleDTO } from 'src/app/api/models';
 import { SalePage } from '../sale/sale.page';
 
@@ -23,6 +23,7 @@ export class MakePaymentPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private commandResourceService: CommandResourceService,
+    private navController: NavController
   ) { }
 
   dismiss() {
@@ -34,12 +35,8 @@ export class MakePaymentPage implements OnInit {
     this.sale.grandTotal = this.toBePaid;
   }
 
-  async returnToSale() {
-    const modal = await this.modalController.create({
-      component: SalePage
-    });
-
-    return await modal.present();
+  returnToSale() {
+    this.navController.navigateRoot('/sale');
   }
 
   save() {
@@ -53,6 +50,8 @@ export class MakePaymentPage implements OnInit {
             ticket =  result;
           });
         });
+        this.returnToSale();
+        this.dismiss();
       });
     }
   }

@@ -50,13 +50,13 @@
       <ion-row *ngFor="let ticket of ticketLines" class="border-top ion-margin-vertical ion-padding-vertical"
       (click)="productQuantity()">
           <ion-col size="6" text-left>
-            <ion-label *ngIf="products.length != 0">{{getProduct(ticket).name}}</ion-label>
+            <ion-label *ngIf="products.length > 0">{{getProduct(ticket).name}}</ion-label>
           </ion-col>
           <ion-col size="2">
-            <ion-label *ngIf="products.length != 0">{{'x' +ticket.quantity}}</ion-label>
+            <ion-label *ngIf="products.length > 0">{{'x' +ticket.quantity}}</ion-label>
           </ion-col>
           <ion-col size="2" text-right>
-            <ion-label>&#x20b9;{{total}}</ion-label>
+            <ion-label>&#x20b9;{{ticket.total}}</ion-label>
           </ion-col>
       </ion-row>
 

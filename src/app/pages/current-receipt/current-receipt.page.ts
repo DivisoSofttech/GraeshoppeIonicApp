@@ -19,7 +19,6 @@ export class CurrentReceiptPage implements OnInit {
   products: ProductDTO[] = [];
   customer: CustomerDTO;
   total = 0;
-  deliveryFee = 50;
 
   constructor(
     private modalController: ModalController,
@@ -43,7 +42,7 @@ export class CurrentReceiptPage implements OnInit {
   async checkout() {
     const modal = await this.modalController.create({
       component: MakePaymentPage,
-      componentProps: { ticketLines: this.ticketLines, toBePaid: this.total + this.deliveryFee, customerId: this.customer.id }
+      componentProps: { ticketLines: this.ticketLines, toBePaid: this.total, customerId: this.customer.id }
     });
     return await modal.present();
   }
