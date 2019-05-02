@@ -1,15 +1,19 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons>
-        <ion-back-button></ion-back-button>    
-        <ion-title>Basket</ion-title>
+      <ion-back-button></ion-back-button>    
+      <ion-title>Basket</ion-title>
     </ion-buttons>
-
+    
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content *ngIf="ticketLines.length > 0" >
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button color="danger" (click)="setCustomer()" >
+      <ion-icon name="person"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <ion-grid class="bg-grey">
     <ion-row justify-content-center class="ion-margin-top">
       <ion-col size="8" text-center>
@@ -22,7 +26,7 @@
     </ion-row>
     <ion-row justify-content-center>
       <ion-col size="12" text-center>
-          <p class="price">&#x20b9;{{total + deliveryFee}}</p>
+          <p class="price">&#x20b9;{{total}}</p>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -39,53 +43,30 @@
           <ion-label class="bold">Order summary</ion-label>
         </ion-col>
         <ion-col size="4" text-right>
-          <ion-label class="bold">Change</ion-label>
+          <ion-label class="bold">Total</ion-label>
         </ion-col>
       </ion-row>
 
       <ion-row *ngFor="let ticket of ticketLines" class="border-top ion-margin-vertical ion-padding-vertical"
       (click)="productQuantity()">
-          <ion-col size="8" text-left>
-            <ion-label>{{getProduct(ticket).name}}</ion-label>
+          <ion-col size="6" text-left>
+            <ion-label *ngIf="products.length != 0">{{getProduct(ticket).name}}</ion-label>
           </ion-col>
-          <ion-col size="4" text-right>
-            <ion-label>{{'x' +ticket.quantity}}</ion-label>
+          <ion-col size="2">
+            <ion-label *ngIf="products.length != 0">{{'x' +ticket.quantity}}</ion-label>
+          </ion-col>
+          <ion-col size="2" text-right>
+            <ion-label>&#x20b9;{{total}}</ion-label>
           </ion-col>
       </ion-row>
 
-      <ion-row class="border-top ion-margin-top ion-padding-vertical">
-
-        <ion-grid>
-
-          <ion-row>
-            <ion-col text-left>
-              <ion-label>SUBTOTAL</ion-label>
-            </ion-col>
-            <ion-col text-right>
-              <ion-label>&#x20b9;{{total}}</ion-label>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-              <ion-col text-left>
-                <ion-label>Delivery fee</ion-label>
-              </ion-col>
-              <ion-col text-right>
-                <ion-label>&#x20b9;{{deliveryFee}}</ion-label>
-              </ion-col>
-            </ion-row>  
-
-        </ion-grid>
-
-      </ion-row>
-
-      <ion-row class="border-top ion-padding-vertical">
+         <ion-row class="border-top ion-padding-vertical">
           <ion-col size="8" text-left>
             <ion-label class="bold">Total</ion-label>
           </ion-col>
           <ion-col size="4" text-right>
             <ion-label class="bold">
-                &#x20b9;{{total + deliveryFee}}
+                &#x20b9;{{total}}
             </ion-label>
           </ion-col>
         </ion-row>
@@ -98,6 +79,34 @@
           </ion-col>
         </ion-row> -->
   </ion-grid>
+</ion-content>
 
+<ion-content *ngIf="ticketLines.length === 0" >
+  <ion-grid class="bg-grey">
+    <ion-row justify-content-center class="ion-margin-top">
+      <ion-col size="8" text-center>
+        <ion-label>
+          Order total
+        </ion-label>
+        <ion-text cl>(0 items)</ion-text>
 
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center>
+      <ion-col size="12" text-center>
+          <p class="price">&#x20b9;0</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-content>
+            <ion-icon class="cart" name="cart"></ion-icon>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

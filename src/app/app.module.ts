@@ -24,6 +24,7 @@ import { AddUomPageModule } from './pages/add-uom/add-uom.module';
 import { ImageCompressService } from 'ng2-image-compress';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { DashboardPageModule } from './pages/dashboard/dashboard.module';
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { DashboardPageModule } from './pages/dashboard/dashboard.module';
     AddItemsPageModule,
     AddUomPageModule,
     DashboardPageModule,
+    ChartsModule,
     ApiModule.forRoot({rootUrl: 'http://34.73.191.107:9080'})
 
 

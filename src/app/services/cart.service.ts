@@ -1,13 +1,17 @@
-import { TicketLineDTO } from "./../api/models/ticket-line-dto";
-import { Injectable } from "@angular/core";
-import { Product } from "../api/models";
+import { TicketLineDTO } from './../api/models/ticket-line-dto';
+import { Injectable } from '@angular/core';
+import { Product } from '../api/models';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class CartService {
   ticketLines: TicketLineDTO[] = [];
-  constructor() {}
+  observableTickets: BehaviorSubject<TicketLineDTO[]>;
+  constructor() {
+    this.observableTickets = new BehaviorSubject<TicketLineDTO[]>(this.ticketLines);
+  }
 
   addProduct(product: Product) {
     let added = false;
@@ -15,7 +19,7 @@ export class CartService {
       if (ticket.productId === product.id) {
         ticket.quantity++;
         ticket.total += ticket.price;
-        this.printCart();
+        this.updateCart();
         added = true;
       }
     });
@@ -27,11 +31,12 @@ export class CartService {
         total: 200
       };
       this.ticketLines.push(ticketLine);
-      this.printCart();
+      this.updateCart();
     }
   }
 
-  printCart() {
+  updateCart() {
     console.log(this.ticketLines);
+    this.observableTickets.next(this.ticketLines);
   }
 }
