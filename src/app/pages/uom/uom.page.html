@@ -1,11 +1,4 @@
 <app-header></app-header>
-<div style = "position:relative; top:8px">
-  <ion-toolbar color="danger">
-    <ion-buttons>
-      <ion-title><strong>Unit Of Measurement</strong></ion-title>
-    </ion-buttons>
-  </ion-toolbar>
-</div>
 <ion-content>
   <ion-list show-delete="false" can-swipe="true">
     <ion-item-sliding *ngFor="let uom of uoms">
@@ -21,7 +14,7 @@
 
       <ion-item-options side="end">
         <ion-item-option color="danger">
-          <ion-icon slot="icon-only" name="trash"></ion-icon>
+          <ion-icon slot="icon-only" name="trash" (click)="delete(uom)"></ion-icon>
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
