@@ -25,18 +25,21 @@ class CommandResourceService extends __BaseService {
   static readonly updateCategoryUsingPUTPath = '/api/command/categories';
   static readonly deleteCategoryUsingDELETEPath = '/api/command/categories/{id}';
   static readonly updateCustomerUsingPUTPath = '/api/command/customers';
-  static readonly deleteCustomerUsingDELETEPath = '/api/command/customers';
   static readonly createCustomerUsingPOSTPath = '/api/command/customers/register-customer';
+  static readonly deleteCustomerUsingDELETEPath = '/api/command/customers/{id}';
   static readonly createProductCategoryUsingPOSTPath = '/api/command/productCategory';
   static readonly createProductUsingPOSTPath = '/api/command/products';
   static readonly updateProductUsingPUTPath = '/api/command/products';
   static readonly deleteProductUsingDELETEPath = '/api/command/products/{id}';
   static readonly createSaleUsingPOSTPath = '/api/command/sales';
-  static readonly updateTicketLineUsingPUTPath = '/api/command/sales';
-  static readonly deleteTicketlineUsingDELETEPath = '/api/command/sales/{id}';
+  static readonly updateSaleUsingPUTPath = '/api/command/sales';
+  static readonly deleteSaleUsingDELETEPath = '/api/command/sales/{id}';
+  static readonly createTickerLineUsingPOSTPath = '/api/command/ticket-lines';
+  static readonly updateTicketLineUsingPUTPath = '/api/command/ticket-lines';
+  static readonly deleteTicketlineUsingDELETEPath = '/api/command/ticket-lines/{id}';
   static readonly createUOMUsingPOSTPath = '/api/command/unit-of-meassurement';
-  static readonly createUomUsingPUTPath = '/api/command/uoms';
-  static readonly deleteUOMUsingDELETEPath = '/api/command/uoms';
+  static readonly updateUOMUsingPUTPath = '/api/command/uoms';
+  static readonly deleteUOMUsingDELETEPath = '/api/command/uoms/{id}';
 
   constructor(
     config: __Configuration,
@@ -152,40 +155,6 @@ class CommandResourceService extends __BaseService {
   }
 
   /**
-   * @param id id
-   */
-  deleteCustomerUsingDELETEResponse(id: number): __Observable<__StrictHttpResponse<null>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    let req = new HttpRequest<any>(
-      'DELETE',
-      this.rootUrl + `/api/command/customers`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<null>;
-      })
-    );
-  }
-  /**
-   * @param id id
-   */
-  deleteCustomerUsingDELETE(id: number): __Observable<null> {
-    return this.deleteCustomerUsingDELETEResponse(id).pipe(
-      __map(_r => _r.body as null)
-    );
-  }
-
-  /**
    * @param customerAggregator customerAggregator
    * @return OK
    */
@@ -218,6 +187,40 @@ class CommandResourceService extends __BaseService {
   createCustomerUsingPOST(customerAggregator: CustomerAggregator): __Observable<CustomerDTO> {
     return this.createCustomerUsingPOSTResponse(customerAggregator).pipe(
       __map(_r => _r.body as CustomerDTO)
+    );
+  }
+
+  /**
+   * @param id id
+   */
+  deleteCustomerUsingDELETEResponse(id: number): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/api/command/customers/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+  /**
+   * @param id id
+   */
+  deleteCustomerUsingDELETE(id: number): __Observable<null> {
+    return this.deleteCustomerUsingDELETEResponse(id).pipe(
+      __map(_r => _r.body as null)
     );
   }
 
@@ -400,6 +403,112 @@ class CommandResourceService extends __BaseService {
   }
 
   /**
+   * @param saleDTO saleDTO
+   * @return OK
+   */
+  updateSaleUsingPUTResponse(saleDTO: SaleDTO): __Observable<__StrictHttpResponse<SaleDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = saleDTO;
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/api/command/sales`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<SaleDTO>;
+      })
+    );
+  }
+  /**
+   * @param saleDTO saleDTO
+   * @return OK
+   */
+  updateSaleUsingPUT(saleDTO: SaleDTO): __Observable<SaleDTO> {
+    return this.updateSaleUsingPUTResponse(saleDTO).pipe(
+      __map(_r => _r.body as SaleDTO)
+    );
+  }
+
+  /**
+   * @param id id
+   */
+  deleteSaleUsingDELETEResponse(id: number): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/api/command/sales/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+  /**
+   * @param id id
+   */
+  deleteSaleUsingDELETE(id: number): __Observable<null> {
+    return this.deleteSaleUsingDELETEResponse(id).pipe(
+      __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param ticketLineDTO ticketLineDTO
+   * @return OK
+   */
+  createTickerLineUsingPOSTResponse(ticketLineDTO: TicketLineDTO): __Observable<__StrictHttpResponse<TicketLineDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = ticketLineDTO;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/command/ticket-lines`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<TicketLineDTO>;
+      })
+    );
+  }
+  /**
+   * @param ticketLineDTO ticketLineDTO
+   * @return OK
+   */
+  createTickerLineUsingPOST(ticketLineDTO: TicketLineDTO): __Observable<TicketLineDTO> {
+    return this.createTickerLineUsingPOSTResponse(ticketLineDTO).pipe(
+      __map(_r => _r.body as TicketLineDTO)
+    );
+  }
+
+  /**
    * @param ticketLineDTO ticketLineDTO
    * @return OK
    */
@@ -410,7 +519,7 @@ class CommandResourceService extends __BaseService {
     __body = ticketLineDTO;
     let req = new HttpRequest<any>(
       'PUT',
-      this.rootUrl + `/api/command/sales`,
+      this.rootUrl + `/api/command/ticket-lines`,
       __body,
       {
         headers: __headers,
@@ -445,7 +554,7 @@ class CommandResourceService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/api/command/sales/${id}`,
+      this.rootUrl + `/api/command/ticket-lines/${id}`,
       __body,
       {
         headers: __headers,
@@ -509,7 +618,7 @@ class CommandResourceService extends __BaseService {
    * @param uomDTO uomDTO
    * @return OK
    */
-  createUomUsingPUTResponse(uomDTO: UomDTO): __Observable<__StrictHttpResponse<UomDTO>> {
+  updateUOMUsingPUTResponse(uomDTO: UomDTO): __Observable<__StrictHttpResponse<UomDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -535,8 +644,8 @@ class CommandResourceService extends __BaseService {
    * @param uomDTO uomDTO
    * @return OK
    */
-  createUomUsingPUT(uomDTO: UomDTO): __Observable<UomDTO> {
-    return this.createUomUsingPUTResponse(uomDTO).pipe(
+  updateUOMUsingPUT(uomDTO: UomDTO): __Observable<UomDTO> {
+    return this.updateUOMUsingPUTResponse(uomDTO).pipe(
       __map(_r => _r.body as UomDTO)
     );
   }
@@ -551,7 +660,7 @@ class CommandResourceService extends __BaseService {
 
     let req = new HttpRequest<any>(
       'DELETE',
-      this.rootUrl + `/api/command/uoms`,
+      this.rootUrl + `/api/command/uoms/${id}`,
       __body,
       {
         headers: __headers,

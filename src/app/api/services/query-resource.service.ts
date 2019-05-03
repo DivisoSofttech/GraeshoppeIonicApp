@@ -12,6 +12,7 @@ import { PageOfCustomer } from '../models/page-of-customer';
 import { UomDTO } from '../models/uom-dto';
 import { PageOfProduct } from '../models/page-of-product';
 import { ProductDTO } from '../models/product-dto';
+import { SaleDTO } from '../models/sale-dto';
 import { TicketLineDTO } from '../models/ticket-line-dto';
 
 /**
@@ -21,6 +22,7 @@ import { TicketLineDTO } from '../models/ticket-line-dto';
   providedIn: 'root',
 })
 class QueryResourceService extends __BaseService {
+  static readonly exportCustomersUsingGETPath = '/api/query/customers/export';
   static readonly findAllCategoriesWithOutImageUsingGETPath = '/api/query/findAllCategoriesWithOutImage';
   static readonly findAllCategoriesUsingGETPath = '/api/query/findAllCateogories';
   static readonly findAllCustomersUsingGETPath = '/api/query/findAllCustomer/{searchTerm}';
@@ -28,7 +30,10 @@ class QueryResourceService extends __BaseService {
   static readonly findAllUomUsingGETPath = '/api/query/findAllUom';
   static readonly findProductByCategoryIdUsingGETPath = '/api/query/findProductByCategoryId/{categoryId}';
   static readonly findAllProductUsingGETPath = '/api/query/products';
+  static readonly exportProductsUsingGETPath = '/api/query/products/export';
   static readonly findProductUsingGETPath = '/api/query/products/{id}';
+  static readonly findAllSalesUsingGETPath = '/api/query/sales';
+  static readonly findSaleByIdUsingGETPath = '/api/query/sales/{id}';
   static readonly findAllTicketlinesUsingGETPath = '/api/query/ticket-lines';
   static readonly findOneTicketLinesUsingGETPath = '/api/query/ticket-lines/{id}';
 
@@ -37,6 +42,39 @@ class QueryResourceService extends __BaseService {
     http: HttpClient
   ) {
     super(config, http);
+  }
+
+  /**
+   * @return OK
+   */
+  exportCustomersUsingGETResponse(): __Observable<__StrictHttpResponse<string>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/customers/export`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<string>;
+      })
+    );
+  }
+  /**
+   * @return OK
+   */
+  exportCustomersUsingGET(): __Observable<string> {
+    return this.exportCustomersUsingGETResponse().pipe(
+      __map(_r => _r.body as string)
+    );
   }
 
   /**
@@ -414,6 +452,39 @@ class QueryResourceService extends __BaseService {
   }
 
   /**
+   * @return OK
+   */
+  exportProductsUsingGETResponse(): __Observable<__StrictHttpResponse<string>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/products/export`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'text'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<string>;
+      })
+    );
+  }
+  /**
+   * @return OK
+   */
+  exportProductsUsingGET(): __Observable<string> {
+    return this.exportProductsUsingGETResponse().pipe(
+      __map(_r => _r.body as string)
+    );
+  }
+
+  /**
    * @param id id
    * @return OK
    */
@@ -446,6 +517,94 @@ class QueryResourceService extends __BaseService {
   findProductUsingGET(id: number): __Observable<ProductDTO> {
     return this.findProductUsingGETResponse(id).pipe(
       __map(_r => _r.body as ProductDTO)
+    );
+  }
+
+  /**
+   * @param params The `QueryResourceService.FindAllSalesUsingGETParams` containing the following parameters:
+   *
+   * - `sort`: sort
+   *
+   * - `size`: size
+   *
+   * - `page`: page
+   *
+   * @return OK
+   */
+  findAllSalesUsingGETResponse(params: QueryResourceService.FindAllSalesUsingGETParams): __Observable<__StrictHttpResponse<Array<SaleDTO>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/sales`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<SaleDTO>>;
+      })
+    );
+  }
+  /**
+   * @param params The `QueryResourceService.FindAllSalesUsingGETParams` containing the following parameters:
+   *
+   * - `sort`: sort
+   *
+   * - `size`: size
+   *
+   * - `page`: page
+   *
+   * @return OK
+   */
+  findAllSalesUsingGET(params: QueryResourceService.FindAllSalesUsingGETParams): __Observable<Array<SaleDTO>> {
+    return this.findAllSalesUsingGETResponse(params).pipe(
+      __map(_r => _r.body as Array<SaleDTO>)
+    );
+  }
+
+  /**
+   * @param id id
+   * @return OK
+   */
+  findSaleByIdUsingGETResponse(id: number): __Observable<__StrictHttpResponse<SaleDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/sales/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<SaleDTO>;
+      })
+    );
+  }
+  /**
+   * @param id id
+   * @return OK
+   */
+  findSaleByIdUsingGET(id: number): __Observable<SaleDTO> {
+    return this.findSaleByIdUsingGETResponse(id).pipe(
+      __map(_r => _r.body as SaleDTO)
     );
   }
 
@@ -693,6 +852,27 @@ module QueryResourceService {
 
     /**
      * Page number of the requested page
+     */
+    page?: number;
+  }
+
+  /**
+   * Parameters for findAllSalesUsingGET
+   */
+  export interface FindAllSalesUsingGETParams {
+
+    /**
+     * sort
+     */
+    sort?: Array<string>;
+
+    /**
+     * size
+     */
+    size?: number;
+
+    /**
+     * page
      */
     page?: number;
   }

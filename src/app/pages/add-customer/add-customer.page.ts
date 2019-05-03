@@ -22,7 +22,7 @@ export class AddCustomerPage implements OnInit {
   phone: string;
 
   dismiss() {
-    this.modalController.dismiss();
+    this.modalController.dismiss({customer : this.customer});
   }
 
   ngOnInit() {
@@ -36,6 +36,7 @@ export class AddCustomerPage implements OnInit {
    console.log('Customer is ' + this.customer.name);
     this.customerCommandResourceService.createCustomerUsingPOST(this.customer).subscribe(customer => {
       console.log('Customer is ' + customer);
+      this.customer=customer;
       this.dismiss();
     },
       err => console.log('Error is ' + err),
