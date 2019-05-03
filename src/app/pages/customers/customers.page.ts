@@ -61,4 +61,10 @@ export class CustomersPage implements OnInit {
       this.dismiss(false);
     }
   }
+
+  downloadPDF() {
+    this.queryResource.exportCustomersUsingGET().subscribe(res => {
+      console.log(res);
+    })
+  }
 }

@@ -28,6 +28,8 @@
       <ion-col size="12" text-center>
           <p class="price">&#x20b9;{{total}}</p>
       </ion-col>
+      <ion-text *ngIf="!customer">No customer Selected</ion-text>
+      <ion-text *ngIf="customer">{{customer.name}}</ion-text>
     </ion-row>
     <ion-row>
       <ion-col size="12">

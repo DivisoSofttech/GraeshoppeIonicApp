@@ -1,3 +1,4 @@
+import { CartService } from './../../services/cart.service';
 import { TicketLineDTO } from './../../api/models/ticket-line-dto';
 import { CommandResourceService } from 'src/app/api/services';
 import { Component, OnInit, Input } from '@angular/core';
@@ -23,7 +24,8 @@ export class MakePaymentPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private commandResourceService: CommandResourceService,
-    private navController: NavController
+    private navController: NavController,
+    private cartService: CartService
   ) { }
 
   dismiss() {
@@ -51,6 +53,7 @@ export class MakePaymentPage implements OnInit {
           });
         });
         this.returnToSale();
+        this.cartService.emptyCart();
         this.dismiss();
       });
     }

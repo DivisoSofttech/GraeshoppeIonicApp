@@ -39,4 +39,9 @@ export class CartService {
     console.log(this.ticketLines);
     this.observableTickets.next(this.ticketLines);
   }
+
+  emptyCart() {
+    this.ticketLines = [];
+    this.observableTickets.next(this.ticketLines);
+  }
 }
