@@ -3,7 +3,7 @@
   <ion-grid>
     <ion-row justify-content-center>
         <ion-col *ngFor='let product of products'>
-          <ion-card class="size" >
+          <ion-card class="size" (click)="addTicketLine(product)">
             <img [src]="'data:' + product.imageContentType + ';base64,' + product.image">
             <div class="myOverlay">
               <div class="card-title"><strong>{{product.name}}</strong></div>
