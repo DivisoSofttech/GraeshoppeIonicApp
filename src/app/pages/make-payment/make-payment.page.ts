@@ -2,7 +2,7 @@ import { CartService } from './../../services/cart.service';
 import { TicketLineDTO } from './../../api/models/ticket-line-dto';
 import { CommandResourceService } from 'src/app/api/services';
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController, ToastController } from '@ionic/angular';
 import { SaleDTO } from 'src/app/api/models';
 import { SalePage } from '../sale/sale.page';
 
@@ -25,7 +25,8 @@ export class MakePaymentPage implements OnInit {
     private modalController: ModalController,
     private commandResourceService: CommandResourceService,
     private navController: NavController,
-    private cartService: CartService
+    private cartService: CartService,
+    private toastController: ToastController
   ) { }
 
   dismiss() {
@@ -54,9 +55,19 @@ export class MakePaymentPage implements OnInit {
         });
         this.returnToSale();
         this.cartService.emptyCart();
+        this.toastView();
         this.dismiss();
       });
     }
+  }
+
+  async toastView() {
+    const toast = await this.toastController.create({
+      message: 'Thank you for shopping',
+      cssClass: 'toast',
+      duration: 2000
+    });
+    toast.present();
   }
 
 }
