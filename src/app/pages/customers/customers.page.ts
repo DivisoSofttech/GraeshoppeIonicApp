@@ -91,4 +91,9 @@ export class CustomersPage implements OnInit {
     this.customers.splice(this.customers.indexOf(customer),1)},
     err=>{console.log('err deleting an customer ',err)});
   }
+  downloadPDF() {
+    this.queryResource.exportCustomersUsingGET().subscribe(res => {
+      console.log(res);
+    })
+  }
 }

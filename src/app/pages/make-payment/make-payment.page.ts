@@ -1,6 +1,8 @@
+import { CartService } from './../../services/cart.service';
+import { TicketLineDTO } from './../../api/models/ticket-line-dto';
 import { CommandResourceService } from 'src/app/api/services';
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController, ToastController } from '@ionic/angular';
 import { SaleDTO } from 'src/app/api/models';
 import { SalePage } from '../sale/sale.page';
 
@@ -11,6 +13,8 @@ import { SalePage } from '../sale/sale.page';
 })
 export class MakePaymentPage implements OnInit {
   @Input()
+  ticketLines: TicketLineDTO[] = [];
+  @Input()
   toBePaid;
   @Input()
   customerId;
@@ -19,7 +23,10 @@ export class MakePaymentPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private commandResourceService: CommandResourceService
+    private commandResourceService: CommandResourceService,
+    private navController: NavController,
+    private cartService: CartService,
+    private toastController: ToastController
   ) { }
 
   dismiss() {
@@ -31,20 +38,36 @@ export class MakePaymentPage implements OnInit {
     this.sale.grandTotal = this.toBePaid;
   }
 
-  async returnToSale() {
-    const modal = await this.modalController.create({
-      component: SalePage
-    });
-
-    return await modal.present();
+  returnToSale() {
+    this.navController.navigateRoot('/sale');
   }
 
   save() {
     if (this.cashRecieved >= this.toBePaid) {
-      this.commandResourceService.createSaleUsingPOST(this.sale).subscribe(result => {
-        console.log(result);
+      this.commandResourceService.createSaleUsingPOST(this.sale).subscribe(res => {
+        console.log(res);
+        this.sale = res;
+        this.ticketLines.forEach(ticket => {
+          ticket.saleId =  this.sale.id;
+          this.commandResourceService.createTickerLineUsingPOST(ticket).subscribe(result => {
+            ticket =  result;
+          });
+        });
+        this.returnToSale();
+        this.cartService.emptyCart();
+        this.toastView();
+        this.dismiss();
       });
     }
+  }
+
+  async toastView() {
+    const toast = await this.toastController.create({
+      message: 'Thank you for shopping',
+      cssClass: 'toast',
+      duration: 2000
+    });
+    toast.present();
   }
 
 }

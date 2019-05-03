@@ -1,9 +1,35 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="sale"></ion-back-button>
+    </ion-buttons>
     <ion-title>profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-content padding-bottom>
+    <ion-grid margin-top>
+      <ion-row>
+        <ion-col>
+          <ion-img class="base-image" src="/assets/Graeshoppe.png"></ion-img>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-md="6" align-self-center offset="1" offset-md="3" size="10">
+          <ion-item class="item-inner">
+            <ion-label color="medium" position="floating">Username</ion-label>
+            <ion-input [(ngModel)]="username" background="light" readonly></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label color="medium" position="floating">email</ion-label>
+            <ion-input placeholder="Enter your Email" [(ngModel)]="email" type="email"></ion-input>
+          </ion-item>
+          <ion-button color="danger" (click)="update()" expand="block" margin-top margin-bottom>Save</ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </ion-content>
 
 </ion-content>
