@@ -2,7 +2,7 @@
 <ion-content padding>
   <ion-grid>
     <ion-row justify-content-center>
-        <ion-col *ngFor='let product of products'>
+        <ion-col *ngFor='let product of products' (click)="addTicketLine(product)" >
           <ion-card class="size" >
             <img [src]="'data:' + product.imageContentType + ';base64,' + product.image">
             <div class="myOverlay">

@@ -21,6 +21,7 @@
 </ion-header>
 
 <ion-content>
+    <embed *ngIf="fileurl"  src="{{fileurl}}" style="width:200px;height:200px;">
     <ion-searchbar padding placeholder="Search customers" class="border" (ionChange)="onSearch()"
         [(ngModel)]="searchTerm"></ion-searchbar>
     <ion-list>
