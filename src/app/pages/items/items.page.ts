@@ -64,27 +64,4 @@ getproducts()
     });
   }
 
-  // async presentPopover() {
-  //   const popover = await this.popoverController.create({
-  //     component: ItemSalePackageComponent,
-  //     translucent: true
-  //   });
-  //  await popover.present();
-  //  const {data} = await popover.onDidDismiss();
-  //  let option : number = data.option;
-  //  switch(option) { 
-  //   case 1: { 
-  //    this.presentModal();
-  //      break; 
-  //   } 
-  //   // case constant_expr2: { 
-  //   //    //statements; 
-  //   //    break; 
-  //   // } 
-  //   default: {
-  //      break;
-  //   } 
-  //  }
-  // }
-
 }
