@@ -38,7 +38,7 @@ class CommandResourceService extends __BaseService {
   static readonly updateTicketLineUsingPUTPath = '/api/command/ticket-lines';
   static readonly deleteTicketlineUsingDELETEPath = '/api/command/ticket-lines/{id}';
   static readonly createUOMUsingPOSTPath = '/api/command/unit-of-meassurement';
-  static readonly createUomUsingPUTPath = '/api/command/uoms';
+  static readonly updateUOMUsingPUTPath = '/api/command/uoms';
   static readonly deleteUOMUsingDELETEPath = '/api/command/uoms/{id}';
 
   constructor(
@@ -618,7 +618,7 @@ class CommandResourceService extends __BaseService {
    * @param uomDTO uomDTO
    * @return OK
    */
-  createUomUsingPUTResponse(uomDTO: UomDTO): __Observable<__StrictHttpResponse<UomDTO>> {
+  updateUOMUsingPUTResponse(uomDTO: UomDTO): __Observable<__StrictHttpResponse<UomDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -644,8 +644,8 @@ class CommandResourceService extends __BaseService {
    * @param uomDTO uomDTO
    * @return OK
    */
-  createUomUsingPUT(uomDTO: UomDTO): __Observable<UomDTO> {
-    return this.createUomUsingPUTResponse(uomDTO).pipe(
+  updateUOMUsingPUT(uomDTO: UomDTO): __Observable<UomDTO> {
+    return this.updateUOMUsingPUTResponse(uomDTO).pipe(
       __map(_r => _r.body as UomDTO)
     );
   }

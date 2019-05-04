@@ -1,3 +1,5 @@
+import { EditCustomerComponent } from './edit-customer/edit-customer.component';
+import { EditUomComponent } from './edit-uom/edit-uom.component';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
 import { EditUOMModalComponent } from './edit-uommodal/edit-uommodal.component';
 import { EditProductModalComponent } from './edit-product-modal/edit-product-modal.component';
@@ -22,7 +24,9 @@ import { RefundQuantityModalComponent } from './refund-quantity-modal/refund-qua
                     ReceiptDetailPopoverComponent,
                     RefundQuantityModalComponent,
                     ProductQuantityModalComponent,
-                    EditCategoryComponent
+                    EditCategoryComponent,
+                    EditUomComponent,
+                    EditCustomerComponent
                     ],
     exports : [ EditProductModalComponent,
                 EditUOMModalComponent,
@@ -30,7 +34,9 @@ import { RefundQuantityModalComponent } from './refund-quantity-modal/refund-qua
                 ReceiptDetailPopoverComponent,
                 RefundQuantityModalComponent,
                 ProductQuantityModalComponent,
-                EditCategoryComponent
+                EditCategoryComponent,
+                EditUomComponent,
+                EditCustomerComponent
                 ]
     })
 export class ComponentsModule { }

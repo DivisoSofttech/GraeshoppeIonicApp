@@ -45,8 +45,10 @@ export class CategoriesPage implements OnInit {
         icon: 'trash',
         handler: () => {
           console.log('Delete clicked');
-          this.commandResource.deleteCategoryUsingDELETE(selectedCategory.id).subscribe(res => {console.log('delete success ' + res)}, err => {console.log('delete faild error ' + err)});
-         this.categories.splice(this.categories.indexOf(selectedCategory),1);
+          this.commandResource.deleteCategoryUsingDELETE(selectedCategory.id).subscribe(res => {console.log('delete success ' + res);
+          this.categories.splice(this.categories.indexOf(selectedCategory),1);
+        }, err => {console.log('delete faild error ' + err)});
+       
         }
       }, {
         text: 'Edit',

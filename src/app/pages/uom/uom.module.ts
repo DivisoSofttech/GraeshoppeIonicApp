@@ -1,3 +1,4 @@
+import { EditUomComponent } from './../../components/edit-uom/edit-uom.component';
 import { ComponentsModule } from './../../components/components.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -26,6 +27,6 @@ const routes: Routes = [
     RouterModule.forChild(routes)
     ],
   declarations: [UomPage],
-  entryComponents: [HeaderComponent]
+  entryComponents: [HeaderComponent,EditUomComponent]
 })
 export class UomPageModule {}

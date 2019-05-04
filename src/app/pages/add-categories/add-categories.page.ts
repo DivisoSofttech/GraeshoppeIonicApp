@@ -41,6 +41,7 @@ export class AddCategoriesPage implements OnInit {
     console.log(this.category);
     this.commandResourceService.createProductCategoryUsingPOST(this.category)
     .subscribe(result => {
+      this.category=result;
         this.dismiss();
     }, err => {
       console.log('Error creating category');

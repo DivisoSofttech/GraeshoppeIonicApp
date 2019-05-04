@@ -17,8 +17,8 @@ export class AddUomPage implements OnInit {
     private commandResourceService: CommandResourceService
   ) { }
 
-  dismiss() {
-    this.modalController.dismiss();
+  dismiss( uom: UomDTO) {
+    this.modalController.dismiss({uom : uom});
   }
 
   ngOnInit() {
@@ -26,9 +26,12 @@ export class AddUomPage implements OnInit {
 
   save() {
     console.log(this.uom);
-    this.commandResourceService.createUOMUsingPOST(this.uom)
+   this.commandResourceService.createUOMUsingPOST(this.uom)
     .subscribe(result => {
-        this.dismiss();
-    });
+      this.uom = result;
+        this.dismiss(this.uom);
+    },
+    err=>{console.log('error creating an uom with res ',err)}
+    );
   }
 }
