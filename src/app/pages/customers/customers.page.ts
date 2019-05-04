@@ -19,6 +19,7 @@ export class CustomersPage implements OnInit {
   asModal = false;
   customers: Customer[];
   selectedCustomer: Customer;
+  fileurl;
 
   searchTerm = '';
   params: QueryResourceService.FindAllCustomersUsingGETParams = {searchTerm: undefined};
@@ -92,8 +93,13 @@ export class CustomersPage implements OnInit {
     err=>{console.log('err deleting an customer ',err)});
   }
   downloadPDF() {
-    this.queryResource.exportCustomersUsingGET().subscribe(res => {
-      console.log(res);
-    })
+  //   this.queryResource.exportCustomersUsingGET().subscribe(res => {
+  //     fetch(res)
+  //       .then(data => {
+  //         data.blob()
+  //           .then(blob => {
+  //             this.fileurl = 
+  //       })
+  //   });
   }
 }
