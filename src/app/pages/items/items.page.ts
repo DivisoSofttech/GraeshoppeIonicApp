@@ -5,8 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import {AddItemsPage} from '../add-items/add-items.page';
 import { ProductDTO } from 'src/app/api/models';
 import { EditProductModalComponent } from 'src/app/components/edit-product-modal/edit-product-modal.component';
-
-
+import { PopoverController } from '@ionic/angular';
 @Component({
   selector: 'app-items',
   templateUrl: './items.page.html',
@@ -18,7 +17,8 @@ export class ItemsPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private queryResourceservice: QueryResourceService,
-    private commandResource: CommandResourceService
+    private commandResource: CommandResourceService,
+   private popoverController : PopoverController
   ) { }
 
   async presentModal() {
@@ -63,4 +63,28 @@ getproducts()
       console.log('Error deleting product ', product);
     });
   }
+
+  // async presentPopover() {
+  //   const popover = await this.popoverController.create({
+  //     component: ItemSalePackageComponent,
+  //     translucent: true
+  //   });
+  //  await popover.present();
+  //  const {data} = await popover.onDidDismiss();
+  //  let option : number = data.option;
+  //  switch(option) { 
+  //   case 1: { 
+  //    this.presentModal();
+  //      break; 
+  //   } 
+  //   // case constant_expr2: { 
+  //   //    //statements; 
+  //   //    break; 
+  //   // } 
+  //   default: {
+  //      break;
+  //   } 
+  //  }
+  // }
+
 }

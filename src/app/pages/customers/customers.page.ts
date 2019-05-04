@@ -26,9 +26,9 @@ export class CustomersPage implements OnInit {
   ngOnInit() {
     this.queryResource.findAllCustomersWithoutSearchUsingGET({}).subscribe(result => {
         this.customers = result.content;
-        this.customers.forEach(c => {
-          console.log('ddddddddddd*ddddddddddddd',c.contact.mobileNumber);
-    });
+    //     this.customers.forEach(c => {
+    //       console.log('ddddddddddd*ddddddddddddd',c.contact.mobileNumber);
+    // });
     });
 
   }

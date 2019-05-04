@@ -20,15 +20,13 @@ export class EditCustomerComponent implements OnInit {
   ngOnInit() {}
   update(customer : Customer)
   {
-    // console.log('customer update working');
-    // let tempCustomer: CustomerDTO = {};
-    // tempCustomer.id=customer.id;
-    // tempCustomer.name=customer.name;
-    // tempCustomer.contact.=customer.contact=customer.id;
-
-    // this.commandResourceService.updateCustomerUsingPUT(tempCustomer).subscribe(succ=>{console.log('succes updating customer ',succ);
-  //   this.dismiss();
-  // },err=>{console.log('error updating customer ',err)});
+    console.log('customer update working');
+    let tempCustomer: CustomerDTO = {};
+    tempCustomer.id=customer.id;
+    tempCustomer.name=customer.name;
+    this.commandResourceService.updateCustomerUsingPUT(tempCustomer).subscribe(succ=>{console.log('succes updating customer ',succ);
+    this.dismiss();
+  },err=>{console.log('error updating customer ',err)});
   this.dismiss();
   }
   dismiss()
