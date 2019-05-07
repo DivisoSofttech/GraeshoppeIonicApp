@@ -13,7 +13,11 @@ import {AddCategoriesPage} from '../add-categories/add-categories.page'
 export class CategoriesPage implements OnInit {
 
   categories: CategoryDTO[] = [];
-
+  accending : boolean=true;
+  sort()
+  {
+    this.accending=!this.accending;
+  }
   constructor(public actionSheetController: ActionSheetController,
     private modalController: ModalController,
     private queryResourceService: QueryResourceService, public commandResource: CommandResourceService

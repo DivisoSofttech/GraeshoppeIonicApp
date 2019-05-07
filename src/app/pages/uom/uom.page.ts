@@ -13,7 +13,11 @@ import { UomDTO } from 'src/app/api/models';
 export class UomPage implements OnInit {
   @Input()
   uoms: UomDTO[];
-
+  accending : boolean=true;
+  sort()
+  {
+    this.accending=!this.accending;
+  }  
   constructor(
     private modalController: ModalController,
     private queryResourceService: QueryResourceService,

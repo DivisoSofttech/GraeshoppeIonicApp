@@ -1,3 +1,4 @@
+import { ContactDTO } from './../../api/models/contact-dto';
 import { Contact } from './../../api/models/contact';
 import { CommandResourceService } from 'src/app/api/services';
 import { ModalController } from '@ionic/angular';
@@ -20,16 +21,17 @@ export class EditCustomerComponent implements OnInit {
   ngOnInit() {}
   update(customer : Customer)
   {
-    // console.log('customer update working');
-    // let tempCustomer: CustomerDTO = {};
-    // tempCustomer.id=customer.id;
-    // tempCustomer.name=customer.name;
-    // tempCustomer.contact.=customer.contact=customer.id;
-
-    // this.commandResourceService.updateCustomerUsingPUT(tempCustomer).subscribe(succ=>{console.log('succes updating customer ',succ);
-  //   this.dismiss();
-  // },err=>{console.log('error updating customer ',err)});
-  this.dismiss();
+    let tempCustomer: CustomerDTO = {};
+    tempCustomer.id=customer.id;
+    tempCustomer.name=customer.name;
+    tempCustomer.contactId=customer.contact.id;
+    let tempContact : ContactDTO={};
+    tempContact.id=customer.contact.id;
+    tempContact.mobileNumber=customer.contact.mobileNumber;
+    this.commandResourceService.updateCustomerUsingPUT(tempCustomer).subscribe(succ=>{console.log('succes updating customer ',succ);
+    this.commandResourceService.updateContactUsingPUT(tempContact).subscribe(succ=>{console.log('success updating contact with rs ',succ);
+    this.dismiss();},err=>{console.log('error updating contact with rs',err)});
+  },err=>{console.log('error updating customer ',err)});
   }
   dismiss()
   {

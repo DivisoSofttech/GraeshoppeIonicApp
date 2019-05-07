@@ -27,9 +27,9 @@ export class CustomersPage implements OnInit {
   ngOnInit() {
     this.queryResource.findAllCustomersWithoutSearchUsingGET({}).subscribe(result => {
         this.customers = result.content;
-        this.customers.forEach(c => {
-          console.log('ddddddddddd*ddddddddddddd',c.contact.mobileNumber);
-    });
+    //     this.customers.forEach(c => {
+    //       console.log('ddddddddddd*ddddddddddddd',c.contact.mobileNumber);
+    // });
     });
 
   }
@@ -43,7 +43,7 @@ export class CustomersPage implements OnInit {
     }
     this.queryResource.findAllCustomersUsingGET(this.params).subscribe(
       result => {
-      console.log('result is ' + result);
+      console.log('result is ',result);
       this.customers = result.content;
     });
   }
@@ -54,7 +54,7 @@ export class CustomersPage implements OnInit {
     });
      await modal.present();
      const {data} = await modal.onDidDismiss();
-     this.customers.push(data.customer);
+     this.customers = data.customers;
 
   }
 
@@ -84,6 +84,12 @@ export class CustomersPage implements OnInit {
       componentProps : {customer : customer}
     });
       await modal.present();
+      this.queryResource.findAllCustomersWithoutSearchUsingGET({}).subscribe(result => {
+        this.customers = result.content;
+    //     this.customers.forEach(c => {
+    //       console.log('ddddddddddd*ddddddddddddd',c.contact.mobileNumber);
+    // });
+    });
   }
   deleteCustomer(customer : Customer)
   {

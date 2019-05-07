@@ -21,6 +21,10 @@
 </ion-header>
 
 <ion-content>
+        <ion-item >
+                <ion-icon name="arrow-dropdown-circle"></ion-icon>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <ion-icon name="funnel"></ion-icon>
+            </ion-item>
     <embed *ngIf="fileurl"  src="{{fileurl}}" style="width:200px;height:200px;">
     <ion-searchbar padding placeholder="Search customers" class="border" (ionChange)="onSearch()"
         [(ngModel)]="searchTerm"></ion-searchbar>
