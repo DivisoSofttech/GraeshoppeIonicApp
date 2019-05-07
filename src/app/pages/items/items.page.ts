@@ -13,6 +13,12 @@ import { PopoverController } from '@ionic/angular';
 })
 export class ItemsPage implements OnInit {
   products: Product[] = [];
+accending : boolean=true;
+sort()
+{
+  this.accending=!this.accending;
+  console.log(">>>>>>>"+this.accending);
+}
 
   constructor(
     private modalController: ModalController,
@@ -62,6 +68,7 @@ getproducts()
     err => {
       console.log('Error deleting product ', product);
     });
+
   }
 
 }
