@@ -1,7 +1,7 @@
 import { Product } from './../../api/models/product';
 import { QueryResourceService, CommandResourceService } from 'src/app/api/services';
 import { ModalController } from '@ionic/angular';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {AddItemsPage} from '../add-items/add-items.page';
 import { ProductDTO } from 'src/app/api/models';
 import { EditProductModalComponent } from 'src/app/components/edit-product-modal/edit-product-modal.component';
@@ -13,6 +13,8 @@ import { EditProductModalComponent } from 'src/app/components/edit-product-modal
   styleUrls: ['./items.page.scss'],
 })
 export class ItemsPage implements OnInit {
+  @Input()
+  asModal = false;
   products: Product[] = [];
 
   constructor(
@@ -62,5 +64,13 @@ getproducts()
     err => {
       console.log('Error deleting product ', product);
     });
+  }
+
+  dismiss() {
+    this.modalController.dismiss();
+  }
+
+  selectProduct(product: Product) {
+    this.modalController.dismiss({'selectedProduct': product});
   }
 }

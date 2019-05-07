@@ -61,6 +61,11 @@ export class AppComponent {
           title: 'UOM',
           url: '/uom',
           icon: 'document'
+        },
+        {
+          title: 'Manage Stock',
+          url: '/stock-management',
+          icon: 'cube'
         }
       ]
     },
@@ -109,8 +114,8 @@ export class AppComponent {
     private statusBar: StatusBar,
     private oauthService: OAuthService,
     private toastController: ToastController,
-    private navCtrl:NavController,
-    private menuCtrl:MenuController
+    private navCtrl: NavController,
+    private menuCtrl: MenuController
   ) {
     this.initializeApp();
     this.configureOAuth();
@@ -124,24 +129,26 @@ export class AppComponent {
   }
 
   logout() {
-    console.log("Logout clicked");
+    console.log('Logout clicked');
     this.oauthService.logOut();
     this.presentToastLogout();
   }
 
   async presentToastLogout() {
     const toast = await this.toastController.create({
-      message: "You've been successfully logout",
+      message: 'You\'ve been successfully logout',
       duration: 2000,
-      position: 'bottom'  
+      position: 'bottom',
+      cssClass: 'toast'
     });
     toast.present();
   }
 
-  navigateToProfile(){
-    this.navCtrl.navigateForward("/profile");
+  navigateToProfile() {
+    this.navCtrl.navigateForward('/profile');
     this.menuCtrl.close();
   }
+
   configureOAuth(): any {
     this.oauthService.configure(authConfig);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();

@@ -20,11 +20,6 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'stock',
-    loadChildren: './pages/stock/stock.module#StockPageModule',
-    canActivate: [AuthGuardService]
-  },
-  {
     path: 'customers',
     loadChildren: './pages/customers/customers.module#CustomersPageModule',
     canActivate: [AuthGuardService]
@@ -188,8 +183,12 @@ const routes: Routes = [
     loadChildren: './pages/refund/refund.module#RefundPageModule',
     canActivate: [AuthGuardService]
   },
-  { path: 'stock-management', loadChildren: './stock-management/stock-management.module#StockManagementPageModule' },
-  { path: 'add-stock', loadChildren: './add-stock/add-stock.module#AddStockPageModule' }
+  {
+    path: 'stock-management',
+    loadChildren: './pages/stock-management/stock-management.module#StockManagementPageModule',
+    canActivate: [AuthGuardService]
+   }
+
 ];
 
 @NgModule({
