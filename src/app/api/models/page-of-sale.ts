@@ -1,8 +1,8 @@
 /* tslint:disable */
-import { Customer } from './customer';
+import { Sale } from './sale';
 import { Sort } from './sort';
-export interface PageOfCustomer {
-  content?: Array<Customer>;
+export interface PageOfSale {
+  content?: Array<Sale>;
   first?: boolean;
   last?: boolean;
   number?: number;

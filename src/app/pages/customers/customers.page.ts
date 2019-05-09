@@ -99,13 +99,17 @@ export class CustomersPage implements OnInit {
     err=>{console.log('err deleting an customer ',err)});
   }
   downloadPDF() {
-  //   this.queryResource.exportCustomersUsingGET().subscribe(res => {
-  //     fetch(res)
-  //       .then(data => {
-  //         data.blob()
-  //           .then(blob => {
-  //             this.fileurl = 
-  //       })
-  //   });
+    console.log("download pdf method");
+/*     this.queryResource.exportCustomersUsingGET().subscribe(res => {
+      fetch(res)
+        .then(data => {
+          data.blob()
+            .then(blob => {
+              this.fileurl = blob;
+              console.log("file url and blob",this.fileurl,blob);
+        })
+    });
+  
+  }); */
   }
 }

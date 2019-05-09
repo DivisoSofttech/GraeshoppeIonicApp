@@ -1,3 +1,5 @@
+import { SaleService } from './../../services/sale.service';
+import { SaleAggregate } from './../../api/models/sale-aggregate';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PopoverController, NavController } from '@ionic/angular';
@@ -13,10 +15,15 @@ export class ReceiptDetailPage implements OnInit {
   id: string;
   quantity = 2;
   unitPrice = 1.29;
-  constructor(private popoverController: PopoverController, private route: ActivatedRoute, private navController: NavController) { }
+  currentSale: SaleAggregate;
+
+  constructor(private popoverController: PopoverController, private route: ActivatedRoute, private navController: NavController,private saleService:SaleService) { }
 
   ngOnInit() {
+
     this.id = this.route.snapshot.paramMap.get('id');
+    this.currentSale=this.saleService.getCurrentSale();
+    console.log("currentSale",this.currentSale);
   }
 
   async presentPopover(ev: any) {
@@ -31,6 +38,7 @@ export class ReceiptDetailPage implements OnInit {
   }
 
   navigateToRefund() {
+    
     this.navController.navigateForward(/refund/ + this.id);
   }
 

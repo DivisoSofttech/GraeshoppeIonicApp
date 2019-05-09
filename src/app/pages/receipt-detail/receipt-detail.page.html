@@ -9,14 +9,14 @@
         <ion-icon name="more" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>{{'#' + id}}</ion-title>
+    <ion-title>{{id}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
     <ion-item text-center>
-      <ion-label class="bold-text large-text">2.58<br><span class="thin-text small-text">Total</span></ion-label>
+      <ion-label class="bold-text large-text"><br><span class="thin-text small-text">Total</span></ion-label>
     </ion-item>
     <ion-item>
       <ion-label>
@@ -24,13 +24,13 @@
         <span>POS: POS1</span>
       </ion-label>
     </ion-item>
-    <ion-item>
+    <ion-item *ngFor="let ticketLine of currentSale.ticketLines">
       <ion-label>
         <span>Product name</span><br>
-        <span class="small-text">{{quantity}} x {{unitPrice}}</span>
+        <span class="small-text">{{ticketLine.quantity}} x {{ticketLine.price}}</span>
       </ion-label>
       <ion-label text-end>
-        2.58
+        {{ticketLine.total}}
       </ion-label>
     </ion-item>
     <ion-item>
@@ -39,8 +39,8 @@
           <span>Cash</span>
         </ion-label>
         <ion-label text-end>
-            <span>2.58</span><br>
-            <span>2.58</span>
+            <span>{{currentSale.sale.grandTotal}}</span><br>
+            <span>{{currentSale.sale.grandTotal}}</span>
           </ion-label>
       </ion-item>
       <ion-item>

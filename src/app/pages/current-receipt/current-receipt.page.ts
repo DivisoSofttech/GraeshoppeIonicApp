@@ -71,7 +71,7 @@ splitBill()
     await modal.present();
     const { data } = await modal.onDidDismiss();
     this.customer = data.selectedCustomer;
-    console.log(this.customer)
+    console.log(this.customer);
   }
   removeBill(bilno:number)
   {

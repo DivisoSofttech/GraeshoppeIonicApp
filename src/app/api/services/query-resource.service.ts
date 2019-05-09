@@ -14,9 +14,12 @@ import { PageOfCustomer } from '../models/page-of-customer';
 import { UomDTO } from '../models/uom-dto';
 import { PageOfProduct } from '../models/page-of-product';
 import { ProductDTO } from '../models/product-dto';
+import { PageOfSale } from '../models/page-of-sale';
+import { SaleAggregate } from '../models/sale-aggregate';
 import { SaleDTO } from '../models/sale-dto';
 import { StockLine } from '../models/stock-line';
 import { TicketLineDTO } from '../models/ticket-line-dto';
+import { TicketLine } from '../models/ticket-line';
 
 /**
  * Query Resource
@@ -37,10 +40,12 @@ class QueryResourceService extends __BaseService {
   static readonly findAllProductUsingGETPath = '/api/query/products';
   static readonly exportProductsUsingGETPath = '/api/query/products/export';
   static readonly findProductUsingGETPath = '/api/query/products/{id}';
-  static readonly findAllSalesUsingGETPath = '/api/query/sales';
+  static readonly findSalesUsingGETPath = '/api/query/sale';
+  static readonly findAllSaleAggregatesUsingGETPath = '/api/query/sale-aggregate';
   static readonly findSaleByIdUsingGETPath = '/api/query/sales/{id}';
   static readonly findAllStockLinesUsingGETPath = '/api/query/stocklines';
   static readonly findAllTicketlinesUsingGETPath = '/api/query/ticket-lines';
+  static readonly findAllTicketLinesBySaleIdUsingGETPath = '/api/query/ticket-lines-by-sale/{saleId}';
   static readonly findOneTicketLinesUsingGETPath = '/api/query/ticket-lines/{id}';
 
   constructor(
@@ -599,17 +604,17 @@ class QueryResourceService extends __BaseService {
   }
 
   /**
-   * @param params The `QueryResourceService.FindAllSalesUsingGETParams` containing the following parameters:
+   * @param params The `QueryResourceService.FindSalesUsingGETParams` containing the following parameters:
    *
-   * - `sort`: sort
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
    *
-   * - `size`: size
+   * - `size`: Size of a page
    *
-   * - `page`: page
+   * - `page`: Page number of the requested page
    *
    * @return OK
    */
-  findAllSalesUsingGETResponse(params: QueryResourceService.FindAllSalesUsingGETParams): __Observable<__StrictHttpResponse<Array<SaleDTO>>> {
+  findSalesUsingGETResponse(params: QueryResourceService.FindSalesUsingGETParams): __Observable<__StrictHttpResponse<PageOfSale>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -618,7 +623,7 @@ class QueryResourceService extends __BaseService {
     if (params.page != null) __params = __params.set('page', params.page.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/query/sales`,
+      this.rootUrl + `/api/query/sale`,
       __body,
       {
         headers: __headers,
@@ -629,24 +634,76 @@ class QueryResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<Array<SaleDTO>>;
+        return _r as __StrictHttpResponse<PageOfSale>;
       })
     );
   }
   /**
-   * @param params The `QueryResourceService.FindAllSalesUsingGETParams` containing the following parameters:
+   * @param params The `QueryResourceService.FindSalesUsingGETParams` containing the following parameters:
    *
-   * - `sort`: sort
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
    *
-   * - `size`: size
+   * - `size`: Size of a page
    *
-   * - `page`: page
+   * - `page`: Page number of the requested page
    *
    * @return OK
    */
-  findAllSalesUsingGET(params: QueryResourceService.FindAllSalesUsingGETParams): __Observable<Array<SaleDTO>> {
-    return this.findAllSalesUsingGETResponse(params).pipe(
-      __map(_r => _r.body as Array<SaleDTO>)
+  findSalesUsingGET(params: QueryResourceService.FindSalesUsingGETParams): __Observable<PageOfSale> {
+    return this.findSalesUsingGETResponse(params).pipe(
+      __map(_r => _r.body as PageOfSale)
+    );
+  }
+
+  /**
+   * @param params The `QueryResourceService.FindAllSaleAggregatesUsingGETParams` containing the following parameters:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `page`: Page number of the requested page
+   *
+   * @return OK
+   */
+  findAllSaleAggregatesUsingGETResponse(params: QueryResourceService.FindAllSaleAggregatesUsingGETParams): __Observable<__StrictHttpResponse<Array<SaleAggregate>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/sale-aggregate`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<SaleAggregate>>;
+      })
+    );
+  }
+  /**
+   * @param params The `QueryResourceService.FindAllSaleAggregatesUsingGETParams` containing the following parameters:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `page`: Page number of the requested page
+   *
+   * @return OK
+   */
+  findAllSaleAggregatesUsingGET(params: QueryResourceService.FindAllSaleAggregatesUsingGETParams): __Observable<Array<SaleAggregate>> {
+    return this.findAllSaleAggregatesUsingGETResponse(params).pipe(
+      __map(_r => _r.body as Array<SaleAggregate>)
     );
   }
 
@@ -787,6 +844,42 @@ class QueryResourceService extends __BaseService {
   findAllTicketlinesUsingGET(params: QueryResourceService.FindAllTicketlinesUsingGETParams): __Observable<Array<TicketLineDTO>> {
     return this.findAllTicketlinesUsingGETResponse(params).pipe(
       __map(_r => _r.body as Array<TicketLineDTO>)
+    );
+  }
+
+  /**
+   * @param saleId saleId
+   * @return OK
+   */
+  findAllTicketLinesBySaleIdUsingGETResponse(saleId: number): __Observable<__StrictHttpResponse<Array<TicketLine>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/ticket-lines-by-sale/${saleId}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<TicketLine>>;
+      })
+    );
+  }
+  /**
+   * @param saleId saleId
+   * @return OK
+   */
+  findAllTicketLinesBySaleIdUsingGET(saleId: number): __Observable<Array<TicketLine>> {
+    return this.findAllTicketLinesBySaleIdUsingGETResponse(saleId).pipe(
+      __map(_r => _r.body as Array<TicketLine>)
     );
   }
 
@@ -987,22 +1080,43 @@ module QueryResourceService {
   }
 
   /**
-   * Parameters for findAllSalesUsingGET
+   * Parameters for findSalesUsingGET
    */
-  export interface FindAllSalesUsingGETParams {
+  export interface FindSalesUsingGETParams {
 
     /**
-     * sort
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      */
     sort?: Array<string>;
 
     /**
-     * size
+     * Size of a page
      */
     size?: number;
 
     /**
-     * page
+     * Page number of the requested page
+     */
+    page?: number;
+  }
+
+  /**
+   * Parameters for findAllSaleAggregatesUsingGET
+   */
+  export interface FindAllSaleAggregatesUsingGETParams {
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     */
+    sort?: Array<string>;
+
+    /**
+     * Size of a page
+     */
+    size?: number;
+
+    /**
+     * Page number of the requested page
      */
     page?: number;
   }

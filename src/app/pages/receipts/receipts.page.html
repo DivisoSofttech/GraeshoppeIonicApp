@@ -18,16 +18,16 @@
       <ion-label class="date">Friday, April 26, 2019</ion-label>
     </ion-item>
   
-    <div>
-      <ion-grid >
-        <ion-row (click)="navigateToDetails()" >
+    <div *ngIf="sales?.length>0">
+      <ion-grid>
+        <ion-row (click)="navigateToDetails(sale)" *ngFor="let sale of sales">
           <ion-col size="2" class="vertical-align-center">
               <ion-icon name="cash" class="fs-20"></ion-icon>
           </ion-col>
           <ion-col size="6" class="border-bottom">
             <ion-grid>
               <ion-row>
-                  <ion-label>2.58</ion-label>
+                  <ion-label>{{sale.sale.grandTotal}}</ion-label>
               </ion-row>
               <ion-row>
                   <ion-label class="time">9.48 AM</ion-label>
@@ -42,7 +42,7 @@
   
     </div>
   
-    <div  class="vertical-align-center" *ngIf="test">
+    <div  class="vertical-align-center" *ngIf="sales && sales.length<1">
         <ion-grid>
   
             <ion-row>

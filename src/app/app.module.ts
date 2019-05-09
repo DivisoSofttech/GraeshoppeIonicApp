@@ -1,3 +1,4 @@
+import { ItemsPageModule } from './pages/items/items.module';
 import { CustomersPageModule } from './pages/customers/customers.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -26,6 +27,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { DashboardPageModule } from './pages/dashboard/dashboard.module';
 import { ChartsModule } from 'ng2-charts';
 import { UserComponent } from './user/user.component';
+import { StockManagementPageModule } from './pages/stock-management/stock-management.module';
 
 
 @NgModule({
@@ -47,6 +49,8 @@ import { UserComponent } from './user/user.component';
     CategoriesListPageModule,
     RecentlyUsedPageModule,
     SalePageModule,
+    ItemsPageModule,
+    StockManagementPageModule,
     AddCustomerPageModule,
     CustomersPageModule,
     AddCategoriesPageModule,
