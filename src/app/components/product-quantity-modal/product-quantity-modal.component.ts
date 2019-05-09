@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-product-quantity-modal',
@@ -17,7 +18,7 @@ export class ProductQuantityModalComponent implements OnInit {
     price: 12.00
   }
 
-  constructor() { }
+  constructor(private modalController: ModalController) { }
 
   ngOnInit() {}
 
@@ -43,6 +44,10 @@ export class ProductQuantityModalComponent implements OnInit {
     } else if (this.requiredQuantity < 0) {
       this.requiredQuantity = 0;
     }
+  }
+  dismiss()
+  {
+    this.modalController.dismiss();
   }
 
 }

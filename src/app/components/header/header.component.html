@@ -3,7 +3,7 @@
 
     <ion-buttons margin-top>
       <ion-menu-button slot="start" auto-hide="false"></ion-menu-button>
-      <ion-title><strong>Graeshoppe</strong></ion-title>
+      <ion-title (click)="salePage()"><strong>Graeshoppe</strong></ion-title>
       <ion-icon name="cart" class="cursor" slot="icon-only" (click)="onSelectCart()"></ion-icon>
       <ion-badge class="badge" color="danger">{{total}}</ion-badge>
       &nbsp;&nbsp;&nbsp;&nbsp;

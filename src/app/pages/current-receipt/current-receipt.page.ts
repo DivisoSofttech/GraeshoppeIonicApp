@@ -19,13 +19,17 @@ export class CurrentReceiptPage implements OnInit {
   products: ProductDTO[] = [];
   customer: CustomerDTO;
   total = 0;
-
+  noOfBills: number[]=[1];
   constructor(
     private modalController: ModalController,
     private cartService: CartService,
     private queryResourceService: QueryResourceService
   ) {}
-
+splitBill()
+  {
+    console.log(">>>>>>>>>>>>noOfBills"+this.noOfBills.length);
+    this.noOfBills.push((this.noOfBills[(this.noOfBills.length-1)])+1);
+  }
   ngOnInit() {
     this.ticketLines = this.cartService.ticketLines;
     this.ticketLines.forEach(ticket => {
@@ -68,5 +72,9 @@ export class CurrentReceiptPage implements OnInit {
     const { data } = await modal.onDidDismiss();
     this.customer = data.selectedCustomer;
     console.log(this.customer)
+  }
+  removeBill(bilno:number)
+  {
+    this.noOfBills.splice(this.noOfBills.indexOf(bilno),1);
   }
 }

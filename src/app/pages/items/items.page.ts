@@ -17,7 +17,6 @@ accending : boolean=true;
 sort()
 {
   this.accending=!this.accending;
-  console.log(">>>>>>>"+this.accending);
 }
 
   constructor(
