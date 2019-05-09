@@ -1,3 +1,4 @@
+import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer/ngx';
 import { Customer } from './../../api/models/customer';
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
@@ -7,6 +8,10 @@ import { PageOfCustomer } from 'src/app/api/models';
 import { EditCustomerComponent } from 'src/app/components/edit-customer/edit-customer.component';
 import { forEach } from '@angular/router/src/utils/collection';
 
+const options: DocumentViewerOptions = {
+  title: 'Customers'
+}
+
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.page.html',
@@ -14,7 +19,8 @@ import { forEach } from '@angular/router/src/utils/collection';
 })
 export class CustomersPage implements OnInit {
   constructor(private modalController: ModalController, private queryResource: QueryResourceService,
-    private commandResourceService: CommandResourceService) { }
+    private commandResourceService: CommandResourceService,
+    private documentViewer: DocumentViewer) { }
   @Input()
   asModal = false;
   customers: Customer[];
@@ -100,16 +106,18 @@ export class CustomersPage implements OnInit {
   }
   downloadPDF() {
     console.log("download pdf method");
-/*     this.queryResource.exportCustomersUsingGET().subscribe(res => {
+    this.queryResource.exportCustomersUsingGET().subscribe(res => {
       fetch(res)
         .then(data => {
           data.blob()
             .then(blob => {
               this.fileurl = blob;
+              this.documentViewer.viewDocument(this.fileurl,'application/pdf',options);
               console.log("file url and blob",this.fileurl,blob);
         })
     });
+    console.log(res);
   
-  }); */
+  });
   }
 }
