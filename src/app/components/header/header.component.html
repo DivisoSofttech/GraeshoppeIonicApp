@@ -10,7 +10,7 @@
       <ion-icon name="notifications" slot="icon-only" class="cursor" (click)="presentActionSheet()"></ion-icon>
     </ion-buttons>
 
-    <ion-searchbar placeholder="Search products,categories" class="border"></ion-searchbar>
+    <ion-searchbar [(ngModel)]="searchQuery" (ionChange)="emitSearchEvent()"  placeholder="Search products,categories" class="border"></ion-searchbar>
 
   </ion-toolbar>
 </ion-header>

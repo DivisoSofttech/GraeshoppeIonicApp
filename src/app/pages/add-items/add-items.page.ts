@@ -39,7 +39,7 @@ export class AddItemsPage implements OnInit {
 
   categories: CategoryDTO[] = [];
 
-  uom: UomDTO[] = [];
+  uoms: UomDTO[] = [];
 
   constructor(
     private modalController: ModalController,
@@ -54,6 +54,9 @@ export class AddItemsPage implements OnInit {
     .subscribe(result => {
         this.categories = result;
       });
+    this.queryResourceService.findAllUomUsingGET({}).subscribe(result => {
+      this.uoms = result;
+    });
   }
 
   dismiss() {
@@ -66,10 +69,7 @@ export class AddItemsPage implements OnInit {
       this.product.imageContentType = this.fileToUpload.type;
     }
     console.log(this.product);
-    // const stockLine: StockLine = {
-    //   product: this.product,
-    //   uom: this.productUOM
-    // };
+    
     this.commandResourceService.createProductUsingPOST(this.product).subscribe(result => {
       console.log('saved', result);
       this.dismiss();

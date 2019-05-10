@@ -28,10 +28,11 @@ import { DashboardPageModule } from './pages/dashboard/dashboard.module';
 import { ChartsModule } from 'ng2-charts';
 import { UserComponent } from './user/user.component';
 import { StockManagementPageModule } from './pages/stock-management/stock-management.module';
+import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
 
 
 @NgModule({
-  declarations: [AppComponent,UserComponent],
+  declarations: [AppComponent, UserComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -72,8 +73,9 @@ import { StockManagementPageModule } from './pages/stock-management/stock-manage
       multi: true
 
     },
-    ImageCompressService, 
-    BarcodeScanner
+    ImageCompressService,
+    BarcodeScanner,
+    DocumentViewer
   ],
   bootstrap: [AppComponent]
 })

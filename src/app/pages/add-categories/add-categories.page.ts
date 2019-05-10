@@ -21,9 +21,12 @@ export class AddCategoriesPage implements OnInit {
     private commandResourceService: CommandResourceService
   ) { }
 
-  dismiss() {
-    console.log('>>>>>>>>>>>>>dismiss working');
-    this.modalController.dismiss({'newCategory' : this.category});
+  dismiss(force: boolean) {
+    if (force) {
+      this.modalController.dismiss();
+    } else {
+      this.modalController.dismiss({'newCategory' : this.category});
+    }
   }
 
   triggerUpload(ev: Event) {
@@ -41,8 +44,8 @@ export class AddCategoriesPage implements OnInit {
     console.log(this.category);
     this.commandResourceService.createProductCategoryUsingPOST(this.category)
     .subscribe(result => {
-      this.category=result;
-        this.dismiss();
+      this.category = result;
+        this.dismiss(false);
     }, err => {
       console.log('Error creating category');
     });

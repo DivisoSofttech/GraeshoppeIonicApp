@@ -115,12 +115,6 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'search-products',
-    loadChildren:
-      './pages/search-products/search-products.module#SearchProductsPageModule',
-    canActivate: [AuthGuardService]
-  },
-  {
     path: 'search-results-products',
     loadChildren:
       './pages/search-results-products/search-results-products.module#SearchResultsProductsPageModule',
