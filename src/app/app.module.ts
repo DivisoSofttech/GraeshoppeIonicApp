@@ -31,7 +31,7 @@ import { StockManagementPageModule } from './pages/stock-management/stock-manage
 
 
 @NgModule({
-  declarations: [AppComponent,UserComponent],
+  declarations: [AppComponent, UserComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -72,7 +72,7 @@ import { StockManagementPageModule } from './pages/stock-management/stock-manage
       multi: true
 
     },
-    ImageCompressService, 
+    ImageCompressService,
     BarcodeScanner
   ],
   bootstrap: [AppComponent]

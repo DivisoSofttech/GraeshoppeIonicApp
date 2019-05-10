@@ -16,6 +16,7 @@ import { RecentlyUsedPageModule } from '../recently-used/recently-used.module';
 import { RecentlyUsedPage } from '../recently-used/recently-used.page';
 import { CategoriesListPageModule } from '../categories-list/categories-list.module';
 import { HeaderComponent } from 'src/app/components/header/header.component';
+import { SearchProductsPage } from 'src/app/components/search-products/search-products.page';
 
 const routes: Routes = [
   {
@@ -34,6 +35,6 @@ const routes: Routes = [
     ComponentsModule
       ],
   declarations: [SalePage],
-  entryComponents: [HeaderComponent]
+  entryComponents: [HeaderComponent, SearchProductsPage]
 })
 export class SalePageModule {}

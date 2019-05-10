@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { RefundQuantityModalComponent } from './refund-quantity-modal/refund-quantity-modal.component';
+import { SearchProductsPage } from './search-products/search-products.page';
 @NgModule({
     imports: [
         CommonModule,
@@ -26,7 +27,7 @@ import { RefundQuantityModalComponent } from './refund-quantity-modal/refund-qua
                     EditCategoryComponent,
                     EditUomComponent,
                     EditCustomerComponent,
-                 
+                    SearchProductsPage,
                     ],
     exports : [ EditProductModalComponent,
                 EditUOMModalComponent,
@@ -37,8 +38,7 @@ import { RefundQuantityModalComponent } from './refund-quantity-modal/refund-qua
                 EditCategoryComponent,
                 EditUomComponent,
                 EditCustomerComponent,
-               
-
+               SearchProductsPage
                 ]
     })
 export class ComponentsModule { }

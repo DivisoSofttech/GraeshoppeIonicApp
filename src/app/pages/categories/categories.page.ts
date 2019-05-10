@@ -3,7 +3,7 @@ import { CategoryDTO } from './../../api/models/category-dto';
 import { QueryResourceService, CommandResourceService } from 'src/app/api/services';
 import { ModalController, ActionSheetController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import {AddCategoriesPage} from '../add-categories/add-categories.page'
+import {AddCategoriesPage} from '../add-categories/add-categories.page';
 
 @Component({
   selector: 'app-categories',
@@ -13,10 +13,9 @@ import {AddCategoriesPage} from '../add-categories/add-categories.page'
 export class CategoriesPage implements OnInit {
 
   categories: CategoryDTO[] = [];
-  accending : boolean=true;
-  sort()
-  {
-    this.accending=!this.accending;
+  accending = true;
+  sort() {
+    this.accending = !this.accending;
   }
   constructor(public actionSheetController: ActionSheetController,
     private modalController: ModalController,
@@ -39,7 +38,7 @@ export class CategoriesPage implements OnInit {
     const { data } = await modal.onDidDismiss();
     this.categories.push(data.newCategory);
   }
-  async presentActionSheet(selectedCategory : CategoryDTO) {
+  async presentActionSheet(selectedCategory: CategoryDTO) {
     console.log('>>>>>>>>>>>>>>>>>>action sheet with id' + selectedCategory.id);
     const actionSheet = await this.actionSheetController.create({
       header: 'Options',
@@ -50,9 +49,9 @@ export class CategoriesPage implements OnInit {
         handler: () => {
           console.log('Delete clicked');
           this.commandResource.deleteCategoryUsingDELETE(selectedCategory.id).subscribe(res => {console.log('delete success ' + res);
-          this.categories.splice(this.categories.indexOf(selectedCategory),1);
-        }, err => {console.log('delete faild error ' + err)});
-       
+          this.categories.splice(this.categories.indexOf(selectedCategory), 1);
+        }, err => {console.log('delete faild error ' + err);});
+
         }
       }, {
         text: 'Edit',
@@ -72,8 +71,8 @@ export class CategoriesPage implements OnInit {
     });
     await actionSheet.present();
   }
-  async presentEditModal(selectedCategory : CategoryDTO) {
-    console.log('category seleted for editing '+ selectedCategory);
+  async presentEditModal(selectedCategory: CategoryDTO) {
+    console.log('category seleted for editing ' + selectedCategory);
     const modal = await this.modalController.create({
       component: EditCategoryComponent,
       componentProps: {category: selectedCategory}
