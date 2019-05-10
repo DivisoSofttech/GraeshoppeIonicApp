@@ -80,4 +80,8 @@ getproducts()
   selectProduct(product: Product) {
     this.modalController.dismiss({'selectedProduct': product});
   }
+
+  downloadReport() {
+    
+  }
 }

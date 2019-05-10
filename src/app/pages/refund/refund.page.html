@@ -13,11 +13,10 @@
       <ion-checkbox (click)="presentModal()"  color="light" [(ngModel)]="selected" ></ion-checkbox>
       <ion-label class="margin-text">
         Product Name<br>
-        <span class="small-text" *ngIf="selected && refundQuantity" >
-          Refund x {{refundQuantity}}
+        <span class="small-text" *ngIf="selected && refundQuantity" >{{currentSale.ticketLines[0].quantity}}
         </span>
       </ion-label>
-      <ion-label text-end>{{price | number:'1.2-2'}}</ion-label>
+      <ion-label text-end>{{currentSale.sale.grandTotal | number:'1.2-2'}}</ion-label>
     </ion-item>
     <ion-item>
       <ion-label>Total</ion-label>

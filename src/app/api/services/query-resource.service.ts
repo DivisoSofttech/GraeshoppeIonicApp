@@ -45,6 +45,7 @@ class QueryResourceService extends __BaseService {
   static readonly findProductByCategoryIdUsingGETPath = '/api/query/findProductByCategoryId/{categoryId}';
   static readonly findAllProductBySearchTermUsingGETPath = '/api/query/findProductBySearchTerm/{searchTerm}';
   static readonly findStockCurrentByProductIdUsingGETPath = '/api/query/findStockCurrentByProductId/{productId}';
+  static readonly findStockCurrentByProductNameUsingGETPath = '/api/query/findStockCurrentByProductName/{name}';
   static readonly findStockDiaryByProductIdUsingGETPath = '/api/query/findStockDiaryByProductId/{productId}';
   static readonly findAllProductUsingGETPath = '/api/query/products';
   static readonly exportProductsUsingGETPath = '/api/query/products/export';
@@ -607,6 +608,63 @@ class QueryResourceService extends __BaseService {
    */
   findStockCurrentByProductIdUsingGET(params: QueryResourceService.FindStockCurrentByProductIdUsingGETParams): __Observable<PageOfStockCurrent> {
     return this.findStockCurrentByProductIdUsingGETResponse(params).pipe(
+      __map(_r => _r.body as PageOfStockCurrent)
+    );
+  }
+
+  /**
+   * @param params The `QueryResourceService.FindStockCurrentByProductNameUsingGETParams` containing the following parameters:
+   *
+   * - `name`: name
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `page`: Page number of the requested page
+   *
+   * @return OK
+   */
+  findStockCurrentByProductNameUsingGETResponse(params: QueryResourceService.FindStockCurrentByProductNameUsingGETParams): __Observable<__StrictHttpResponse<PageOfStockCurrent>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/findStockCurrentByProductName/${params.name}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<PageOfStockCurrent>;
+      })
+    );
+  }
+  /**
+   * @param params The `QueryResourceService.FindStockCurrentByProductNameUsingGETParams` containing the following parameters:
+   *
+   * - `name`: name
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `page`: Page number of the requested page
+   *
+   * @return OK
+   */
+  findStockCurrentByProductNameUsingGET(params: QueryResourceService.FindStockCurrentByProductNameUsingGETParams): __Observable<PageOfStockCurrent> {
+    return this.findStockCurrentByProductNameUsingGETResponse(params).pipe(
       __map(_r => _r.body as PageOfStockCurrent)
     );
   }
@@ -1569,6 +1627,32 @@ module QueryResourceService {
      * productId
      */
     productId: number;
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     */
+    sort?: Array<string>;
+
+    /**
+     * Size of a page
+     */
+    size?: number;
+
+    /**
+     * Page number of the requested page
+     */
+    page?: number;
+  }
+
+  /**
+   * Parameters for findStockCurrentByProductNameUsingGET
+   */
+  export interface FindStockCurrentByProductNameUsingGETParams {
+
+    /**
+     * name
+     */
+    name: string;
 
     /**
      * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
