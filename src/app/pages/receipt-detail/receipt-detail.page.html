@@ -23,6 +23,14 @@
       </ion-avatar>
     </ion-item>
     <ion-item>
+      <ion-label color="primary">
+        {{(currentSale.sale.date | slice:0:10)+' '+(currentSale.sale.date | slice:11:16)}}
+      </ion-label>
+      <ion-label text-end>
+        {{'#'+currentSale.sale.id}}
+        </ion-label>
+    </ion-item>
+    <ion-item>
       <ion-label>
         <span>Cashier: Owner</span><br>
         <span>POS: POS1</span>
@@ -40,20 +48,12 @@
     <ion-item>
         <ion-label>
           <span>Total</span><br>
-          <span>Cash</span>
+          <!-- <span>Cash</span> -->
         </ion-label>
         <ion-label text-end>
             <span>{{currentSale.sale.grandTotal}}</span><br>
-            <span>{{currentSale.sale.grandTotal}}</span>
+            <!-- <span>{{currentSale.sale.grandTotal}}</span> -->
           </ion-label>
       </ion-item>
-      <ion-item>
-          <ion-label>
-            26/4/2019 2:13 pm
-          </ion-label>
-          <ion-label text-end>
-            {{'#'+currentSale.sale.id}}
-            </ion-label>
-        </ion-item>
   </ion-list>
 </ion-content>
