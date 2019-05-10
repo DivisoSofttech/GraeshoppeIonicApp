@@ -46,7 +46,6 @@ export class HeaderComponent implements OnInit {
   }
 
   emitSearchEvent() {
-    console.log(this.searchQuery, 'rftgyhujikokjhgf');
     if (this.searchQuery === '') {
       this.clearSearch.emit(false);
     } else {

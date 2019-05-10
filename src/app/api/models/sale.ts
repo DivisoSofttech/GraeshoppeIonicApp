@@ -4,6 +4,6 @@ export interface Sale {
   customerId?: number;
   date?: string;
   grandTotal?: number;
-  id?: number;
+  id?: number; 
   ticketLines?: Array<TicketLine>;
 }
