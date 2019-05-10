@@ -76,10 +76,8 @@
       </ion-row>
 
       <ion-row *ngFor="let ticket of ticketLines" class="border-top ion-margin-vertical ion-padding-vertical">
-          <ion-col size="2">
-                  <ion-select value="brown" okText="Okay" cancelText="Dismiss" text-leftx>
-                    <ion-select-option *ngFor="let noOfBill of noOfBills" value="noOfBill"></ion-select-option>
-                    </ion-select>
+          <ion-col size="2" (click)="presentSplitBIllOptionModal()">
+            <ion-icon name="cut"></ion-icon>
           </ion-col>
           <ion-col size="4" text-left  (click)="productQuantity()">
             <ion-label *ngIf="products.length > 0">{{getProduct(ticket).name}}</ion-label>

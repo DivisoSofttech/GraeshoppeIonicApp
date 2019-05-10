@@ -1,3 +1,4 @@
+import { BilloptionsComponent } from './billoptions/billoptions.component';
 import { EditCustomerComponent } from './edit-customer/edit-customer.component';
 import { EditUomComponent } from './edit-uom/edit-uom.component';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
@@ -26,7 +27,7 @@ import { RefundQuantityModalComponent } from './refund-quantity-modal/refund-qua
                     EditCategoryComponent,
                     EditUomComponent,
                     EditCustomerComponent,
-                 
+                    BilloptionsComponent
                     ],
     exports : [ EditProductModalComponent,
                 EditUOMModalComponent,
@@ -37,8 +38,7 @@ import { RefundQuantityModalComponent } from './refund-quantity-modal/refund-qua
                 EditCategoryComponent,
                 EditUomComponent,
                 EditCustomerComponent,
-               
-
+                BilloptionsComponent
                 ]
     })
 export class ComponentsModule { }

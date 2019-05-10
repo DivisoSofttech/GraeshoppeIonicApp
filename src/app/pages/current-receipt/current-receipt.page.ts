@@ -1,3 +1,4 @@
+import { BilloptionsComponent } from 'src/app/components/billoptions/billoptions.component';
 import { CustomersPage } from './../customers/customers.page';
 import { CustomerDTO } from './../../api/models/customer-dto';
 import { QueryResourceService } from 'src/app/api/services';
@@ -76,5 +77,15 @@ splitBill()
   removeBill(bilno:number)
   {
     this.noOfBills.splice(this.noOfBills.indexOf(bilno),1);
+  }
+
+  async presentSplitBIllOptionModal()
+  {
+    const modal = await this.modalController.create({
+      component:BilloptionsComponent,
+      cssClass : "half-height",
+      componentProps :{ bills : this.noOfBills }
+    });
+    await modal.present();
   }
 }
