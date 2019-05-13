@@ -6,6 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { StockManagementPage } from './stock-management.page';
+import { AddStockComponent } from 'src/app/components/add-stock/add-stock.component';
+import { ComponentsModule } from 'src/app/components/components.module';
+
 
 const routes: Routes = [
   {
@@ -17,10 +20,12 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    ComponentsModule,
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [StockManagementPage]
+  declarations: [StockManagementPage],
+  entryComponents: [AddStockComponent]
 })
 export class StockManagementPageModule {}

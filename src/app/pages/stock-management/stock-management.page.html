@@ -9,7 +9,18 @@
 </ion-header>
 
 <ion-content>
-  <ion-searchbar placeholder="Search products" class="border" animated [(ngModel)]="searchTerm"></ion-searchbar>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles"
+          refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher>
+    <!-- <h2> Button Progress: {{ progress }}</h2>
+    <h2> Presses State: {{ pressState }}</h2> -->
+
+  <ion-searchbar placeholder="Search Stocks" class="border" animated [(ngModel)]="searchTerm" (keyup)="onSearchType($event)"></ion-searchbar>
   <ion-card>
     <ion-card-content>
 <ion-grid>
@@ -21,21 +32,21 @@
             <ion-col size="4">
               <strong>Item</strong>
             </ion-col>
-            <ion-col> <strong>quantity</strong></ion-col>
-            <ion-col> <strong>Sell Price</strong></ion-col>
+            <ion-col text-center> <strong>quantity</strong></ion-col>
+            <ion-col > <strong>Sell Price</strong></ion-col>
       </ion-item>
     </ion-col>
    </ion-row>
 
 
-        <ion-row *ngFor="let item of items">
-     <ion-col no-padding size="12">
-          <ion-item   >
+        <ion-row *ngFor="let item of stock">
+     <ion-col *ngIf="item.product.name" no-padding size="12">
+          <ion-item (click)="presentModal(item.product,item.units)" >
             <ion-col size="4">
-              {{item.title}}
+              {{item.product.name}}
             </ion-col>
-            <ion-col text-center><ion-input type="number" value="333"></ion-input></ion-col>
-            <ion-col text-center><ion-input type="number" value="25"></ion-input></ion-col>
+            <ion-col text-center><ion-input type="number" disabled [value]="item.units"></ion-input></ion-col>
+            <ion-col text-center><ion-input type="text" value="$20"></ion-input></ion-col>
       </ion-item>
     </ion-col>
 </ion-row>
@@ -51,7 +62,7 @@
 </ion-card>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" margin>
-    <ion-fab-button color="danger" (click)="presentModal()">
+    <ion-fab-button color="danger" (click)="presentModal(null,null)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

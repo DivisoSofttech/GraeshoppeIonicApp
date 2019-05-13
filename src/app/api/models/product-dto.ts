@@ -2,7 +2,7 @@
 import { LabelDTO } from './label-dto';
 import { CategoryDTO } from './category-dto';
 export interface ProductDTO {
-  maximumStockLevel?: number;
+  mpn?: string;
   barcodeId?: number;
   dateOfExpiry?: string;
   dateOfMfd?: string;
@@ -11,9 +11,10 @@ export interface ProductDTO {
   image?: string;
   imageContentType?: string;
   labels?: Array<LabelDTO>;
+  maximumStockLevel?: number;
   categories?: Array<CategoryDTO>;
-  mpn?: string;
   name: string;
+  outOfStock?: boolean;
   reOrderLevel?: number;
   reference: string;
   searchkey: string;

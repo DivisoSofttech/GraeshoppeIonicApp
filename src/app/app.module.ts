@@ -1,7 +1,7 @@
 import { ItemsPageModule } from './pages/items/items.module';
 import { CustomersPageModule } from './pages/customers/customers.module';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -28,6 +28,7 @@ import { DashboardPageModule } from './pages/dashboard/dashboard.module';
 import { ChartsModule } from 'ng2-charts';
 import { UserComponent } from './user/user.component';
 import { StockManagementPageModule } from './pages/stock-management/stock-management.module';
+import { IonicGestureConfig } from './gestures/ionic-gesture-config';
 
 
 @NgModule({
@@ -71,8 +72,11 @@ import { StockManagementPageModule } from './pages/stock-management/stock-manage
       useClass: AuthInterceptor,
       multi: true
 
-    },
-    ImageCompressService, 
+    },{
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: IonicGestureConfig
+  },
+    ImageCompressService,
     BarcodeScanner
   ],
   bootstrap: [AppComponent]

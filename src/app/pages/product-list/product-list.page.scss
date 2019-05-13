@@ -1,5 +1,5 @@
 .larger{
-    font-size:25px; 
+    font-size:25px;
 }
 
 img{
@@ -28,13 +28,23 @@ img{
 }
 .card-title2{
     margin-top: 15px;
-    background-color: grey; 
+    background-color: grey;
 }
 .optionPostion{
-    position: absolute; 
+    position: absolute;
     right: 0px;
     left : 110px;
-    font-size: 25px; 
+    font-size: 25px;
     cursor: pointer;
     color: #fff;
 }
+.relative{
+   position:relative;
+   opacity:0.3;
+   
+ }
+ .absolute{
+   position: absolute;
+   top:10px;
+ }
+

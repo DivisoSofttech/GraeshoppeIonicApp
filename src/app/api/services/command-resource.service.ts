@@ -13,6 +13,8 @@ import { CustomerDTO } from '../models/customer-dto';
 import { CustomerAggregator } from '../models/customer-aggregator';
 import { ProductDTO } from '../models/product-dto';
 import { SaleDTO } from '../models/sale-dto';
+import { StockCurrentDTO } from '../models/stock-current-dto';
+import { StockDiaryDTO } from '../models/stock-diary-dto';
 import { StockLineDTO } from '../models/stock-line-dto';
 import { TicketLineDTO } from '../models/ticket-line-dto';
 import { UomDTO } from '../models/uom-dto';
@@ -38,6 +40,11 @@ class CommandResourceService extends __BaseService {
   static readonly createSaleUsingPOSTPath = '/api/command/sales';
   static readonly updateSaleUsingPUTPath = '/api/command/sales';
   static readonly deleteSaleUsingDELETEPath = '/api/command/sales/{id}';
+  static readonly createStockCurrentUsingPOSTPath = '/api/command/stock-currents';
+  static readonly updateStockCurrentUsingPUTPath = '/api/command/stock-currents';
+  static readonly createStockCurrentUsingPOST1Path = '/api/command/stock-diaries';
+  static readonly updateStockDiaryUsingPUTPath = '/api/command/stock-diaries';
+  static readonly createStockOfProductUsingPOSTPath = '/api/command/stock-of-product';
   static readonly createStockLineUsingPOSTPath = '/api/command/stocklines';
   static readonly updateStockLineUsingPUTPath = '/api/command/stocklines';
   static readonly deleteStockLineUsingDELETEPath = '/api/command/stocklines/{id}';
@@ -546,6 +553,186 @@ class CommandResourceService extends __BaseService {
   deleteSaleUsingDELETE(id: number): __Observable<null> {
     return this.deleteSaleUsingDELETEResponse(id).pipe(
       __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param stockCurrent stockCurrent
+   * @return OK
+   */
+  createStockCurrentUsingPOSTResponse(stockCurrent: StockCurrentDTO): __Observable<__StrictHttpResponse<StockCurrentDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = stockCurrent;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/command/stock-currents`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<StockCurrentDTO>;
+      })
+    );
+  }
+  /**
+   * @param stockCurrent stockCurrent
+   * @return OK
+   */
+  createStockCurrentUsingPOST(stockCurrent: StockCurrentDTO): __Observable<StockCurrentDTO> {
+    return this.createStockCurrentUsingPOSTResponse(stockCurrent).pipe(
+      __map(_r => _r.body as StockCurrentDTO)
+    );
+  }
+
+  /**
+   * @param StockCurrent StockCurrent
+   * @return OK
+   */
+  updateStockCurrentUsingPUTResponse(StockCurrent: StockCurrentDTO): __Observable<__StrictHttpResponse<StockCurrentDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = StockCurrent;
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/api/command/stock-currents`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<StockCurrentDTO>;
+      })
+    );
+  }
+  /**
+   * @param StockCurrent StockCurrent
+   * @return OK
+   */
+  updateStockCurrentUsingPUT(StockCurrent: StockCurrentDTO): __Observable<StockCurrentDTO> {
+    return this.updateStockCurrentUsingPUTResponse(StockCurrent).pipe(
+      __map(_r => _r.body as StockCurrentDTO)
+    );
+  }
+
+  /**
+   * @param stockDiary stockDiary
+   * @return OK
+   */
+  createStockCurrentUsingPOST1Response(stockDiary: StockDiaryDTO): __Observable<__StrictHttpResponse<StockDiaryDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = stockDiary;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/command/stock-diaries`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<StockDiaryDTO>;
+      })
+    );
+  }
+  /**
+   * @param stockDiary stockDiary
+   * @return OK
+   */
+  createStockCurrentUsingPOST1(stockDiary: StockDiaryDTO): __Observable<StockDiaryDTO> {
+    return this.createStockCurrentUsingPOST1Response(stockDiary).pipe(
+      __map(_r => _r.body as StockDiaryDTO)
+    );
+  }
+
+  /**
+   * @param stockDiary stockDiary
+   * @return OK
+   */
+  updateStockDiaryUsingPUTResponse(stockDiary: StockDiaryDTO): __Observable<__StrictHttpResponse<StockDiaryDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = stockDiary;
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/api/command/stock-diaries`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<StockDiaryDTO>;
+      })
+    );
+  }
+  /**
+   * @param stockDiary stockDiary
+   * @return OK
+   */
+  updateStockDiaryUsingPUT(stockDiary: StockDiaryDTO): __Observable<StockDiaryDTO> {
+    return this.updateStockDiaryUsingPUTResponse(stockDiary).pipe(
+      __map(_r => _r.body as StockDiaryDTO)
+    );
+  }
+
+  /**
+   * @param stockDiaryDTO stockDiaryDTO
+   * @return OK
+   */
+  createStockOfProductUsingPOSTResponse(stockDiaryDTO: StockDiaryDTO): __Observable<__StrictHttpResponse<StockDiaryDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = stockDiaryDTO;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/command/stock-of-product`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<StockDiaryDTO>;
+      })
+    );
+  }
+  /**
+   * @param stockDiaryDTO stockDiaryDTO
+   * @return OK
+   */
+  createStockOfProductUsingPOST(stockDiaryDTO: StockDiaryDTO): __Observable<StockDiaryDTO> {
+    return this.createStockOfProductUsingPOSTResponse(stockDiaryDTO).pipe(
+      __map(_r => _r.body as StockDiaryDTO)
     );
   }
 

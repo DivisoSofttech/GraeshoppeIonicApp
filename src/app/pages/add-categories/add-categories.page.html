@@ -2,7 +2,7 @@
   <ion-toolbar color="danger" >
     <ion-buttons  (click)="dismiss()" slot="start">
       <ion-icon name="arrow-back" class="icon-size" ></ion-icon>  &nbsp;&nbsp;
-      <ion-title text-center><strong>Create New Category</strong></ion-title> 
+      <ion-title text-center><strong>Create New Category</strong></ion-title>
  </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -29,7 +29,7 @@
         <ion-checkbox [(ngModel)]="category.visible" color="primary"></ion-checkbox>
         <ion-label position="fixed"  margin>Visible</ion-label>
       </ion-item>
-      
+
       <ion-button (click)="save()" margin mode="ios" expand="block" fill="solid" color="danger">Save</ion-button>
     </div>
   </div>
