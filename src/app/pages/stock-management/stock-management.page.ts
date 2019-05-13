@@ -39,7 +39,7 @@ export class StockManagementPage implements OnInit {
       });
   }
 
-  async presentModal(item, units) {
+  async presentModal(currentStock,item, units) {
     if (item === null) {
       const modal = await this.modalController.create({
         component: AddStockComponent
@@ -59,7 +59,8 @@ export class StockManagementPage implements OnInit {
         component: AddStockComponent,
         componentProps: {
           selectedProduct: item,
-          units: units
+          units: units,
+          stockCurrentDto: currentStock
         }
       });
       await modal.present();

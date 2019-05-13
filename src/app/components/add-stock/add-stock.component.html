@@ -53,18 +53,25 @@
         </ion-select>
       </ion-item> -->
 
+
+      <ion-item *ngIf="stockCurrentDto">
+        <ion-label position="floating">Sell Price</ion-label>
+        <ion-input type="number" [(ngModel)]="stockCurrentDto.sellPrice" disabled  required></ion-input>
+
+      </ion-item>
+
       <ion-item>
-          <ion-label position="floating">Current Stock</ion-label>
+          <ion-label position="floating">Current Stock Units</ion-label>
           <ion-input *ngIf="!units" type="text" disabled [value]="0"  ></ion-input>
           <ion-input *ngIf="units" type="text" disabled [value]="units"  ></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label position="floating">Units </ion-label>
+            <ion-label position="floating">Add Units </ion-label>
             <ion-input type="number"   [(ngModel)]="stockDiaryDto.units"></ion-input>
           </ion-item>
           <ion-item>
-              <ion-label position="floating">Price</ion-label>
+              <ion-label position="floating">Buy Price</ion-label>
               <ion-input type="number" [(ngModel)]="stockDiaryDto.price" value="250 " required></ion-input>
             </ion-item>
 

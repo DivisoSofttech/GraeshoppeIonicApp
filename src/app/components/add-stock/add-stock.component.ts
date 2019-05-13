@@ -35,13 +35,7 @@ export class AddStockComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    //   if(!this.selectedProduct==null){
-    //  let params:QueryResourceService.FindStockCurrentByProductIdUsingGETParams;
-    //  params={productId:this.selectedProduct.id}
-    //   this.queryResource.findStockCurrentByProductIdUsingGET(params).subscribe(result=>{
-    //     this.stockCurrentDto=result.content[0];
-    //   });
-    // }
+
   }
 
   async toastView() {
@@ -54,7 +48,7 @@ export class AddStockComponent implements OnInit {
   }
 
   dismiss() {
-    console.log('>>>>>>>>>>>>>dismiss working');
+
     this.modalController.dismiss();
   }
 
@@ -80,9 +74,11 @@ export class AddStockComponent implements OnInit {
     this.queryResource
       .findStockCurrentByProductIdUsingGET(params)
       .subscribe(result => {
+
         if (result.content.length === 0) {
           this.units = 0;
         } else {
+          this.stockCurrentDto=result.content[0];
           console.table(result.content);
           this.units = result.content[0].units;
         }
@@ -97,13 +93,9 @@ export class AddStockComponent implements OnInit {
         .findAllProductBySearchTermUsingGET(this.params)
         .subscribe(result => {
           this.products = result.content;
-          console.log("workinggggggggggggggg"+result.content.length);
+
         });
-      // let params:QueryResourceService.FindStockCurrentByProductIdUsingGETParams;
-      // params={productId:this.selectedProduct.id}
-      //  this.queryResource.findStockCurrentByProductIdUsingGET(params).subscribe(result=>{
-      //    this.stockCurrentDto=result.content[0];
-      //  });
+
     }
   }
 

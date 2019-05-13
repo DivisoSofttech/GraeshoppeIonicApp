@@ -40,7 +40,7 @@
 
         <ion-row *ngFor="let item of stock">
      <ion-col *ngIf="item.product.name" no-padding size="12">
-          <ion-item (click)="presentModal(item.product,item.units)" >
+          <ion-item (click)="presentModal(item,item.product,item.units)" >
             <ion-col size="4">
               {{item.product.name}}
             </ion-col>
@@ -61,7 +61,7 @@
 </ion-card>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" margin>
-    <ion-fab-button color="danger" (click)="presentModal(null,null)">
+    <ion-fab-button color="danger" (click)="presentModal(null,null,null)">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
