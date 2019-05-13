@@ -1,5 +1,9 @@
+import { SaleService } from './../../services/sale.service';
+import { LoadingService, loading } from './../../services/loading.service';
+import { SaleAggregate } from './../../api/models/sale-aggregate';
+import { QueryResourceService } from 'src/app/api/services';
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-receipts',
@@ -10,13 +14,40 @@ export class ReceiptsPage implements OnInit {
 
   test: boolean = false;
   id: String = '1-1001';
+  sales: SaleAggregate[];
 
-  constructor(private navController: NavController) { }
+  constructor(private navController: NavController,
+    private queryResourceService: QueryResourceService,
+    private loadingService:LoadingService,
+    private saleService: SaleService) { }
 
   ngOnInit() {
+
+    //this.presentLoading();
+    //this.loadingService.presentLoading();
+    this.queryResourceService.findAllSaleAggregatesUsingGET({})
+      .subscribe(response => {
+        console.log(response);
+        this.sales = response;
+        //this.loadingController.dismiss();
+        //loading.dismiss();
+      });
   }
 
-  navigateToDetails() {
+/*   async presentLoading() {
+    const loading = await this.loadingController.create({
+      spinner: "dots"
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+
+    console.log('Loading dismissed!');
+  } */
+
+  navigateToDetails(currentSale: SaleAggregate) {
+
+    this.saleService.setCurrentSale(currentSale);
     this.navController.navigateForward('/receipts/' + this.id);
   }
 

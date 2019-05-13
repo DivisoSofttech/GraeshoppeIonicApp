@@ -1,8 +1,8 @@
+import { Router, RouterLink } from '@angular/router';
 import { CartService } from './../../services/cart.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActionSheetController, NavController } from '@ionic/angular';
 import { Subscription, Subscriber } from 'rxjs';
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -10,9 +10,12 @@ import { Subscription, Subscriber } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
 
+  @Output() searchEvent = new EventEmitter();
+  @Output() clearSearch = new EventEmitter();
   total = 0;
   numberOfItems: number;
   private subscription: Subscription;
+  searchQuery = '';
 
   onSelectCart() {
     this.navctrl.navigateForward('/current-receipt');
@@ -40,5 +43,16 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.subscription = this.cartService.observableTickets.subscribe(ticketLines => this.total = ticketLines.length);
     // this.total = this.cartService.ticketLines.length;
+  }
+  salePage()
+  {
+    this.navctrl.navigateForward('/sale');
+  }
+  emitSearchEvent() {
+    if (this.searchQuery === '') {
+      this.clearSearch.emit(false);
+    } else {
+      this.searchEvent.emit(this.searchQuery);
+    }
   }
 }

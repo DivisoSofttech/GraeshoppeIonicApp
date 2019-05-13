@@ -1,3 +1,4 @@
+import { BilloptionsComponent } from './billoptions/billoptions.component';
 import { EditCustomerComponent } from './edit-customer/edit-customer.component';
 import { EditUomComponent } from './edit-uom/edit-uom.component';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
@@ -12,6 +13,7 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { RefundQuantityModalComponent } from './refund-quantity-modal/refund-quantity-modal.component';
 import { AddStockComponent } from './add-stock/add-stock.component';
+import { SearchProductsPage } from './search-products/search-products.page';
 @NgModule({
     imports: [
         CommonModule,
@@ -27,7 +29,9 @@ import { AddStockComponent } from './add-stock/add-stock.component';
                     EditCategoryComponent,
                     EditUomComponent,
                     EditCustomerComponent,
-                 AddStockComponent
+                 AddStockComponent,
+                    BilloptionsComponent,
+                    SearchProductsPage,
                     ],
     exports : [ EditProductModalComponent,
                 EditUOMModalComponent,
@@ -38,9 +42,9 @@ import { AddStockComponent } from './add-stock/add-stock.component';
                 EditCategoryComponent,
                 EditUomComponent,
                 EditCustomerComponent,
-                AddStockComponent
-
-
+                AddStockComponent,
+                BilloptionsComponent,
+               SearchProductsPage
                 ]
     })
 export class ComponentsModule { }

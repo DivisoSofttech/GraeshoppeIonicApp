@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header (searchEvent)='search($event)' (clearSearch)='searching = false'></app-header>
 
 
 <ion-content>
@@ -14,7 +14,8 @@
       </ion-card>
     </ion-col>
   </ion-row>  -->
-  <super-tabs padding-top>
+  <app-search-products [products]='products' *ngIf="searching"></app-search-products>
+  <super-tabs *ngIf="!searching" padding-top>
     <super-tabs-toolbar color="danger">
       <super-tab-button>
         <ion-icon name="apps"></ion-icon>

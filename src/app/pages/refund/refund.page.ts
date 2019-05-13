@@ -1,7 +1,9 @@
+import { SaleService } from './../../services/sale.service';
 import { RefundQuantityModalComponent } from './../../components/refund-quantity-modal/refund-quantity-modal.component';
 import { ModalController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { SaleAggregate } from 'src/app/api/models';
 
 @Component({
   selector: 'app-refund',
@@ -15,10 +17,12 @@ export class RefundPage implements OnInit {
   refundQuantity = 0;
   selected = false;
   total = 0.00;
-  constructor(private route: ActivatedRoute, private modalController: ModalController) { }
+  currentSale: SaleAggregate;
+  constructor(private route: ActivatedRoute, private modalController: ModalController, private saleService:SaleService) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
+    this.currentSale=this.saleService.getCurrentSale();
   }
 
   async presentModal() {

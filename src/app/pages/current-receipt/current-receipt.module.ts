@@ -13,6 +13,7 @@ import { CurrentReceiptPage } from './current-receipt.page';
 import { MakePaymentPageModule } from '../make-payment/make-payment.module';
 import { CustomersPageModule } from '../customers/customers.module';
 import { CustomersPage } from '../customers/customers.page';
+import { BilloptionsComponent } from 'src/app/components/billoptions/billoptions.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,6 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [CurrentReceiptPage],
-  entryComponents: [MakePaymentPage , ProductQuantityModalComponent]
+  entryComponents: [MakePaymentPage , ProductQuantityModalComponent,BilloptionsComponent]
 })
 export class CurrentReceiptPageModule {}

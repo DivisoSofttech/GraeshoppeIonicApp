@@ -3,14 +3,14 @@
 
     <ion-buttons margin-top>
       <ion-menu-button slot="start" auto-hide="false"></ion-menu-button>
-      <ion-title><strong>Graeshoppe</strong></ion-title>
+      <ion-title (click)="salePage()"><strong>Graeshoppe</strong></ion-title>
       <ion-icon name="cart" class="cursor" slot="icon-only" (click)="onSelectCart()"></ion-icon>
       <ion-badge class="badge" color="danger">{{total}}</ion-badge>
       &nbsp;&nbsp;&nbsp;&nbsp;
       <ion-icon name="notifications" slot="icon-only" class="cursor" (click)="presentActionSheet()"></ion-icon>
     </ion-buttons>
 
-    <ion-searchbar placeholder="Search products,categories" class="border"></ion-searchbar>
+    <ion-searchbar [(ngModel)]="searchQuery" (ionChange)="emitSearchEvent()"  placeholder="Search products,categories" class="border"></ion-searchbar>
 
   </ion-toolbar>
 </ion-header>

@@ -19,7 +19,6 @@ accending : boolean=true;
 sort()
 {
   this.accending=!this.accending;
-  console.log(">>>>>>>"+this.accending);
 }
 
   constructor(
@@ -79,5 +78,9 @@ getproducts()
 
   selectProduct(product: Product) {
     this.modalController.dismiss({'selectedProduct': product});
+  }
+
+  downloadReport() {
+    
   }
 }

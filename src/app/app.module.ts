@@ -28,11 +28,13 @@ import { DashboardPageModule } from './pages/dashboard/dashboard.module';
 import { ChartsModule } from 'ng2-charts';
 import { UserComponent } from './user/user.component';
 import { StockManagementPageModule } from './pages/stock-management/stock-management.module';
+
 import { IonicGestureConfig } from './gestures/ionic-gesture-config';
+import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
 
 
 @NgModule({
-  declarations: [AppComponent,UserComponent],
+  declarations: [AppComponent, UserComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -76,8 +78,9 @@ import { IonicGestureConfig } from './gestures/ionic-gesture-config';
       provide: HAMMER_GESTURE_CONFIG,
       useClass: IonicGestureConfig
   },
-    ImageCompressService,
-    BarcodeScanner
+  ImageCompressService,
+  BarcodeScanner,
+  DocumentViewer
   ],
   bootstrap: [AppComponent]
 })
