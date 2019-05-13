@@ -44,6 +44,15 @@ export class AddStockComponent implements OnInit {
     // }
   }
 
+  async toastView() {
+    const toast = await this.toastController.create({
+      message: 'Stock Added',
+      cssClass: 'toast',
+      duration: 2000
+    });
+    toast.present();
+  }
+
   dismiss() {
     console.log('>>>>>>>>>>>>>dismiss working');
     this.modalController.dismiss();
@@ -58,6 +67,8 @@ export class AddStockComponent implements OnInit {
       .subscribe(result => {
         console.log(result);
       });
+      this.toastView();
+      this.dismiss();
   }
   selectProduct(product: Product) {
     this.queryResource.findProductUsingGET(product.id).subscribe(result => {
