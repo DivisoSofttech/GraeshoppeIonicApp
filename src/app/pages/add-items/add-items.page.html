@@ -4,7 +4,7 @@
         <ion-button>
           <ion-icon name="close" slot="icon-only" ></ion-icon>  &nbsp;&nbsp;
         </ion-button>
-          <ion-title text-center><strong>Create New Item</strong></ion-title> 
+          <ion-title text-center><strong>Create New Item</strong></ion-title>
      </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -41,8 +41,8 @@
           </ion-select>
         </ion-item> -->
       <ion-item>
-        <ion-label position="floating">Price</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-label position="floating">Sell Price</ion-label>
+        <ion-input type="number" [(ngModel)]="stockCurrent.sellPrice"></ion-input>
       </ion-item>
       <ion-button (click)="save()" margin mode="ios" expand="block" fill="solid" color="danger">Save</ion-button>
     </div>

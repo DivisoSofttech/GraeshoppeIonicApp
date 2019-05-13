@@ -1,25 +1,20 @@
 <app-header></app-header>
 <!-- <ion-item >
-    <ion-icon *ngIf="accending" name="arrow-dropdown-circle" (click)="sort()"></ion-icon>  
-    <ion-icon *ngIf="!accending" name="arrow-dropup-circle" (click)="sort()"></ion-icon>  
-<<<<<<< HEAD
-    <!-- <ion-icon name="funnel" class="rightAlignIcon"></ion-icon> -->
-</ion-item>
-=======
+    <ion-icon *ngIf="accending" name="arrow-dropdown-circle" (click)="sort()"></ion-icon>
+    <ion-icon *ngIf="!accending" name="arrow-dropup-circle" (click)="sort()"></ion-icon>
     <ion-icon name="funnel" class="rightAlignIcon"></ion-icon>
 </ion-item> -->
->>>>>>> 0fa5e0b8e1d7d228a3017d1bfbd8ad87046f2230
 <ion-content padding>
   <ion-row>
     <ion-col *ngFor='let category of categories' size="6">
-      
+
       <ion-card class="size" >
         <ion-icon name="more" class="optionPostion" slot="icon-only" (click)="presentActionSheet(category)"></ion-icon>
         <img [src]="'data:' + category.imageContentType + ';base64,' + category.image" [routerLink]="'/product-list/'+category.id"/>
         <div class="myOverlay" [routerLink]="'/product-list/'+category.id">
           <div class="card-title"><strong>{{category.name}}</strong></div>
           <!-- <div class="card-subtitle"><strong>{{category.products.length}}</strong></div> -->
-          
+
         </div>
       </ion-card>
     </ion-col>

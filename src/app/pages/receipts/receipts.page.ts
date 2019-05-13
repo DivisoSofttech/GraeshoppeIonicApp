@@ -25,7 +25,8 @@ export class ReceiptsPage implements OnInit {
 
     //this.presentLoading();
     //this.loadingService.presentLoading();
-    this.queryResourceService.findAllSaleAggregatesUsingGET({})
+   let params: QueryResourceService.FindAllSaleAggregatesUsingGETParams={};
+    this.queryResourceService.findAllSaleAggregatesUsingGET(params)
       .subscribe(response => {
         console.log(response);
         this.sales = response;
