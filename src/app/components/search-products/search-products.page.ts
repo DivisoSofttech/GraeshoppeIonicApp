@@ -22,7 +22,7 @@ export class SearchProductsPage implements OnInit {
 
   addTicketLine(product: Product) {
     console.log('added');
-    this.cartService.addProduct(product);
+    this.cartService.addProduct(product,null);
   }
 
 }

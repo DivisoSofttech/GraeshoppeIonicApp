@@ -1,6 +1,6 @@
 import { TicketLineDTO } from './../api/models/ticket-line-dto';
 import { Injectable } from '@angular/core';
-import { Product } from '../api/models';
+import { Product, Stock, StockCurrent } from '../api/models';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class CartService {
     this.observableTickets = new BehaviorSubject<TicketLineDTO[]>(this.ticketLines);
   }
 
-  addProduct(product: Product) {
+  addProduct(product: Product,stockCurrent: StockCurrent) {
     let added = false;
     this.ticketLines.forEach(ticket => {
       if (ticket.productId === product.id) {
@@ -27,8 +27,8 @@ export class CartService {
       const ticketLine: TicketLineDTO = {
         productId: product.id,
         quantity: 1,
-        price: 200,
-        total: 200
+        price: stockCurrent.sellPrice,
+        total: stockCurrent.sellPrice
       };
       this.ticketLines.push(ticketLine);
       this.updateCart();

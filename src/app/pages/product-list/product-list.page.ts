@@ -33,14 +33,22 @@ export class ProductListPage implements OnInit {
       .findProductByCategoryIdUsingGET(params)
       .subscribe(result => {
         result.content.forEach(product => {
+
           let params: QueryResourceService.FindStockCurrentByProductIdUsingGETParams;
           params = { productId: product.id };
           this.queryResourceService
             .findStockCurrentByProductIdUsingGET(params)
             .subscribe(result => {
+
               if (result.content.length === 0) {
+                console.log("Nooo Stockkk"+result.content);
+                this.stockCurrent.push(null);
+
                 product.outOfStock = true;
               } else {
+                console.log("Stockkk Availabless "+result.content[0].sellPrice);
+                this.stockCurrent.push(result.content[0]);
+
                 if (result.content[0].units < 1) {
                   product.outOfStock = true;
                 } else {
@@ -51,14 +59,16 @@ export class ProductListPage implements OnInit {
         });
 
         this.products=result.content;
+        console.log("Product Size"+this.products.length);
+
       });
 
     console.log('completed');
   }
 
-  addTicketLine(product: Product) {
-    console.log('added');
-    this.cartService.addProduct(product);
+  addTicketLine(product: Product,stockCurrent: StockCurrent) {
+    console.log('added Product Name'+product.name+" Price "+stockCurrent.sellPrice);
+    this.cartService.addProduct(product,stockCurrent);
   }
 
   // stockCheck(products: Product[]) {

@@ -2,7 +2,7 @@
 <ion-content padding>
   <ion-grid>
     <ion-row justify-content-center>
-        <ion-col *ngFor='let product of products' (click)="addTicketLine(product)" >
+        <ion-col *ngFor="let product of products ; let i = index" [attr.data-index]="i" (click)="addTicketLine(product,stockCurrent[i])" >
           <ion-card class="size" >
 
             <img [class.relative]="product.outOfStock" [src]="'data:' + product.imageContentType + ';base64,' + product.image">
