@@ -18,11 +18,11 @@ export class RefundPage implements OnInit {
   selected = false;
   total = 0.00;
   currentSale: SaleAggregate;
-  constructor(private route: ActivatedRoute, private modalController: ModalController, private saleService:SaleService) { }
+  constructor(private route: ActivatedRoute, private modalController: ModalController, private saleService: SaleService) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.currentSale=this.saleService.getCurrentSale();
+    this.currentSale = this.saleService.getCurrentSale();
   }
 
   async presentModal() {

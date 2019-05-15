@@ -38,9 +38,9 @@ export class AddStockComponent implements OnInit {
 
   }
 
-  async toastView() {
+  async toastView(message) {
     const toast = await this.toastController.create({
-      message: 'Stock Added',
+      message: message,
       cssClass: 'toast',
       duration: 2000
     });
@@ -53,16 +53,18 @@ export class AddStockComponent implements OnInit {
   }
 
   save() {
-    console.log("this.selectedProduct.id : "+this.selectedProduct.id);
+    console.log('this.selectedProduct.id : ' + this.selectedProduct.id);
     this.stockDiaryDto.productId = this.selectedProduct.id;
     this.stockDiaryDto.isBuy = true;
     this.commandResourceService
       .createStockOfProductUsingPOST(this.stockDiaryDto)
       .subscribe(result => {
         console.log(result);
+        this.dismiss();
+        this.toastView('Added to Stock');
+      }, err => {
+        this.toastView('Error Adding to Stock');
       });
-      this.toastView();
-      this.dismiss();
   }
   selectProduct(product: Product) {
     this.queryResource.findProductUsingGET(product.id).subscribe(result => {
@@ -78,7 +80,7 @@ export class AddStockComponent implements OnInit {
         if (result.content.length === 0) {
           this.units = 0;
         } else {
-          this.stockCurrentDto=result.content[0];
+          this.stockCurrentDto = result.content[0];
           console.table(result.content);
           this.units = result.content[0].units;
         }

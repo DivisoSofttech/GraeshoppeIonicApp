@@ -19,22 +19,26 @@ export class ReceiptDetailPage implements OnInit {
   quantity = 2;
   unitPrice = 1.29;
   currentSale: SaleAggregate;
-  products:ProductDTO[]=[];
+  products: ProductDTO[] = [];
 
-  constructor(private popoverController: PopoverController, private route: ActivatedRoute, private navController: NavController,private saleService:SaleService, private queryResource: QueryResourceService) { }
+  constructor(private popoverController: PopoverController,
+              private route: ActivatedRoute,
+              private navController: NavController,
+              private saleService: SaleService,
+              private queryResource: QueryResourceService) { }
 
   ngOnInit() {
 
     this.id = this.route.snapshot.paramMap.get('id');
-    this.currentSale=this.saleService.getCurrentSale();
+    this.currentSale = this.saleService.getCurrentSale();
     this.currentSale.ticketLines.forEach(element => {
       this.queryResource.findProductUsingGET(element.productId)
-        .subscribe(product=>{
+        .subscribe(product => {
           this.products.push(product);
-          console.log("product: ",product);
-        })
+          console.log('product: ', product);
+        });
     });
-    console.log("currentSale",this.currentSale);
+    console.log('currentSale', this.currentSale);
   }
 
   async presentPopover(ev: any) {
@@ -49,7 +53,7 @@ export class ReceiptDetailPage implements OnInit {
   }
 
   navigateToRefund() {
-    
+
     this.navController.navigateForward(/refund/ + this.id);
   }
 

@@ -17,12 +17,12 @@ import { PageOfStockCurrent } from '../models/page-of-stock-current';
 import { PageOfStockDiary } from '../models/page-of-stock-diary';
 import { ProductDTO } from '../models/product-dto';
 import { PageOfSale } from '../models/page-of-sale';
-import { SaleAggregate } from '../models/sale-aggregate';
+import { PageOfSaleAggregate } from '../models/page-of-sale-aggregate';
 import { SaleDTO } from '../models/sale-dto';
 import { StockCurrentDTO } from '../models/stock-current-dto';
-import { StockDiaryDTO } from '../models/stock-diary-dto';
 import { StockCurrent } from '../models/stock-current';
 import { StockDiary } from '../models/stock-diary';
+import { StockDiaryDTO } from '../models/stock-diary-dto';
 import { StockLine } from '../models/stock-line';
 import { TicketLineDTO } from '../models/ticket-line-dto';
 import { TicketLine } from '../models/ticket-line';
@@ -51,19 +51,19 @@ class QueryResourceService extends __BaseService {
   static readonly findAllProductUsingGETPath = '/api/query/products';
   static readonly exportProductsUsingGETPath = '/api/query/products/export';
   static readonly findProductUsingGETPath = '/api/query/products/{id}';
-  static readonly findSalesUsingGETPath = '/api/query/sale';
-  static readonly findAllSaleAggregatesUsingGETPath = '/api/query/sale-aggregate';
+  static readonly findSalesUsingGETPath = '/api/query/sales';
+  static readonly findAllSaleAggregatesUsingGETPath = '/api/query/sales/combined';
   static readonly findSaleByIdUsingGETPath = '/api/query/sales/{id}';
-  static readonly searchStockCurrentsUsingGETPath = '/api/query/search-stock-current/{searchTerm}';
-  static readonly searchStockDiariesUsingGETPath = '/api/query/search-stock-diary/{searchTerm}';
+  static readonly searchStockCurrentsUsingGETPath = '/api/query/stock-current/{searchTerm}';
   static readonly getAllStockCurrentsUsingGETPath = '/api/query/stock-currents';
   static readonly findOneStockCurrentUsingGETPath = '/api/query/stock-currents/{id}';
   static readonly findAllStockDiariesUsingGETPath = '/api/query/stock-diaries';
   static readonly findOneStockDiaryUsingGETPath = '/api/query/stock-diaries/{id}';
+  static readonly searchStockDiariesUsingGETPath = '/api/query/stock-diary/{searchTerm}';
   static readonly findAllStockLinesUsingGETPath = '/api/query/stocklines';
   static readonly findAllTicketlinesUsingGETPath = '/api/query/ticket-lines';
-  static readonly findAllTicketLinesBySaleIdUsingGETPath = '/api/query/ticket-lines-by-sale/{saleId}';
   static readonly findOneTicketLinesUsingGETPath = '/api/query/ticket-lines/{id}';
+  static readonly findAllTicketLinesBySaleIdUsingGETPath = '/api/query/ticket-lines/{saleId}';
 
   constructor(
     config: __Configuration,
@@ -920,7 +920,7 @@ class QueryResourceService extends __BaseService {
     if (params.page != null) __params = __params.set('page', params.page.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/query/sale`,
+      this.rootUrl + `/api/query/sales`,
       __body,
       {
         headers: __headers,
@@ -963,7 +963,7 @@ class QueryResourceService extends __BaseService {
    *
    * @return OK
    */
-  findAllSaleAggregatesUsingGETResponse(params: QueryResourceService.FindAllSaleAggregatesUsingGETParams): __Observable<__StrictHttpResponse<Array<SaleAggregate>>> {
+  findAllSaleAggregatesUsingGETResponse(params: QueryResourceService.FindAllSaleAggregatesUsingGETParams): __Observable<__StrictHttpResponse<PageOfSaleAggregate>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -972,7 +972,7 @@ class QueryResourceService extends __BaseService {
     if (params.page != null) __params = __params.set('page', params.page.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/query/sale-aggregate`,
+      this.rootUrl + `/api/query/sales/combined`,
       __body,
       {
         headers: __headers,
@@ -983,7 +983,7 @@ class QueryResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<Array<SaleAggregate>>;
+        return _r as __StrictHttpResponse<PageOfSaleAggregate>;
       })
     );
   }
@@ -998,9 +998,9 @@ class QueryResourceService extends __BaseService {
    *
    * @return OK
    */
-  findAllSaleAggregatesUsingGET(params: QueryResourceService.FindAllSaleAggregatesUsingGETParams): __Observable<Array<SaleAggregate>> {
+  findAllSaleAggregatesUsingGET(params: QueryResourceService.FindAllSaleAggregatesUsingGETParams): __Observable<PageOfSaleAggregate> {
     return this.findAllSaleAggregatesUsingGETResponse(params).pipe(
-      __map(_r => _r.body as Array<SaleAggregate>)
+      __map(_r => _r.body as PageOfSaleAggregate)
     );
   }
 
@@ -1063,7 +1063,7 @@ class QueryResourceService extends __BaseService {
     if (params.page != null) __params = __params.set('page', params.page.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/query/search-stock-current/${params.searchTerm}`,
+      this.rootUrl + `/api/query/stock-current/${params.searchTerm}`,
       __body,
       {
         headers: __headers,
@@ -1094,63 +1094,6 @@ class QueryResourceService extends __BaseService {
   searchStockCurrentsUsingGET(params: QueryResourceService.SearchStockCurrentsUsingGETParams): __Observable<Array<StockCurrentDTO>> {
     return this.searchStockCurrentsUsingGETResponse(params).pipe(
       __map(_r => _r.body as Array<StockCurrentDTO>)
-    );
-  }
-
-  /**
-   * @param params The `QueryResourceService.SearchStockDiariesUsingGETParams` containing the following parameters:
-   *
-   * - `searchTerm`: searchTerm
-   *
-   * - `sort`: sort
-   *
-   * - `size`: size
-   *
-   * - `page`: page
-   *
-   * @return OK
-   */
-  searchStockDiariesUsingGETResponse(params: QueryResourceService.SearchStockDiariesUsingGETParams): __Observable<__StrictHttpResponse<Array<StockDiaryDTO>>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
-    if (params.size != null) __params = __params.set('size', params.size.toString());
-    if (params.page != null) __params = __params.set('page', params.page.toString());
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/api/query/search-stock-diary/${params.searchTerm}`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<Array<StockDiaryDTO>>;
-      })
-    );
-  }
-  /**
-   * @param params The `QueryResourceService.SearchStockDiariesUsingGETParams` containing the following parameters:
-   *
-   * - `searchTerm`: searchTerm
-   *
-   * - `sort`: sort
-   *
-   * - `size`: size
-   *
-   * - `page`: page
-   *
-   * @return OK
-   */
-  searchStockDiariesUsingGET(params: QueryResourceService.SearchStockDiariesUsingGETParams): __Observable<Array<StockDiaryDTO>> {
-    return this.searchStockDiariesUsingGETResponse(params).pipe(
-      __map(_r => _r.body as Array<StockDiaryDTO>)
     );
   }
 
@@ -1331,6 +1274,63 @@ class QueryResourceService extends __BaseService {
   }
 
   /**
+   * @param params The `QueryResourceService.SearchStockDiariesUsingGETParams` containing the following parameters:
+   *
+   * - `searchTerm`: searchTerm
+   *
+   * - `sort`: sort
+   *
+   * - `size`: size
+   *
+   * - `page`: page
+   *
+   * @return OK
+   */
+  searchStockDiariesUsingGETResponse(params: QueryResourceService.SearchStockDiariesUsingGETParams): __Observable<__StrictHttpResponse<Array<StockDiaryDTO>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/stock-diary/${params.searchTerm}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<StockDiaryDTO>>;
+      })
+    );
+  }
+  /**
+   * @param params The `QueryResourceService.SearchStockDiariesUsingGETParams` containing the following parameters:
+   *
+   * - `searchTerm`: searchTerm
+   *
+   * - `sort`: sort
+   *
+   * - `size`: size
+   *
+   * - `page`: page
+   *
+   * @return OK
+   */
+  searchStockDiariesUsingGET(params: QueryResourceService.SearchStockDiariesUsingGETParams): __Observable<Array<StockDiaryDTO>> {
+    return this.searchStockDiariesUsingGETResponse(params).pipe(
+      __map(_r => _r.body as Array<StockDiaryDTO>)
+    );
+  }
+
+  /**
    * @param params The `QueryResourceService.FindAllStockLinesUsingGETParams` containing the following parameters:
    *
    * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -1435,42 +1435,6 @@ class QueryResourceService extends __BaseService {
   }
 
   /**
-   * @param saleId saleId
-   * @return OK
-   */
-  findAllTicketLinesBySaleIdUsingGETResponse(saleId: number): __Observable<__StrictHttpResponse<Array<TicketLine>>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/api/query/ticket-lines-by-sale/${saleId}`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<Array<TicketLine>>;
-      })
-    );
-  }
-  /**
-   * @param saleId saleId
-   * @return OK
-   */
-  findAllTicketLinesBySaleIdUsingGET(saleId: number): __Observable<Array<TicketLine>> {
-    return this.findAllTicketLinesBySaleIdUsingGETResponse(saleId).pipe(
-      __map(_r => _r.body as Array<TicketLine>)
-    );
-  }
-
-  /**
    * @param id id
    * @return OK
    */
@@ -1503,6 +1467,42 @@ class QueryResourceService extends __BaseService {
   findOneTicketLinesUsingGET(id: number): __Observable<TicketLineDTO> {
     return this.findOneTicketLinesUsingGETResponse(id).pipe(
       __map(_r => _r.body as TicketLineDTO)
+    );
+  }
+
+  /**
+   * @param saleId saleId
+   * @return OK
+   */
+  findAllTicketLinesBySaleIdUsingGETResponse(saleId: number): __Observable<__StrictHttpResponse<Array<TicketLine>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/ticket-lines/${saleId}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<TicketLine>>;
+      })
+    );
+  }
+  /**
+   * @param saleId saleId
+   * @return OK
+   */
+  findAllTicketLinesBySaleIdUsingGET(saleId: number): __Observable<Array<TicketLine>> {
+    return this.findAllTicketLinesBySaleIdUsingGETResponse(saleId).pipe(
+      __map(_r => _r.body as Array<TicketLine>)
     );
   }
 }
@@ -1860,32 +1860,6 @@ module QueryResourceService {
   }
 
   /**
-   * Parameters for searchStockDiariesUsingGET
-   */
-  export interface SearchStockDiariesUsingGETParams {
-
-    /**
-     * searchTerm
-     */
-    searchTerm: string;
-
-    /**
-     * sort
-     */
-    sort?: Array<string>;
-
-    /**
-     * size
-     */
-    size?: number;
-
-    /**
-     * page
-     */
-    page?: number;
-  }
-
-  /**
    * Parameters for getAllStockCurrentsUsingGET
    */
   export interface GetAllStockCurrentsUsingGETParams {
@@ -1923,6 +1897,32 @@ module QueryResourceService {
 
     /**
      * Page number of the requested page
+     */
+    page?: number;
+  }
+
+  /**
+   * Parameters for searchStockDiariesUsingGET
+   */
+  export interface SearchStockDiariesUsingGETParams {
+
+    /**
+     * searchTerm
+     */
+    searchTerm: string;
+
+    /**
+     * sort
+     */
+    sort?: Array<string>;
+
+    /**
+     * size
+     */
+    size?: number;
+
+    /**
+     * page
      */
     page?: number;
   }

@@ -85,6 +85,12 @@ export class StockManagementPage implements OnInit {
         .subscribe(result => {
           this.stock = result.content;
         });
+    } else if (searchTerm === '') {
+      this.queryResource
+      .getAllStockCurrentsUsingGET(this.params)
+      .subscribe(result => {
+        this.stock = result;
+      });
     }
   }
 

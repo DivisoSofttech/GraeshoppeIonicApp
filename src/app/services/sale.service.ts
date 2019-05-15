@@ -15,6 +15,6 @@ export class SaleService {
   }
 
   public setCurrentSale(sale: SaleAggregate) {
-    this.currentSale=sale;
+    this.currentSale = sale;
   }
 }
