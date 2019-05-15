@@ -42,17 +42,24 @@ export class ProductListPage implements OnInit {
 
               if (result.content.length === 0) {
                 console.log("Nooo Stockkk"+result.content);
-                this.stockCurrent.push(null);
+
 
                 product.outOfStock = true;
+
+                this.stockCurrent.push(null);
               } else {
+
                 console.log("Stockkk Availabless "+result.content[0].sellPrice);
-                this.stockCurrent.push(result.content[0]);
+
 
                 if (result.content[0].units < 1) {
                   product.outOfStock = true;
+                  result.content[0].product=product;
+                  this.stockCurrent.push(result.content[0]);
                 } else {
                   product.outOfStock = false;
+                  result.content[0].product=product;
+                  this.stockCurrent.push(result.content[0]);
                 }
               }
             });
@@ -71,28 +78,7 @@ export class ProductListPage implements OnInit {
     this.cartService.addProduct(product,stockCurrent);
   }
 
-  // stockCheck(products: Product[]) {
-  //   console.log('stock check started');
-  //   for (let i = 0; i < products.length; i++) {
-  //     let params: QueryResourceService.FindStockCurrentByProductIdUsingGETParams;
-  //     let stockCurrent: StockCurrent[];
-  //     params = { productId: products[i].id };
-  //     this.queryResourceService
-  //       .findStockCurrentByProductIdUsingGET(params)
-  //       .subscribe(result => {
-  //         stockCurrent = result.content;
-  //         console.log('at last' + stockCurrent.length);
-  //         if (stockCurrent.length === 0) {
-  //           products[i].outOfStock = true;
-  //         } else {
-  //           if (stockCurrent[0].units < 1) {
-  //             products[i].outOfStock = true;
-  //           } else {
-  //             products[i].outOfStock = false;
-  //           }
-  //         }
-  //       });
-  //   }
 
-  // }
+
+
 }

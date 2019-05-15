@@ -7,6 +7,8 @@ import { QueryResourceService, CommandResourceService } from 'src/app/api/servic
 import { PageOfCustomer } from 'src/app/api/models';
 import { EditCustomerComponent } from 'src/app/components/edit-customer/edit-customer.component';
 import { forEach } from '@angular/router/src/utils/collection';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 
 const options: DocumentViewerOptions = {
   title: 'Customers'
@@ -20,7 +22,7 @@ const options: DocumentViewerOptions = {
 export class CustomersPage implements OnInit {
   constructor(private modalController: ModalController, private queryResource: QueryResourceService,
     private commandResourceService: CommandResourceService,
-    private documentViewer: DocumentViewer) { }
+    private documentViewer: DocumentViewer,private iab: InAppBrowser) { }
   @Input()
   asModal = false;
   customers: Customer[];
@@ -107,6 +109,7 @@ export class CustomersPage implements OnInit {
   downloadPDF() {
     console.log("download pdf method");
     this.queryResource.exportCustomersUsingGET().subscribe(res => {
+      //window.open(res);
       fetch(res)
         .then(data => {
           data.blob()
@@ -117,7 +120,19 @@ export class CustomersPage implements OnInit {
         })
     });
     console.log(res);
-  
+
   });
-  }
+
+}
+
+openBrowser()
+{
+  let url='http://www.google.com';
+  let target = "_system";
+  const browser = this.iab.create(url);
+}
+
+
+
+
 }
