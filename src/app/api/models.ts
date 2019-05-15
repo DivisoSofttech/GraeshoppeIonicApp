@@ -16,6 +16,7 @@ export { Note } from './models/note';
 export { PageOfCustomer } from './models/page-of-customer';
 export { PageOfProduct } from './models/page-of-product';
 export { PageOfSale } from './models/page-of-sale';
+export { PageOfSaleAggregate } from './models/page-of-sale-aggregate';
 export { PageOfStockCurrent } from './models/page-of-stock-current';
 export { PageOfStockDiary } from './models/page-of-stock-diary';
 export { Product } from './models/product';

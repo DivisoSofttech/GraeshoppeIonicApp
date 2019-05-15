@@ -3,7 +3,7 @@
     <ion-row>
       <ion-col>
     <ion-buttons>
-      <ion-back-button></ion-back-button>    
+      <ion-back-button></ion-back-button>
       <ion-title>Basket</ion-title>
     </ion-buttons>
     </ion-col>
@@ -23,17 +23,17 @@
     <!-- <ion-button *ngIf="noOfBills.length > 1" (click)="splitBill()">Split</ion-button> -->
   <ion-row *ngIf="noOfBills.length > 1">
 
-    <ion-col *ngFor="let noOfBill of noOfBills"> 
+    <ion-col *ngFor="let noOfBill of noOfBills">
       <ion-item color="primary">
         <ion-buttons>
         <ion-button > {{'bill'+noOfBill}}</ion-button>
         <ion-button slot="end" (click)="removeBill(noOfBill)"><ion-icon name="close"></ion-icon></ion-button>
       </ion-buttons>
-       
+
       </ion-item>
     </ion-col>
     </ion-row>
-  
+
 
     <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button color="danger" (click)="setCustomer()" >
