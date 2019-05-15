@@ -11,43 +11,25 @@ export class ProductQuantityModalComponent implements OnInit {
 
   @Input() quantity: number;
 
-  @Input() requiredQuantity = 0;
-
-  @Input() product = {
-    name: 'Soap',
-    price: 12.00
-  }
 
   constructor(private modalController: ModalController) { }
 
   ngOnInit() {}
 
   add() {
-    if (this.requiredQuantity >= this.quantity) {
-      this.requiredQuantity = this.quantity;
-      return;
-    }
-    this.requiredQuantity++;
+    this.quantity++;
   }
 
   remove() {
-    if (this.requiredQuantity <= 0) {
-      this.requiredQuantity = 0;
-      return;
-    }
-    this.requiredQuantity--;
+    this.quantity--;
   }
 
-  setValid() {
-    if (this.requiredQuantity > this.quantity) {
-      this.requiredQuantity = this.quantity;
-    } else if (this.requiredQuantity < 0) {
-      this.requiredQuantity = 0;
+  dismiss(force) {
+    if (!force) {
+      this.modalController.dismiss({quantity: this.quantity});
+    } else {
+      this.modalController.dismiss();
     }
-  }
-  dismiss()
-  {
-    this.modalController.dismiss();
   }
 
 }

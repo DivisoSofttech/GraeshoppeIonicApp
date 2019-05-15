@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { KeycloakAdminClient } from 'keycloak-admin/lib/client';
 
 
@@ -10,11 +10,10 @@ import { KeycloakAdminClient } from 'keycloak-admin/lib/client';
 })
 export class SignUpPage implements OnInit {
 
-  constructor(private navCtrl: NavController) {
+  constructor(private navCtrl: NavController, private toastController: ToastController) {
     this.kcAdminClient = new KeycloakAdminClient();
     this.kcAdminClient.setConfig({
         baseUrl: 'http://35.237.193.86:8080/auth'
-
      });
     this.configureKeycloakAdmin();
   }
@@ -32,11 +31,9 @@ export class SignUpPage implements OnInit {
       password: 'admin',
       grantType: 'password',
       clientId: 'admin-cli'
-
-
-
     });
   }
+
   signup() {
     const map = new Map([
       ['phone', this.phone],
@@ -56,11 +53,10 @@ export class SignUpPage implements OnInit {
 
     }).then(res => {
       this.navCtrl.navigateForward('/login');
-
+    }, err => {
+      console.log(err);
+      this.presentToast('user already exists');
     });
-
-
-
   }
 
   dataChanged(agreement) {
@@ -71,6 +67,14 @@ export class SignUpPage implements OnInit {
 
   }
 
+  async presentToast(message) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      cssClass: 'toast'
+    });
+    await toast.present();
+  }
 
   ngOnInit() {
     this.agreement = false;

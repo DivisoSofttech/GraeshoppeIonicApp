@@ -15,9 +15,8 @@ export class ItemsPage implements OnInit {
   @Input()
   asModal = false;
   products: Product[] = [];
-accending : boolean=true;
-sort()
-{
+  accending: boolean = true;
+sort() {
   this.accending=!this.accending;
 }
 
@@ -25,7 +24,7 @@ sort()
     private modalController: ModalController,
     private queryResourceservice: QueryResourceService,
     private commandResource: CommandResourceService,
-   private popoverController : PopoverController
+   private popoverController: PopoverController
   ) { }
 
   async presentModal() {
@@ -43,10 +42,9 @@ sort()
       component: EditProductModalComponent,
       componentProps: {id: product.id}
     });
-   await modal.present();
-  await modal.onDidDismiss();
-  console.log('...............[][][][]');
-  this.getproducts();
+   return await modal.present();
+  // console.log('...............[][][][]');
+  // this.getproducts();
   }
 getproducts()
 {
@@ -81,6 +79,6 @@ getproducts()
   }
 
   downloadReport() {
-    
+
   }
 }

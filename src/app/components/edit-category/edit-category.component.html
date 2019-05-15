@@ -1,8 +1,10 @@
 <ion-header>
   <ion-toolbar color="danger" >
-    <ion-buttons  (click)="dismiss()" slot="start">
-      <ion-icon name="arrow-back" class="icon-size" ></ion-icon>
-      <ion-title text-center><strong>Edit Category</strong></ion-title> 
+    <ion-title text-center><strong>Edit Category</strong></ion-title> 
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
  </ion-buttons>
   </ion-toolbar>
 </ion-header>

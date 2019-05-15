@@ -139,7 +139,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'product-detail',
+    path: 'product-detail/:id',
     loadChildren:
       './pages/product-detail/product-detail.module#ProductDetailPageModule',
     canActivate: [AuthGuardService]
