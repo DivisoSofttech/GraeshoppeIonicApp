@@ -12,8 +12,6 @@ import { PopoverController } from '@ionic/angular';
   styleUrls: ['./items.page.scss'],
 })
 export class ItemsPage implements OnInit {
-  @Input()
-  asModal = false;
   products: Product[] = [];
   accending: boolean = true;
 sort() {
@@ -46,8 +44,7 @@ sort() {
   // console.log('...............[][][][]');
   // this.getproducts();
   }
-getproducts()
-{
+getproducts() {
   this.queryResourceservice.findAllProductUsingGET({}).subscribe(result => {
     console.log('-----', result);
     this.products = result;
@@ -72,10 +69,6 @@ getproducts()
 
   dismiss() {
     this.modalController.dismiss();
-  }
-
-  selectProduct(product: Product) {
-    this.modalController.dismiss({'selectedProduct': product});
   }
 
   downloadReport() {

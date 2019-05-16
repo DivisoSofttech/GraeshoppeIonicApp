@@ -1,64 +1,13 @@
-<ion-header>
-  <!-- <ion-toolbar>
-    <ion-title>recently-used</ion-title>
-  </ion-toolbar> -->
-</ion-header>
-
-<ion-content>
-    <ion-row>
-        <ion-col>
-          <ion-card>
-            <ion-card-content>
-              <ion-img src="/assets/biriyani.jpg"></ion-img>
-              <ion-card-subtitle><strong>Biriyani</strong></ion-card-subtitle>
-            </ion-card-content>
+<ion-grid>
+    <ion-row justify-content-center>
+        <ion-col *ngFor="let stock of stockCurrent; let i = index" [attr.data-index]="i" (click)="addTicketLine(stock.product,stock)" >
+          <ion-card class="size" >
+            <img [class.relative]="stock.product.outOfStock" [src]="'data:' +stock.product.imageContentType + ';base64,' + stock.product.image">
+            <img *ngIf="stock.product.outOfStock" class="absolute" src="/assets/stockout.png">
+            <div class="myOverlay">
+              <div class="card-title"><strong>{{stock.product.name}}</strong></div>
+            </div>
           </ion-card>
         </ion-col>
-        <ion-col>
-            <ion-card>
-              <ion-card-content>
-                <ion-img src="/assets/drinks.jpeg"></ion-img>
-                <ion-card-subtitle><strong>Drinks</strong></ion-card-subtitle>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-      </ion-row>
-      <ion-row>
-          <ion-col>
-            <ion-card>
-              <ion-card-content>
-                <ion-img src="/assets/chinese.jpg"></ion-img>
-                <ion-card-subtitle><strong>Chinese</strong></ion-card-subtitle>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-          <ion-col>
-              <ion-card>
-                <ion-card-content>
-                  <ion-img src="/assets/dosa.jpg"></ion-img>
-                  <ion-card-subtitle><strong>Dosa</strong></ion-card-subtitle>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col>
-              <ion-card>
-                <ion-card-content>
-                  <ion-img src="/assets/burger.jpg"></ion-img>
-                  <ion-card-subtitle><strong>Burger</strong></ion-card-subtitle>
-    
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-            <ion-col>
-                <ion-card>
-                  <ion-card-content>
-                    <ion-img src="/assets/fish.jpg"></ion-img>
-                    <ion-card-subtitle><strong>Fish</strong></ion-card-subtitle>
-    
-                  </ion-card-content>
-                </ion-card>
-              </ion-col>
-          </ion-row>
-</ion-content>
+    </ion-row>
+  </ion-grid>

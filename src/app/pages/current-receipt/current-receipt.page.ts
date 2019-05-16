@@ -85,6 +85,7 @@ splitBill() {
     this.customer = data.selectedCustomer;
     console.log(this.customer);
   }
+
   removeBill(bilno: number) {
     this.noOfBills.pop();
   }
@@ -96,5 +97,10 @@ splitBill() {
       componentProps : { bills : this.noOfBills }
     });
     await modal.present();
+  }
+
+  clearCart() {
+    this.ticketLines = [];
+    this.cartService.emptyCart();
   }
 }

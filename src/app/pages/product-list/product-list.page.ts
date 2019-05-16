@@ -26,11 +26,11 @@ export class ProductListPage implements OnInit {
     this.getProducts();
   }
   getProducts() {
-    const params: QueryResourceService.FindProductByCategoryIdUsingGETParams = {
+    const param: QueryResourceService.FindProductByCategoryIdUsingGETParams = {
       categoryId: this.id
     };
     this.queryResourceService
-      .findProductByCategoryIdUsingGET(params)
+      .findProductByCategoryIdUsingGET(param)
       .subscribe(result => {
         result.content.forEach(product => {
 
@@ -38,10 +38,10 @@ export class ProductListPage implements OnInit {
           params = { productId: product.id };
           this.queryResourceService
             .findStockCurrentByProductIdUsingGET(params)
-            .subscribe(result => {
+            .subscribe(res => {
 
-              if (result.content.length === 0) {
-                console.log("Nooo Stockkk"+result.content);
+              if (res.content.length === 0) {
+                console.log('Nooo Stockkk' + res.content);
 
 
                 product.outOfStock = true;
@@ -49,24 +49,24 @@ export class ProductListPage implements OnInit {
                 this.stockCurrent.push(null);
               } else {
 
-                console.log("Stockkk Availabless "+result.content[0].sellPrice);
+                console.log('Stockkk Availabless ' + res.content[0].sellPrice);
 
 
-                if (result.content[0].units < 1) {
+                if (res.content[0].units < 1) {
                   product.outOfStock = true;
-                  result.content[0].product=product;
+                  res.content[0].product = product;
                   this.stockCurrent.push(result.content[0]);
                 } else {
                   product.outOfStock = false;
-                  result.content[0].product=product;
-                  this.stockCurrent.push(result.content[0]);
+                  res.content[0].product = product;
+                  this.stockCurrent.push(res.content[0]);
                 }
               }
             });
         });
 
-        this.products=result.content;
-        console.log("Product Size"+this.products.length);
+        this.products = result.content;
+        console.log('Product Size' + this.products.length);
 
       });
 
@@ -74,7 +74,7 @@ export class ProductListPage implements OnInit {
   }
 
   addTicketLine(product: Product,stockCurrent: StockCurrent) {
-    console.log('added Product Name'+product.name+" Price "+stockCurrent.sellPrice);
+    console.log('added Product Name'+product.name+' Price '+stockCurrent.sellPrice);
     this.cartService.addProduct(product,stockCurrent);
   }
 

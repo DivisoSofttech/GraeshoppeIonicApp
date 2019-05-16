@@ -1,19 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-row>
-      <ion-col>
-        <ion-buttons>
-          <ion-back-button></ion-back-button>
-          <ion-title>Basket</ion-title>
-        </ion-buttons>
-      </ion-col>
-      <ion-col>
-        <ion-button hidden *ngIf="ticketLines.length > 0" color="danger" (click)="splitBill()" class="rightAlignIcon">
-          <ion-icon *ngIf="noOfBills.length == 1" name="cut"></ion-icon>
-          <ion-icon *ngIf="noOfBills.length > 1" name="add"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+      <ion-title>Basket</ion-title>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="ticketLines.length > 0" (click)="clearCart()">
+        CLEAR
+      </ion-button>
+      <ion-button hidden *ngIf="ticketLines.length > 0" color="danger" (click)="splitBill()" class="rightAlignIcon">
+        <ion-icon *ngIf="noOfBills.length == 1" name="cut"></ion-icon>
+        <ion-icon *ngIf="noOfBills.length > 1" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -82,7 +81,7 @@
       <!-- <ion-col *ngIf="noOfBills.length == 1" size="2">
       </ion-col> -->
       <ion-col size="4" text-start>
-        <ion-label *ngIf="products.length > 0" >{{getProduct(ticket).name}}</ion-label>
+        <ion-label *ngIf="products.length > 0">{{getProduct(ticket).name}}</ion-label>
       </ion-col>
       <ion-col size="4" (click)="productQuantity(ticket)">
         <ion-label *ngIf="products.length > 0">{{'x' +ticket.quantity}}</ion-label>
@@ -103,8 +102,7 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col *ngIf="noOfBills.length > 1"
-         size="12">
+      <ion-col *ngIf="noOfBills.length > 1" size="12">
         <ion-button expand="full">Pay Split Bills</ion-button>
       </ion-col>
     </ion-row>
