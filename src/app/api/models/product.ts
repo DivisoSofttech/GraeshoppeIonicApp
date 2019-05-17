@@ -1,14 +1,14 @@
 /* tslint:disable */
+import { Note } from './note';
 import { Barcode } from './barcode';
 import { Label } from './label';
 import { Category } from './category';
-import { Note } from './note';
 import { Status } from './status';
 import { StockDiary } from './stock-diary';
 import { StockLine } from './stock-line';
 import { TaxCategory } from './tax-category';
 export interface Product {
-  name: string;
+  notes?: Array<Note>;
   barcode?: Barcode;
   dateOfExpiry?: string;
   dateOfMfd?: string;
@@ -19,8 +19,8 @@ export interface Product {
   labels?: Array<Label>;
   maximumStockLevel?: number;
   mpn?: string;
+  name: string;
   categories?: Array<Category>;
-  notes?: Array<Note>;
   outOfStock?: boolean;
   reOrderLevel?: number;
   reference: string;
@@ -30,5 +30,6 @@ export interface Product {
   stockDiaries?: Array<StockDiary>;
   stockLines?: Array<StockLine>;
   taxCategory?: TaxCategory;
+  userId?: string;
   visible?: boolean;
 }

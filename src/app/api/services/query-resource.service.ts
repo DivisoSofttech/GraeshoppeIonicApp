@@ -16,6 +16,7 @@ import { UomDTO } from '../models/uom-dto';
 import { PageOfStockCurrent } from '../models/page-of-stock-current';
 import { PageOfStockDiary } from '../models/page-of-stock-diary';
 import { ProductDTO } from '../models/product-dto';
+import { Review } from '../models/review';
 import { PageOfSale } from '../models/page-of-sale';
 import { PageOfSaleAggregate } from '../models/page-of-sale-aggregate';
 import { SaleDTO } from '../models/sale-dto';
@@ -26,6 +27,7 @@ import { StockDiaryDTO } from '../models/stock-diary-dto';
 import { StockLine } from '../models/stock-line';
 import { TicketLineDTO } from '../models/ticket-line-dto';
 import { TicketLine } from '../models/ticket-line';
+import { UserRating } from '../models/user-rating';
 
 /**
  * Query Resource
@@ -51,6 +53,7 @@ class QueryResourceService extends __BaseService {
   static readonly findAllProductUsingGETPath = '/api/query/products';
   static readonly exportProductsUsingGETPath = '/api/query/products/export';
   static readonly findProductUsingGETPath = '/api/query/products/{id}';
+  static readonly findAllReviewsUsingGETPath = '/api/query/reviews';
   static readonly findSalesUsingGETPath = '/api/query/sales';
   static readonly findAllSaleAggregatesUsingGETPath = '/api/query/sales/combined';
   static readonly findSaleByIdUsingGETPath = '/api/query/sales/{id}';
@@ -64,6 +67,7 @@ class QueryResourceService extends __BaseService {
   static readonly findAllTicketlinesUsingGETPath = '/api/query/ticket-lines';
   static readonly findOneTicketLinesUsingGETPath = '/api/query/ticket-lines/{id}';
   static readonly findAllTicketLinesBySaleIdUsingGETPath = '/api/query/ticket-lines/{saleId}';
+  static readonly findAllUserRatingsUsingGETPath = '/api/query/user-ratings';
 
   constructor(
     config: __Configuration,
@@ -901,6 +905,58 @@ class QueryResourceService extends __BaseService {
   }
 
   /**
+   * @param params The `QueryResourceService.FindAllReviewsUsingGETParams` containing the following parameters:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `page`: Page number of the requested page
+   *
+   * @return OK
+   */
+  findAllReviewsUsingGETResponse(params: QueryResourceService.FindAllReviewsUsingGETParams): __Observable<__StrictHttpResponse<Array<Review>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/reviews`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<Review>>;
+      })
+    );
+  }
+  /**
+   * @param params The `QueryResourceService.FindAllReviewsUsingGETParams` containing the following parameters:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `page`: Page number of the requested page
+   *
+   * @return OK
+   */
+  findAllReviewsUsingGET(params: QueryResourceService.FindAllReviewsUsingGETParams): __Observable<Array<Review>> {
+    return this.findAllReviewsUsingGETResponse(params).pipe(
+      __map(_r => _r.body as Array<Review>)
+    );
+  }
+
+  /**
    * @param params The `QueryResourceService.FindSalesUsingGETParams` containing the following parameters:
    *
    * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -1505,6 +1561,58 @@ class QueryResourceService extends __BaseService {
       __map(_r => _r.body as Array<TicketLine>)
     );
   }
+
+  /**
+   * @param params The `QueryResourceService.FindAllUserRatingsUsingGETParams` containing the following parameters:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `page`: Page number of the requested page
+   *
+   * @return OK
+   */
+  findAllUserRatingsUsingGETResponse(params: QueryResourceService.FindAllUserRatingsUsingGETParams): __Observable<__StrictHttpResponse<Array<UserRating>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/user-ratings`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<UserRating>>;
+      })
+    );
+  }
+  /**
+   * @param params The `QueryResourceService.FindAllUserRatingsUsingGETParams` containing the following parameters:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `page`: Page number of the requested page
+   *
+   * @return OK
+   */
+  findAllUserRatingsUsingGET(params: QueryResourceService.FindAllUserRatingsUsingGETParams): __Observable<Array<UserRating>> {
+    return this.findAllUserRatingsUsingGETResponse(params).pipe(
+      __map(_r => _r.body as Array<UserRating>)
+    );
+  }
 }
 
 module QueryResourceService {
@@ -1792,6 +1900,27 @@ module QueryResourceService {
   }
 
   /**
+   * Parameters for findAllReviewsUsingGET
+   */
+  export interface FindAllReviewsUsingGETParams {
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     */
+    sort?: Array<string>;
+
+    /**
+     * Size of a page
+     */
+    size?: number;
+
+    /**
+     * Page number of the requested page
+     */
+    page?: number;
+  }
+
+  /**
    * Parameters for findSalesUsingGET
    */
   export interface FindSalesUsingGETParams {
@@ -1965,6 +2094,27 @@ module QueryResourceService {
 
     /**
      * page
+     */
+    page?: number;
+  }
+
+  /**
+   * Parameters for findAllUserRatingsUsingGET
+   */
+  export interface FindAllUserRatingsUsingGETParams {
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     */
+    sort?: Array<string>;
+
+    /**
+     * Size of a page
+     */
+    size?: number;
+
+    /**
+     * Page number of the requested page
      */
     page?: number;
   }
