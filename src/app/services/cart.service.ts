@@ -35,6 +35,11 @@ export class CartService {
     }
   }
 
+  removeTicket(index) {
+    this.ticketLines.splice(index, 1);
+    this.updateCart();
+  }
+
   updateCart() {
     console.log(this.ticketLines);
     this.observableTickets.next(this.ticketLines);

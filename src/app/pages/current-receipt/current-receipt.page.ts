@@ -103,4 +103,10 @@ splitBill() {
     this.ticketLines = [];
     this.cartService.emptyCart();
   }
+
+  removeTicket(index) {
+    this.cartService.removeTicket(index);
+    console.log(this.ticketLines.length);
+    this.products.splice(index, 1);
+  }
 }

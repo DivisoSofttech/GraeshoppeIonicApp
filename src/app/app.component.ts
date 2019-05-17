@@ -132,6 +132,7 @@ export class AppComponent {
     console.log('Logout clicked');
     this.oauthService.logOut();
     this.presentToastLogout();
+    this.navCtrl.navigateRoot('/landing');
   }
 
   async presentToastLogout() {
