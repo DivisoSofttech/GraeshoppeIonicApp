@@ -12,7 +12,7 @@ export class SettingsPage implements OnInit {
   settingsModel: SettingsModel = {
     settings: [
       {
-        name: "Prints",
+        name: "Printer",
         iconName: "print",
         isSelected: false
       },

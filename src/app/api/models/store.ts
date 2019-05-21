@@ -1,14 +1,12 @@
 /* tslint:disable */
-export interface StoreDTO {
-  info?: string;
+export interface Store {
+  location?: string;
   closingTime?: string;
-  deliveryInfoId?: number;
   email?: string;
   id?: number;
   image?: string;
   imageContentType?: string;
   contactNo?: number;
-  location?: string;
   name?: string;
   openingTime?: string;
   propreitorId?: number;

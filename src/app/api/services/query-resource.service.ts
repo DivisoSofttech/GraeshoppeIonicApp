@@ -25,6 +25,7 @@ import { StockCurrent } from '../models/stock-current';
 import { StockDiary } from '../models/stock-diary';
 import { StockDiaryDTO } from '../models/stock-diary-dto';
 import { StockLine } from '../models/stock-line';
+import { PageOfStore } from '../models/page-of-store';
 import { TicketLineDTO } from '../models/ticket-line-dto';
 import { TicketLine } from '../models/ticket-line';
 import { UserRating } from '../models/user-rating';
@@ -64,6 +65,7 @@ class QueryResourceService extends __BaseService {
   static readonly findOneStockDiaryUsingGETPath = '/api/query/stock-diaries/{id}';
   static readonly searchStockDiariesUsingGETPath = '/api/query/stock-diary/{searchTerm}';
   static readonly findAllStockLinesUsingGETPath = '/api/query/stocklines';
+  static readonly findStoreByRegNoUsingGETPath = '/api/query/stores/{regNo}';
   static readonly findAllTicketlinesUsingGETPath = '/api/query/ticket-lines';
   static readonly findOneTicketLinesUsingGETPath = '/api/query/ticket-lines/{id}';
   static readonly findAllTicketLinesBySaleIdUsingGETPath = '/api/query/ticket-lines/{saleId}';
@@ -1439,6 +1441,63 @@ class QueryResourceService extends __BaseService {
   }
 
   /**
+   * @param params The `QueryResourceService.FindStoreByRegNoUsingGETParams` containing the following parameters:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `regNo`: regNo
+   *
+   * - `page`: Page number of the requested page
+   *
+   * @return OK
+   */
+  findStoreByRegNoUsingGETResponse(params: QueryResourceService.FindStoreByRegNoUsingGETParams): __Observable<__StrictHttpResponse<PageOfStore>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.regNo != null) __params = __params.set('regNo', params.regNo.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/stores/${params.regNo}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<PageOfStore>;
+      })
+    );
+  }
+  /**
+   * @param params The `QueryResourceService.FindStoreByRegNoUsingGETParams` containing the following parameters:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `regNo`: regNo
+   *
+   * - `page`: Page number of the requested page
+   *
+   * @return OK
+   */
+  findStoreByRegNoUsingGET(params: QueryResourceService.FindStoreByRegNoUsingGETParams): __Observable<PageOfStore> {
+    return this.findStoreByRegNoUsingGETResponse(params).pipe(
+      __map(_r => _r.body as PageOfStore)
+    );
+  }
+
+  /**
    * @param params The `QueryResourceService.FindAllTicketlinesUsingGETParams` containing the following parameters:
    *
    * - `sort`: sort
@@ -2070,6 +2129,32 @@ module QueryResourceService {
      * Size of a page
      */
     size?: number;
+
+    /**
+     * Page number of the requested page
+     */
+    page?: number;
+  }
+
+  /**
+   * Parameters for findStoreByRegNoUsingGET
+   */
+  export interface FindStoreByRegNoUsingGETParams {
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     */
+    sort?: Array<string>;
+
+    /**
+     * Size of a page
+     */
+    size?: number;
+
+    /**
+     * regNo
+     */
+    regNo?: string;
 
     /**
      * Page number of the requested page

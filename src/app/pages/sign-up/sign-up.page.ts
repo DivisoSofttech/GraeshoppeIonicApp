@@ -1,3 +1,6 @@
+import { CommandResourceService } from 'src/app/api/services';
+import { HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { OAuthService } from 'angular-oauth2-oidc';
 import { Component, OnInit } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
 import { KeycloakAdminClient } from 'keycloak-admin/lib/client';
@@ -10,11 +13,11 @@ import { KeycloakAdminClient } from 'keycloak-admin/lib/client';
 })
 export class SignUpPage implements OnInit {
 
-  constructor(private navCtrl: NavController, private toastController: ToastController) {
+  constructor(private navCtrl: NavController, private toastController: ToastController, private oauthService: OAuthService, private commandService:CommandResourceService) {
     this.kcAdminClient = new KeycloakAdminClient();
     this.kcAdminClient.setConfig({
-        baseUrl: 'http://35.237.193.86:8080/auth'
-     });
+      baseUrl: 'http://35.237.193.86:8080/auth'
+    });
     this.configureKeycloakAdmin();
   }
 
@@ -52,6 +55,21 @@ export class SignUpPage implements OnInit {
       attributes: map
 
     }).then(res => {
+      this.oauthService.fetchTokenUsingPasswordFlowAndLoadUserProfile(this.username, this.password, new HttpHeaders()).then(() => {
+        const claims = this.oauthService.getIdentityClaims();
+        if (claims) { console.log(claims); }
+        if (this.oauthService.hasValidAccessToken()) {
+          this.presentToast('Signup successfully completed');
+          //this.navCtrl.navigateRoot('/sale');
+          this.commandService.createStoreUsingPOST({regNo: this.username}).subscribe(
+            data=>{
+              console.log("store created",data);
+            }
+          )
+        }
+      }).catch((err: HttpErrorResponse) => {
+        this.presentToast(err.error.error_description);
+      });
       this.navCtrl.navigateForward('/login');
     }, err => {
       console.log(err);
