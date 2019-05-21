@@ -19,7 +19,7 @@
     <!-- <h2> Button Progress: {{ progress }}</h2>
     <h2> Presses State: {{ pressState }}</h2> -->
 
-  <ion-searchbar placeholder="Search Stocks" class="border" animated [(ngModel)]="searchTerm" (keyup)="onSearchType($event)"></ion-searchbar>
+  <ion-searchbar placeholder="Search Stocks" class="border" animated [(ngModel)]="searchTerm" (ionChange)="onSearchType($event)"></ion-searchbar>
   <ion-card>
     <ion-card-content>
 <ion-grid>
@@ -40,7 +40,7 @@
 
         <ion-row *ngFor="let item of stock">
      <ion-col *ngIf="item.product.name" no-padding size="12">
-          <ion-item (click)="presentModal(item,item.product,item.units)" >
+          <ion-item (click)="presentModal(item)" >
             <ion-col size="4">
               {{item.product.name}}
             </ion-col>
