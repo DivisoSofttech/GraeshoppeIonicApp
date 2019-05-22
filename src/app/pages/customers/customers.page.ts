@@ -1,4 +1,7 @@
-import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer/ngx';
+import {
+  DocumentViewer,
+  DocumentViewerOptions
+} from '@ionic-native/document-viewer/ngx';
 import { Customer } from './../../api/models/customer';
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, Platform } from '@ionic/angular';
@@ -12,18 +15,19 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 
-
 const options: DocumentViewerOptions = {
   title: 'Customers'
-}
+};
 
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.page.html',
-  styleUrls: ['./customers.page.scss'],
+  styleUrls: ['./customers.page.scss']
 })
 export class CustomersPage implements OnInit {
-  constructor(private modalController: ModalController, private queryResource: QueryResourceService,
+  constructor(
+    private modalController: ModalController,
+    private queryResource: QueryResourceService,
     private commandResourceService: CommandResourceService,
     private documentViewer: DocumentViewer,private iab: InAppBrowser,private platform: Platform, private file: File,
     private fileTransfer: FileTransfer) { }
@@ -34,47 +38,52 @@ export class CustomersPage implements OnInit {
   fileurl;
 
   searchTerm = '';
-  params: QueryResourceService.FindAllCustomersUsingGETParams = {searchTerm: undefined};
+  params: QueryResourceService.FindAllCustomersUsingGETParams = {
+    searchTerm: undefined
+  };
 
   ngOnInit() {
-    this.queryResource.findAllCustomersWithoutSearchUsingGET({}).subscribe(result => {
+    this.queryResource
+      .findAllCustomersWithoutSearchUsingGET({})
+      .subscribe(result => {
         this.customers = result.content;
-    //     this.customers.forEach(c => {
-    //       console.log('ddddddddddd*ddddddddddddd',c.contact.mobileNumber);
-    // });
-    });
-
+        //     this.customers.forEach(c => {
+        //       console.log('ddddddddddd*ddddddddddddd',c.contact.mobileNumber);
+        // });
+      });
   }
   onSearch() {
     console.log('Search Term is ' + this.searchTerm);
     this.params.searchTerm = this.searchTerm;
     if (this.searchTerm === '') {
-      this.queryResource.findAllCustomersWithoutSearchUsingGET({}).subscribe(result => {
-        this.customers = result.content;
-    });
+      this.queryResource
+        .findAllCustomersWithoutSearchUsingGET({})
+        .subscribe(result => {
+          this.customers = result.content;
+        });
     }
-    this.queryResource.findAllCustomersUsingGET(this.params).subscribe(
-      result => {
-      console.log('result is ',result);
-      this.customers = result.content;
-    });
+    this.queryResource
+      .findAllCustomersUsingGET(this.params)
+      .subscribe(result => {
+        console.log('result is ', result);
+        this.customers = result.content;
+      });
   }
 
   async presentModal() {
     const modal = await this.modalController.create({
-      component: AddCustomerPage,
+      component: AddCustomerPage
     });
-     await modal.present();
-     const {data} = await modal.onDidDismiss();
-     this.customers = data.customers;
-
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+    this.customers = data.customers;
   }
 
   dismiss(force: boolean) {
     if (force) {
       this.modalController.dismiss();
     } else {
-      this.modalController.dismiss({'selectedCustomer': this.selectedCustomer});
+      this.modalController.dismiss({ selectedCustomer: this.selectedCustomer });
     }
   }
 
@@ -84,78 +93,45 @@ export class CustomersPage implements OnInit {
       this.dismiss(false);
     }
   }
-  editCustomer(customer : Customer)
-  {
+  editCustomer(customer: Customer) {
     this.presentEditCustomerModal(customer);
-    console.log('dddddddddddddddddddddddd'+customer.contact.mobileNumber);
+    console.log('dddddddddddddddddddddddd' + customer.contact.mobileNumber);
   }
-  async presentEditCustomerModal(customer:Customer)
-  {
+  async presentEditCustomerModal(customer: Customer) {
     const modal = await this.modalController.create({
       component: EditCustomerComponent,
-      componentProps : {customer : customer}
+      componentProps: { customer: customer }
     });
-      await modal.present();
-      this.queryResource.findAllCustomersWithoutSearchUsingGET({}).subscribe(result => {
+    await modal.present();
+    this.queryResource
+      .findAllCustomersWithoutSearchUsingGET({})
+      .subscribe(result => {
         this.customers = result.content;
-    //     this.customers.forEach(c => {
-    //       console.log('ddddddddddd*ddddddddddddd',c.contact.mobileNumber);
-    // });
-    });
+        //     this.customers.forEach(c => {
+        //       console.log('ddddddddddd*ddddddddddddd',c.contact.mobileNumber);
+        // });
+      });
   }
-  deleteCustomer(customer : Customer)
-  {
-    console.log('delete request for an customer with id'+customer.id);
-    this.commandResourceService.deleteCustomerUsingDELETE(customer.id).subscribe(succ=>{console.log('sucess deleting customer ',succ);
-    this.customers.splice(this.customers.indexOf(customer),1)},
-    err=>{console.log('err deleting an customer ',err)});
+  deleteCustomer(customer: Customer) {
+    console.log('delete request for an customer with id' + customer.id);
+    this.commandResourceService
+      .deleteCustomerUsingDELETE(customer.id)
+      .subscribe(
+        succ => {
+          console.log('sucess deleting customer ', succ);
+          this.customers.splice(this.customers.indexOf(customer), 1);
+        },
+        err => {
+          console.log('err deleting an customer ', err);
+        }
+      );
   }
   downloadPDF() {
     console.log("download pdf method");
-let path=null;
-      this.queryResource.exportCustomersUsingGET().subscribe(result=>{
-if(this.platform.is('ios'))
-{
-  path=this.file.documentsDirectory;
-}
-else
-{
-  path=this.file.dataDirectory;
-}
-const transfer=this.fileTransfer.create();
-transfer.download(result,path+'myFile.pdf').then(entry=>{
 
-  let url=entry.toURL();
-  this.documentViewer.viewDocument(url,'application/pdf',{});
-})
-
-      });
-
-
-
-
-  //   this.queryResource.exportCustomersUsingGET().subscribe(res => {
-  //     fetch(res)
-  //       .then(data => {
-  //         data.blob()
-  //           .then(blob => {
-  //             this.fileurl = blob;
-  //             this.documentViewer.viewDocument(this.fileurl,'application/pdf',options);
-  //             console.log("file url and blob",this.fileurl,blob);
-  //       })
-  //   });
-  //   console.log(res);
-
-  // });
 
 }
 
-openBrowser()
-{
-  let url='http://www.google.com';
-  let target = "_system";
-  const browser = this.iab.create(url);
-}
 
 
 

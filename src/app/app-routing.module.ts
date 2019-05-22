@@ -139,7 +139,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'product-detail',
+    path: 'product-detail/:id',
     loadChildren:
       './pages/product-detail/product-detail.module#ProductDetailPageModule',
     canActivate: [AuthGuardService]
@@ -181,7 +181,9 @@ const routes: Routes = [
     path: 'stock-management',
     loadChildren: './pages/stock-management/stock-management.module#StockManagementPageModule',
     canActivate: [AuthGuardService]
-   }
+   },
+  { path: 'update-store', loadChildren: './pages/update-store/update-store.module#UpdateStorePageModule' }
+
 
 ];
 

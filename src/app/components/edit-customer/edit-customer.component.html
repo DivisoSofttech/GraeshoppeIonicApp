@@ -1,20 +1,24 @@
 <ion-header>
   <ion-toolbar color="danger">
-   <ion-buttons  (click)="dismiss()" slot="start">
-     <ion-icon name="arrow-back" class="icon-size" ></ion-icon>  &nbsp;&nbsp;
-     <ion-title text-center><strong>Edit Customer</strong></ion-title> 
-</ion-buttons>
- </ion-toolbar> 
+    <ion-buttons slot="start">
+      <ion-title text-center><strong>Edit Customer</strong></ion-title>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content><br><br>
-<ion-item>
- <ion-icon name="person"></ion-icon>&nbsp;&nbsp;&nbsp;
- <ion-input placeholder="Name" [(ngModel)]="customer.name"></ion-input>
-</ion-item>
-<ion-item>
-   <ion-icon name="call"></ion-icon>&nbsp;&nbsp;&nbsp;
-   <ion-input placeholder="Phone" [(ngModel)]="customer.contact.mobileNumber" type="number"></ion-input>
- </ion-item><br>
- <ion-button expand="block" (click)="update(customer)" color="danger">Update</ion-button>
+  <ion-item>
+    <ion-icon name="person"></ion-icon>&nbsp;&nbsp;&nbsp;
+    <ion-input placeholder="Name" [(ngModel)]="customer.name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-icon name="call"></ion-icon>&nbsp;&nbsp;&nbsp;
+    <ion-input placeholder="Phone" [(ngModel)]="customer.contact.mobileNumber" type="number"></ion-input>
+  </ion-item><br>
+  <ion-button expand="block" (click)="update(customer)" color="danger">Update</ion-button>
 </ion-content>

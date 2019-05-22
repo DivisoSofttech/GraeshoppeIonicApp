@@ -1,7 +1,7 @@
 
 <ion-content>
   <ion-row>
-    <ion-col *ngFor='let category of categoriesList'>
+    <ion-col *ngFor='let category of categoriesList' size="6">
       <ion-card class="size" [routerLink]="'/product-list/'+category.id">
         <img [src]="'data:' + category.imageContentType + ';base64,' + category.image" />
         <div class="myOverlay">

@@ -21,5 +21,6 @@ export interface ProductDTO {
   sku?: string;
   statusId?: number;
   taxCategoryId?: number;
+  userId?: string;
   visible?: boolean;
 }

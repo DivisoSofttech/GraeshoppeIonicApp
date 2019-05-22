@@ -26,59 +26,25 @@ export class ProductListPage implements OnInit {
     this.getProducts();
   }
   getProducts() {
-    const params: QueryResourceService.FindProductByCategoryIdUsingGETParams = {
-      categoryId: this.id
-    };
-    this.queryResourceService
-      .findProductByCategoryIdUsingGET(params)
-      .subscribe(result => {
-        result.content.forEach(product => {
-
-          let params: QueryResourceService.FindStockCurrentByProductIdUsingGETParams;
-          params = { productId: product.id };
-          this.queryResourceService
-            .findStockCurrentByProductIdUsingGET(params)
-            .subscribe(result => {
-
-              if (result.content.length === 0) {
-                console.log("Nooo Stockkk"+result.content);
-
-
-                product.outOfStock = true;
-
-                this.stockCurrent.push(null);
-              } else {
-
-                console.log("Stockkk Availabless "+result.content[0].sellPrice);
-
-
-                if (result.content[0].units < 1) {
-                  product.outOfStock = true;
-                  result.content[0].product=product;
-                  this.stockCurrent.push(result.content[0]);
-                } else {
-                  product.outOfStock = false;
-                  result.content[0].product=product;
-                  this.stockCurrent.push(result.content[0]);
-                }
-              }
-            });
+    const param: QueryResourceService.FindAllProductsByCategoryIdUsingGETParams = {categoryId: this.id};
+    this.queryResourceService.findAllProductsByCategoryIdUsingGET(param).subscribe(res => {
+      this.products = res.content;
+      this.products.forEach(pr => {
+        this.queryResourceService.findStockCurrentByProductIdUsingGET(pr.id).subscribe(result => {
+          this.stockCurrent.push(result);
+        }, err => {
+          console.log(err);
         });
-
-        this.products=result.content;
-        console.log("Product Size"+this.products.length);
-
       });
-
-    console.log('completed');
+    }, err => {
+      console.log(err);
+    });
+    // const param: QueryResourceService.FindAllStockCurrentByCategoryUsingGETParams = {categoryId: this.id};
+    // this.queryResourceService.findAllStockCurrentByCategoryUsingGET(param).subscribe(res => {
+    //   this.stockCurrent = res.content;
+    // }, err => {
+    //   console.log('error finding products');
+    // });
   }
-
-  addTicketLine(product: Product,stockCurrent: StockCurrent) {
-    console.log('added Product Name'+product.name+" Price "+stockCurrent.sellPrice);
-    this.cartService.addProduct(product,stockCurrent);
-  }
-
-
-
 
 }

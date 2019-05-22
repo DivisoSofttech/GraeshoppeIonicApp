@@ -1,8 +1,8 @@
 /* tslint:disable */
-import { StockDiary } from './stock-diary';
+import { Store } from './store';
 import { Sort } from './sort';
-export interface PageOfStockDiary {
-  content?: Array<StockDiary>;
+export interface PageOfStore {
+  content?: Array<Store>;
   first?: boolean;
   last?: boolean;
   number?: number;

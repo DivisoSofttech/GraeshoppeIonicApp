@@ -2,11 +2,11 @@
 <ion-content padding>
   <ion-grid>
     <ion-row justify-content-center>
-        <ion-col *ngFor="let stock of stockCurrent ; let i = index" [attr.data-index]="i" (click)="addTicketLine(stock.product,stock)" >
+        <ion-col size="6" *ngFor="let stock of stockCurrent ; let i = index" [attr.data-index]="i" >
           <ion-card class="size" >
 
-            <img [class.relative]="stock.product.outOfStock" [src]="'data:' +stock.product.imageContentType + ';base64,' + stock.product.image">
-            <img *ngIf="stock.product.outOfStock" class="absolute" src="/assets/stockout.png">
+            <img [class.relative]="stock.units <= 0" [src]="'data:' +stock.product.imageContentType + ';base64,' + stock.product.image">
+            <img *ngIf="stock.units <= 0" class="absolute" src="/assets/stockout.png">
             <div class="myOverlay">
               <div class="card-title"><strong>{{stock.product.name}}</strong></div>
             </div>
@@ -14,5 +14,4 @@
         </ion-col>
     </ion-row>
   </ion-grid>
-
 </ion-content>

@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-title>update-store</ion-title>
+    <ion-buttons slot="start">
+        <ion-back-button defaultHref="/sale"></ion-back-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+        <ion-col padding>
+          <ion-item>
+            <ion-label>Logo</ion-label>
+            <img src="{{store.image}}" class="image">
+            <input hidden id="image" type="file" accept="image/*" color="primary" (change)="onSelectFile($event)">
+            <ion-button fill="none" (click)="triggerUpload($event)">
+              <ion-icon name="camera" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Opening time</ion-label>
+            <ion-input type="text" [(ngModel)]="store.openingTime"></ion-input>
+          </ion-item>
+              <ion-item>
+                  <ion-label position="floating">Closing time</ion-label>
+                  <ion-input type="text" [(ngModel)]="store.closingTime"></ion-input>
+              </ion-item>
+              <ion-item>
+                  <ion-label position="floating">Additional Info</ion-label>
+                  <ion-input type="text-area" [(ngModel)]="store.closingTime"></ion-input>
+              </ion-item>
+          <!-- <ion-item>
+              <ion-label position="floating">UOM</ion-label>
+              <ion-select [(ngModel)]="productUOM" >
+                <ion-select-option *ngFor="let um of uom" value="{{um.id}}" required>{{um.name}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item> -->
+          <ion-button (click)="save()" margin mode="ios" expand="block" fill="solid" color="danger">Save</ion-button>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

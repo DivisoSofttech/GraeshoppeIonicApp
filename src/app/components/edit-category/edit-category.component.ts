@@ -1,3 +1,6 @@
+import { IImage } from 'ng2-image-compress';
+import { RESIZE_OPTIONS } from './../../image-resize-options';
+import { ImageCompressService } from 'ng2-image-compress';
 import { CommandResourceService } from 'src/app/api/services';
 import { CategoryDTO } from 'src/app/api/models';
 import { Component, OnInit, Input } from '@angular/core';
@@ -30,17 +33,44 @@ export class EditCategoryComponent implements OnInit {
     document.getElementById('image').click();
   }
   onSelectFile(event) {
-
     this.fileToUpload = event.target.files.item(0);
 
     const freader = new FileReader();
 
     freader.onload = (ev: any) => {
-
       this.fileUrl = ev.target.result;
+      this.category.image = this.fileUrl.substring(
+        this.fileUrl.indexOf(',') + 1
+      );
+      this.category.imageContentType = this.fileToUpload.type;
     };
 
-    freader.readAsDataURL(this.fileToUpload);
+    // Array to store the converted source images
+    const images: Array<IImage> = [];
+
+    // Method which compresses the image and read by the filereader as blob
+    ImageCompressService.filesArrayToCompressedImageSourceEx(
+      [this.fileToUpload],
+      RESIZE_OPTIONS
+    ).then(observableImages => {
+      observableImages.subscribe(
+        image => {
+          images.push(image);
+        },
+        error => {
+          console.log('Error while converting');
+        },
+        () => {
+          // converts the encoded compressed file to blob for file reader to read
+          fetch(images.pop().compressedImage.imageDataUrl).then(data => {
+            data.blob().then(blob => {
+              console.log('blob', blob);
+              freader.readAsDataURL(blob);
+            });
+          });
+        }
+      );
+    });
   }
 
 }

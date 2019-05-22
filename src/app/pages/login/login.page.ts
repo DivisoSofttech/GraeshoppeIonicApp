@@ -27,6 +27,7 @@ export class LoginPage implements OnInit {
       const claims = this.oauthService.getIdentityClaims();
       if (claims) { console.log(claims); }
       if (this.oauthService.hasValidAccessToken()) {
+        this.presentToast('Logged in successfully');
         this.navCtrl.navigateRoot('/sale');
       }
     }).catch((err: HttpErrorResponse) => {

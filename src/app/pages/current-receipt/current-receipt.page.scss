@@ -29,6 +29,10 @@
     border-top: 1px solid grey;
 }
 
+.border-bottom{
+    border-bottom: 1px solid grey;
+}
+
 .line-height-medium {
 
     line-height: 22px;
@@ -47,4 +51,14 @@ address {
     position: absolute; 
     right: 2%;
     size: 5%
+}
+
+.absolute {
+    position: relative;
+    top: 0%;
+    right: 0%;
+}
+
+.wrap {
+    white-space: normal;
 }

@@ -20,19 +20,23 @@ export class CurrentReceiptPage implements OnInit {
   products: ProductDTO[] = [];
   customer: CustomerDTO;
   total = 0;
-  noOfBills: number[]=[1];
+  noOfBills: number[] = [1];
   constructor(
     private modalController: ModalController,
     private cartService: CartService,
     private queryResourceService: QueryResourceService
   ) {}
-splitBill()
-  {
-    console.log(">>>>>>>>>>>>noOfBills"+this.noOfBills.length);
-    this.noOfBills.push((this.noOfBills[(this.noOfBills.length-1)])+1);
+splitBill() {
+    console.log(this.noOfBills.length);
+    this.noOfBills.push(this.noOfBills.length + 1);
   }
   ngOnInit() {
     this.ticketLines = this.cartService.ticketLines;
+    this.setTotal();
+  }
+
+  setTotal() {
+    this.total = 0;
     this.ticketLines.forEach(ticket => {
       this.total += ticket.total;
       this.queryResourceService
@@ -52,12 +56,19 @@ splitBill()
     return await modal.present();
   }
 
-  async productQuantity() {
+  async productQuantity(ticket: TicketLineDTO) {
     const modal = await this.modalController.create({
-      component: ProductQuantityModalComponent
+      component: ProductQuantityModalComponent,
+      componentProps: {quantity: ticket.quantity}
     });
-
-    return await modal.present();
+    await modal.present();
+    const {data} = await modal.onDidDismiss();
+    ticket.quantity = data.quantity;
+    ticket.total = ticket.price * ticket.quantity;
+    if (ticket.quantity === 0) {
+      this.ticketLines.splice(this.ticketLines.indexOf(ticket), 1);
+    }
+    this.setTotal();
   }
 
   getProduct(ticket: TicketLineDTO): ProductDTO {
@@ -74,18 +85,28 @@ splitBill()
     this.customer = data.selectedCustomer;
     console.log(this.customer);
   }
-  removeBill(bilno:number)
-  {
-    this.noOfBills.splice(this.noOfBills.indexOf(bilno),1);
+
+  removeBill(bilno: number) {
+    this.noOfBills.pop();
   }
 
-  async presentSplitBIllOptionModal()
-  {
+  async presentSplitBIllOptionModal() {
     const modal = await this.modalController.create({
-      component:BilloptionsComponent,
-      cssClass : "half-height",
-      componentProps :{ bills : this.noOfBills }
+      component: BilloptionsComponent,
+      cssClass : 'half-height',
+      componentProps : { bills : this.noOfBills }
     });
     await modal.present();
+  }
+
+  clearCart() {
+    this.ticketLines = [];
+    this.cartService.emptyCart();
+  }
+
+  removeTicket(index) {
+    this.cartService.removeTicket(index);
+    console.log(this.ticketLines.length);
+    this.products.splice(index, 1);
   }
 }
