@@ -59,7 +59,7 @@ export class MakePaymentPage implements OnInit {
               .createTickerLineUsingPOST(ticket)
               .subscribe(result => {
                 ticket = result;
-                let stockDiary: StockDiaryDTO={};
+                let stockDiary: StockDiaryDTO = {};
                 //stockDiary.dateOfCreation = '' + new Date();
                 stockDiary.isBuy = false;
                 stockDiary.units = -1 * ticket.quantity;
