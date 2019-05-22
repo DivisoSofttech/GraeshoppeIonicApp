@@ -1,13 +1,16 @@
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer/ngx';
 import { Customer } from './../../api/models/customer';
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
+import { File } from '@ionic-native/file/ngx';
 import {AddCustomerPage} from '../add-customer/add-customer.page';
 import { QueryResourceService, CommandResourceService } from 'src/app/api/services';
 import { PageOfCustomer } from 'src/app/api/models';
 import { EditCustomerComponent } from 'src/app/components/edit-customer/edit-customer.component';
 import { forEach } from '@angular/router/src/utils/collection';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+
 
 
 const options: DocumentViewerOptions = {
@@ -22,7 +25,8 @@ const options: DocumentViewerOptions = {
 export class CustomersPage implements OnInit {
   constructor(private modalController: ModalController, private queryResource: QueryResourceService,
     private commandResourceService: CommandResourceService,
-    private documentViewer: DocumentViewer,private iab: InAppBrowser) { }
+    private documentViewer: DocumentViewer,private iab: InAppBrowser,private platform: Platform, private file: File,
+    private fileTransfer: FileTransfer) { }
   @Input()
   asModal = false;
   customers: Customer[];
@@ -108,20 +112,41 @@ export class CustomersPage implements OnInit {
   }
   downloadPDF() {
     console.log("download pdf method");
-    this.queryResource.exportCustomersUsingGET().subscribe(res => {
-      //window.open(res);
-      fetch(res)
-        .then(data => {
-          data.blob()
-            .then(blob => {
-              this.fileurl = blob;
-              this.documentViewer.viewDocument(this.fileurl,'application/pdf',options);
-              console.log("file url and blob",this.fileurl,blob);
-        })
-    });
-    console.log(res);
+let path=null;
+      this.queryResource.exportCustomersUsingGET().subscribe(result=>{
+if(this.platform.is('ios'))
+{
+  path=this.file.documentsDirectory;
+}
+else
+{
+  path=this.file.dataDirectory;
+}
+const transfer=this.fileTransfer.create();
+transfer.download(result,path+'myFile.pdf').then(entry=>{
 
-  });
+  let url=entry.toURL();
+  this.documentViewer.viewDocument(url,'application/pdf',{});
+})
+
+      });
+
+
+
+
+  //   this.queryResource.exportCustomersUsingGET().subscribe(res => {
+  //     fetch(res)
+  //       .then(data => {
+  //         data.blob()
+  //           .then(blob => {
+  //             this.fileurl = blob;
+  //             this.documentViewer.viewDocument(this.fileurl,'application/pdf',options);
+  //             console.log("file url and blob",this.fileurl,blob);
+  //       })
+  //   });
+  //   console.log(res);
+
+  // });
 
 }
 
