@@ -127,7 +127,7 @@ export class CustomersPage implements OnInit {
       );
   }
   downloadPDF() {
-    console.log("download pdf method");
+    console.log('download pdf method');
 
 
 }
