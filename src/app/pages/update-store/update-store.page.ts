@@ -14,7 +14,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateStorePage implements OnInit {
 
-  private store: Store={};
+  private store:Store={};
+  private storeName:string;
+  private storeRegNo:string;
+  private storeEmail:string;
 
   private fileToUpload: File;
   private imageToDisplay:string;
@@ -24,22 +27,25 @@ export class UpdateStorePage implements OnInit {
 
     /*     this.queryService.findStoreByRegNoUsingGET({regNo:}) */
     let username;
-    if (this.oauthService.hasValidIdToken()) {
+    if (this.oauthService.hasValidAccessToken()) {
 
       this.oauthService.loadUserProfile()
       .then((data:any)=>{
-        this.store.name=data.preferred_username;
-        this.store.email=data.email;
+        this.storeName=data.preferred_username;
+        this.storeEmail=data.email;
         username= data.preferred_username;
+        this.storeRegNo=username;
         console.log("store-user",data);
         this.queryService.findStoreByRegNoUsingGET({ regNo: username }).subscribe(
           data => {
             console.log(data.content);
-            this.store = data.content[0];  
+            if((data.content.length>0)){
+              this.store = data.content[0];
+            } 
           }
         );
       })
-      this.queryService.findStoreByRegNoUsingGET({ regNo: username }).subscribe(
+/*       this.queryService.findStoreByRegNoUsingGET({ regNo: username }).subscribe(
         data => {
           console.log(data.content);
           if((data.content.length>0)){
@@ -47,7 +53,7 @@ export class UpdateStorePage implements OnInit {
           }
             
         }
-      );
+      ); */
 
     }
   }
@@ -57,6 +63,9 @@ export class UpdateStorePage implements OnInit {
     this.store.openingTime=this.dateService.convertToInstantFromHourTime(this.store.openingTime);
     this.store.closingTime=this.dateService.convertToInstantFromHourTime(this.store.closingTime);
     console.log("converted Time",this.store.openingTime,this.store.closingTime);
+    this.store.regNo=this.storeRegNo;
+    this.store.email=this.storeEmail;
+    this.store.name=this.storeName;
     this.commandservice.createStoreUsingPOST(this.store)
       .subscribe(data => { 
         console.log("store updated", this.store);
