@@ -127,7 +127,7 @@ export class CustomersPage implements OnInit {
       );
   }
   downloadPDF() {
-    console.log('downloading is working');
+    console.log('download pdf method');
     this.queryResource.exportCustomersUsingGET().subscribe(result => {
       const byteCharacters = atob(result.pdf);
       const byteNumbers = new Array(byteCharacters.length);

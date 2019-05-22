@@ -15,11 +15,15 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
 
-    let claim;
-    if ((claim = this.oauthService.getIdentityClaims()) != null) {
-      console.log("user", claim);
-      this.userName = claim.preferred_username;
-      this.userId = claim.sub;
+    console.log("in user component");
+    if (this.oauthService.hasValidAccessToken()) {
+      //console.log("user", claim);
+      console.log("profile", this.oauthService.loadUserProfile().then(data=>{
+        console.log(data);
+        this.userName=(<any>data).preferred_username;
+      }));
+      //this.userName = claim.preferred_username;
+      //this.userId = claim.sub;
     }
   }
 
