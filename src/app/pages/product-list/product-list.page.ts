@@ -47,4 +47,9 @@ export class ProductListPage implements OnInit {
     // });
   }
 
+  addTicketLine(product: Product, stockCurrent: StockCurrent) {
+    console.log('added Product Name' + product.name + ' Price ' + stockCurrent.sellPrice);
+    this.cartService.addProduct(product, stockCurrent);
+  }
+
 }

@@ -17,7 +17,7 @@ export class ProfilePage implements OnInit {
   ngOnInit() {
     let claim;
     if ((claim = this.oauthService.getIdentityClaims()) != null) {
-      console.log("user", claim);
+      console.log('user', claim);
       this.username = claim.preferred_username;
       this.userId = claim.sub;
       this.email = claim.email;
@@ -26,6 +26,6 @@ export class ProfilePage implements OnInit {
   }
 
   updateUser() {
-    console.log("edit user profile");
+    console.log('edit user profile');
   }
 }
