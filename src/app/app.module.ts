@@ -32,6 +32,8 @@ import { StockManagementPageModule } from './pages/stock-management/stock-manage
 import { IonicGestureConfig } from './gestures/ionic-gesture-config';
 import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 
 
 @NgModule({
@@ -82,7 +84,9 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   ImageCompressService,
   BarcodeScanner,
   DocumentViewer,
-  InAppBrowser
+  InAppBrowser,
+  File,
+  FileTransfer
   ],
   bootstrap: [AppComponent]
 })
