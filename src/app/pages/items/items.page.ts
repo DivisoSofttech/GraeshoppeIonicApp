@@ -9,6 +9,10 @@ import { AddItemsPage } from '../add-items/add-items.page';
 import { ProductDTO } from 'src/app/api/models';
 import { EditProductModalComponent } from 'src/app/components/edit-product-modal/edit-product-modal.component';
 import { PopoverController } from '@ionic/angular';
+import { File } from '@ionic-native/file/ngx';
+import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+
 @Component({
   selector: 'app-items',
   templateUrl: './items.page.html',
@@ -25,7 +29,10 @@ export class ItemsPage implements OnInit {
     private modalController: ModalController,
     private queryResourceservice: QueryResourceService,
     private commandResource: CommandResourceService,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private file: File,
+    private documentViewer: DocumentViewer,
+    private fileTransfer: FileTransfer
   ) {}
 
   async presentModal() {
@@ -79,5 +86,29 @@ export class ItemsPage implements OnInit {
     this.modalController.dismiss();
   }
 
-  downloadReport() {}
+  downloadReport() {
+    console.log('downloading is working');
+    this.queryResourceservice.exportProductsUsingGET().subscribe(result => {
+      const byteCharacters = atob(result.pdf);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: result.contentType });
+      console.log('blob is' + blob);
+      this.file.createFile(this.file.externalCacheDirectory, 'items.pdf', true).then(() => {
+        console.log('file created' + blob);
+
+        this.file.writeFile(this.file.externalCacheDirectory, 'items.pdf', blob,{replace:true}).then(
+          (value) => {
+            console.log('file writed' + value);
+
+            this.documentViewer.viewDocument(this.file.externalCacheDirectory+'new.pdf','application/pdf',{});
+
+
+        });
+      });
+    });
+  }
 }
