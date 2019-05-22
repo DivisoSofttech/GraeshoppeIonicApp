@@ -100,11 +100,12 @@ export class ItemsPage implements OnInit {
       this.file.createFile(this.file.externalCacheDirectory, 'items.pdf', true).then(() => {
         console.log('file created' + blob);
 
-        this.file.writeFile(this.file.externalCacheDirectory, 'items.pdf', blob,{replace:true}).then(
+        this.file.writeFile(this.file.externalCacheDirectory, 'items.pdf', blob, {replace: true}).then(
           (value) => {
             console.log('file writed' + value);
 
-            this.documentViewer.viewDocument(this.file.externalCacheDirectory+'new.pdf','application/pdf',{});
+            this.documentViewer.viewDocument(this.file.externalCacheDirectory + 'items.pdf', 'application/pdf',
+            {print: {enabled: true}, openWith: {enabled: true}});
 
 
         });

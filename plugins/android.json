@@ -16,6 +16,12 @@
     "cordova-plugin-document-viewer": {
       "PACKAGE_NAME": "com.diviso.graeshoppe"
     },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.diviso.graeshoppe"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.diviso.graeshoppe"
+    },
     "cordova-plugin-inappbrowser": {
       "PACKAGE_NAME": "com.diviso.graeshoppe"
     },

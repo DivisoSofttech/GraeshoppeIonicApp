@@ -32,31 +32,15 @@ export class ReceiptsPage implements OnInit {
 
   ngOnInit() {
 
-    //this.presentLoading();
-    //this.loadingService.presentLoading();
-
     this.queryResourceService.findAllSaleAggregatesUsingGET(this.params)
       .subscribe(response => {
-
         console.log("Total Length   ******************  : "+response.content.length);
-        console.table(+response.content);
         this.sales = response.content;
-        this.maximumPage=response.totalPages;
-        //this.loadingController.dismiss();
-        //loading.dismiss();
+        this.maximumPage= response.totalPages;
+
       });
   }
 
-/*   async presentLoading() {
-    const loading = await this.loadingController.create({
-      spinner: "dots"
-    });
-    await loading.present();
-
-    const { role, data } = await loading.onDidDismiss();
-
-    console.log('Loading dismissed!');
-  } */
 
   navigateToDetails(currentSale: SaleAggregate) {
 
@@ -72,9 +56,8 @@ export class ReceiptsPage implements OnInit {
         console.log("Total Length   ******************  : "+response.content.length);
         console.table(+response.content);
         this.sales = this.sales.concat(response.content);
-        // if (infiniteScroll) {
-        //  // this.infiniteScroll.disabled= !this.infiniteScroll.disabled;
-        // }
+
+
 
       });
   }
@@ -89,7 +72,8 @@ export class ReceiptsPage implements OnInit {
 
     if (this.params.page === this.maximumPage) {
       console.log("maximum reached");
-      this.infiniteScroll.disabled=false;
+      this.infiniteScroll.disabled=true;
+      this.infiniteScroll.complete();
     }
   }
 

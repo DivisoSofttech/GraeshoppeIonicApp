@@ -58,6 +58,7 @@ export class AddStockComponent implements OnInit {
     if (this.stockDiary.units > 0) {
       this.stockDiary.productId = this.stockCurrentDTO.productId;
       this.commandResourceService.createStockOfProductUsingPOST(this.stockDiary).subscribe(res => {
+        console.log("result :"+res);
         this.toastView('Successfully updated stock data');
         this.dismiss();
       }, err => {

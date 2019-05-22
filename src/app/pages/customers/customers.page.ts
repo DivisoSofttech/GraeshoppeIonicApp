@@ -127,8 +127,30 @@ export class CustomersPage implements OnInit {
       );
   }
   downloadPDF() {
-    console.log("download pdf method");
+    console.log('downloading is working');
+    this.queryResource.exportCustomersUsingGET().subscribe(result => {
+      const byteCharacters = atob(result.pdf);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: result.contentType });
+      console.log('blob is' + blob);
+      this.file.createFile(this.file.externalCacheDirectory, 'customer.pdf', true).then(() => {
+        console.log('file created' + blob);
 
+        this.file.writeFile(this.file.externalCacheDirectory, 'customer.pdf', blob, {replace: true}).then(
+          (value) => {
+            console.log('file writed' + value);
+
+            this.documentViewer.viewDocument(this.file.externalCacheDirectory + 'customer.pdf', 'application/pdf',
+            {print: {enabled: true}, openWith: {enabled: true}});
+
+
+        });
+      });
+    });
 
 }
 
