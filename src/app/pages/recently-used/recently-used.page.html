@@ -1,13 +1,15 @@
-<ion-grid>
+<ion-content overflow-scroll="true">
+  <ion-grid>
     <ion-row justify-content-center>
-        <ion-col *ngFor="let stock of stockCurrent; let i = index" [attr.data-index]="i" (click)="addTicketLine(stock.product,stock)" >
-          <ion-card class="size" >
-            <img [class.relative]="stock.product.outOfStock" [src]="'data:' +stock.product.imageContentType + ';base64,' + stock.product.image">
-            <img *ngIf="stock.product.outOfStock" class="absolute" src="/assets/stockout.png">
-            <div class="myOverlay">
-              <div class="card-title"><strong>{{stock.product.name}}</strong></div>
-            </div>
-          </ion-card>
-        </ion-col>
+      <ion-col *ngFor="let stock of stockCurrent; let i = index" [attr.data-index]="i" (click)="addTicketLine(stock.product,stock)" >
+        <ion-card class="size" >
+          <img [class.relative]="stock.product.outOfStock" [src]="'data:' +stock.product.imageContentType + ';base64,' + stock.product.image">
+          <img *ngIf="stock.product.outOfStock" class="absolute" src="/assets/stockout.png">
+          <div class="myOverlay">
+            <div class="card-title"><strong>{{stock.product.name}}</strong></div>
+          </div>
+        </ion-card>
+      </ion-col>
     </ion-row>
   </ion-grid>
+</ion-content>
