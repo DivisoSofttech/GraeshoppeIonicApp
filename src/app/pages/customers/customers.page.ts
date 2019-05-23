@@ -4,7 +4,7 @@ import {
 } from '@ionic-native/document-viewer/ngx';
 import { Customer } from './../../api/models/customer';
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, Platform } from '@ionic/angular';
+import { ModalController, Platform, ToastController } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import {AddCustomerPage} from '../add-customer/add-customer.page';
 import { QueryResourceService, CommandResourceService } from 'src/app/api/services';
@@ -31,7 +31,7 @@ export class CustomersPage implements OnInit {
     private queryResource: QueryResourceService,
     private commandResourceService: CommandResourceService,
     private documentViewer: DocumentViewer,private iab: InAppBrowser,private platform: Platform, private file: File,
-    private fileTransfer: FileTransfer,private fileOpener: FileOpener) { }
+    private fileTransfer: FileTransfer,private fileOpener: FileOpener,public toastController: ToastController) { }
   @Input()
   asModal = false;
   customers: Customer[];
@@ -127,8 +127,17 @@ export class CustomersPage implements OnInit {
         }
       );
   }
+
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Downloading.'
+    });
+    toast.present();
+  }
   downloadPDF() {
     console.log('download pdf method');
+
     this.queryResource.exportCustomersUsingGET().subscribe(result => {
       const byteCharacters = atob(result.pdf);
       const byteNumbers = new Array(byteCharacters.length);
@@ -138,6 +147,7 @@ export class CustomersPage implements OnInit {
       const byteArray = new Uint8Array(byteNumbers);
       const blob = new Blob([byteArray], { type: result.contentType });
       console.log('blob is' + blob);
+      this.toastController.dismiss();
       this.file.createFile(this.file.externalCacheDirectory, 'customer.pdf', true).then(() => {
         console.log('file created' + blob);
 
