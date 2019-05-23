@@ -21,6 +21,7 @@ export class DateService {
 
   public convertToInstantFromHourTime(timeToBeConverted: string) {
 
+    console.log("time to be converted",timeToBeConverted);
 /*     let today = this.year + '-' + this.month + '-' + this.day;
     console.log("time to be converted",timeToBeConverted);
 
@@ -30,6 +31,7 @@ export class DateService {
     let minute = ((timeToBeConverted.split(":"))[1]).split(" ")[0];
     console.log("today,time",today,time);
     return (timeHourPeriod == "AM") ? (today + 'T' + time + ':00Z') : (today + 'T' + hour + ':' + minute + ':00Z'); */
-    return (timeToBeConverted.split("."))[0]+'Z';
+    //return ((timeToBeConverted.split("+"))[0])+'Z';
+    return (timeToBeConverted.split("+")[1])?((timeToBeConverted.split("+"))[0])+'Z':timeToBeConverted;
   }
 }

@@ -14,14 +14,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateStorePage implements OnInit {
 
-  private store:Store={};
-  private storeName:string;
-  private storeRegNo:string;
-  private storeEmail:string;
+  private store: Store = {};
+  private storeName: string;
+  private storeRegNo: string;
+  private storeEmail: string;
 
   private fileToUpload: File;
-  private imageToDisplay:string;
-  constructor(private queryService: QueryResourceService, private oauthService: OAuthService, private commandservice: CommandResourceService, private navcntrl:NavController,private dateService:DateService) { }
+  private imageToDisplay: string;
+  constructor(private queryService: QueryResourceService, private oauthService: OAuthService, private commandservice: CommandResourceService, private navcntrl: NavController, private dateService: DateService) { }
 
   ngOnInit() {
 
@@ -30,48 +30,59 @@ export class UpdateStorePage implements OnInit {
     if (this.oauthService.hasValidAccessToken()) {
 
       this.oauthService.loadUserProfile()
-      .then((data:any)=>{
-        this.storeName=data.preferred_username;
-        this.storeEmail=data.email;
-        username= data.preferred_username;
-        this.storeRegNo=username;
-        console.log("store-user",data);
-        this.queryService.findStoreByRegNoUsingGET({ regNo: username }).subscribe(
-          data => {
-            console.log(data.content);
-            if((data.content.length>0)){
-              this.store = data.content[0];
-            } 
-          }
-        );
-      })
-/*       this.queryService.findStoreByRegNoUsingGET({ regNo: username }).subscribe(
-        data => {
-          console.log(data.content);
-          if((data.content.length>0)){
-            this.store = data.content[0];
-          }
-            
-        }
-      ); */
+        .then((data: any) => {
+          this.storeName = data.preferred_username;
+          this.storeEmail = data.email;
+          username = data.preferred_username;
+          this.storeRegNo = username;
+          console.log("store-user", data);
+          this.queryService.findStoreByRegNoUsingGET({ regNo: username }).subscribe(
+            data => {
+              console.log(data.content);
+              if ((data.content.length > 0)) {
+                this.store = data.content[0];
+              }
+            }
+          );
+        })
+      /*       this.queryService.findStoreByRegNoUsingGET({ regNo: username }).subscribe(
+              data => {
+                console.log(data.content);
+                if((data.content.length>0)){
+                  this.store = data.content[0];
+                }
+                  
+              }
+            ); */
 
     }
   }
 
   save() {
 
-    this.store.openingTime=this.dateService.convertToInstantFromHourTime(this.store.openingTime);
-    this.store.closingTime=this.dateService.convertToInstantFromHourTime(this.store.closingTime);
-    console.log("converted Time",this.store.openingTime,this.store.closingTime);
-    this.store.regNo=this.storeRegNo;
-    this.store.email=this.storeEmail;
-    this.store.name=this.storeName;
-    this.commandservice.createStoreUsingPOST(this.store)
-      .subscribe(data => { 
-        console.log("store updated", this.store);
-        this.navcntrl.navigateBack("/settings");
+    this.store.openingTime = this.dateService.convertToInstantFromHourTime(this.store.openingTime);
+    this.store.closingTime = this.dateService.convertToInstantFromHourTime(this.store.closingTime);
+    console.log("converted Time", this.store.openingTime, this.store.closingTime);
+    this.store.regNo = this.storeRegNo;
+    this.store.email = this.storeEmail;
+    this.store.name = this.storeName;
+    if (this.store.id) {
 
-       })
+      this.commandservice.updateStoreUsingPUT(this.store)
+        .subscribe(data => {
+          console.log("store updated", this.store);
+          this.navcntrl.navigateBack("/settings");
+
+        });
+    }
+    else {
+      this.commandservice.createStoreUsingPOST(this.store)
+        .subscribe(data => {
+          console.log("store updated", this.store);
+          this.navcntrl.navigateBack("/settings");
+
+        });
+    }
   }
   onSelectFile(event) {
     this.fileToUpload = event.target.files.item(0);
@@ -80,9 +91,9 @@ export class UpdateStorePage implements OnInit {
 
     freader.onload = (ev: any) => {
       this.store.image = ev.target.result;
-      this.store.imageContentType= this.fileToUpload.type;
+      this.store.imageContentType = this.fileToUpload.type;
     };
-    let images=[];
+    let images = [];
     ImageCompressService.filesArrayToCompressedImageSourceEx(
       [this.fileToUpload],
       RESIZE_OPTIONS
@@ -96,16 +107,16 @@ export class UpdateStorePage implements OnInit {
         },
         () => {
           //converts the encoded compressed file to blob for file reader to read
-/*           fetch(images.pop().compressedImage.imageDataUrl).then(data => {
-            data.blob().then(blob => {
-              console.log("blob", blob);
-              freader.readAsDataURL(blob);
-            });
-          }); */
-          
-          this.imageToDisplay=images.pop().compressedImage.imageDataUrl;
-          this.store.image=(this.imageToDisplay.split(","))[1];
-          console.log("image",this.store.image);
+          /*           fetch(images.pop().compressedImage.imageDataUrl).then(data => {
+                      data.blob().then(blob => {
+                        console.log("blob", blob);
+                        freader.readAsDataURL(blob);
+                      });
+                    }); */
+
+          this.imageToDisplay = images.pop().compressedImage.imageDataUrl;
+          this.store.image = (this.imageToDisplay.split(","))[1];
+          console.log("image", this.store.image);
         }
       );
     });
