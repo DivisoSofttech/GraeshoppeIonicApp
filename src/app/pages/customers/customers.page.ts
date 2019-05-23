@@ -13,6 +13,7 @@ import { EditCustomerComponent } from 'src/app/components/edit-customer/edit-cus
 import { forEach } from '@angular/router/src/utils/collection';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 
 const options: DocumentViewerOptions = {
@@ -30,7 +31,7 @@ export class CustomersPage implements OnInit {
     private queryResource: QueryResourceService,
     private commandResourceService: CommandResourceService,
     private documentViewer: DocumentViewer,private iab: InAppBrowser,private platform: Platform, private file: File,
-    private fileTransfer: FileTransfer) { }
+    private fileTransfer: FileTransfer,private fileOpener: FileOpener) { }
   @Input()
   asModal = false;
   customers: Customer[];
@@ -143,8 +144,9 @@ export class CustomersPage implements OnInit {
           (value) => {
             console.log('file writed' + value);
 
-            this.documentViewer.viewDocument(this.file.externalCacheDirectory + 'customer.pdf', 'application/pdf',
-            {print: {enabled: true}, openWith: {enabled: true}});
+            this.fileOpener.showOpenWithDialog(this.file.externalCacheDirectory + 'customer.pdf', result.contentType).then(() => console.log('File is opened'))
+            .catch(e => console.log('Error opening file', e));
+
 
 
         });

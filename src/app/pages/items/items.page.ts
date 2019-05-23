@@ -12,7 +12,7 @@ import { PopoverController } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
-
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 @Component({
   selector: 'app-items',
   templateUrl: './items.page.html',
@@ -32,7 +32,8 @@ export class ItemsPage implements OnInit {
     private popoverController: PopoverController,
     private file: File,
     private documentViewer: DocumentViewer,
-    private fileTransfer: FileTransfer
+    private fileTransfer: FileTransfer,
+    private fileOpener: FileOpener
   ) {}
 
   async presentModal() {
@@ -97,15 +98,18 @@ export class ItemsPage implements OnInit {
       const byteArray = new Uint8Array(byteNumbers);
       const blob = new Blob([byteArray], { type: result.contentType });
       console.log('blob is' + blob);
+      const fileName = 'items.pdf';
       this.file.createFile(this.file.externalCacheDirectory, 'items.pdf', true).then(() => {
         console.log('file created' + blob);
 
         this.file.writeFile(this.file.externalCacheDirectory, 'items.pdf', blob, {replace: true}).then(
           (value) => {
             console.log('file writed' + value);
+            this.fileOpener.showOpenWithDialog(this.file.externalCacheDirectory + 'items.pdf', result.contentType).then(() => console.log('File is opened'))
+            .catch(e => console.log('Error opening file', e));
+            // this.documentViewer.viewDocument(this.file.externalCacheDirectory + 'items.pdf', 'application/pdf',
+            // {print: {enabled: true}, openWith: {enabled: true}});
 
-            this.documentViewer.viewDocument(this.file.externalCacheDirectory + 'items.pdf', 'application/pdf',
-            {print: {enabled: true}, openWith: {enabled: true}});
 
 
         });
