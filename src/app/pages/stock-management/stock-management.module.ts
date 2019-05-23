@@ -1,3 +1,4 @@
+import { AddItemsPage } from './../add-items/add-items.page';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

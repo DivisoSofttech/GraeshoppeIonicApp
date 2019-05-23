@@ -104,14 +104,13 @@ export class CustomersPage implements OnInit {
       componentProps: { customer: customer }
     });
     await modal.present();
-    this.queryResource
+    modal.onDidDismiss().then(() => {
+      this.queryResource
       .findAllCustomersWithoutSearchUsingGET({})
       .subscribe(result => {
         this.customers = result.content;
-        //     this.customers.forEach(c => {
-        //       console.log('ddddddddddd*ddddddddddddd',c.contact.mobileNumber);
-        // });
       });
+    });
   }
   deleteCustomer(customer: Customer) {
     console.log('delete request for an customer with id' + customer.id);

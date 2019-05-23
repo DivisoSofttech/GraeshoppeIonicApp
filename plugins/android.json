@@ -19,6 +19,10 @@
     "cordova-plugin-file": {
       "PACKAGE_NAME": "com.diviso.graeshoppe"
     },
+    "cordova-plugin-file-opener2": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
+      "PACKAGE_NAME": "com.diviso.graeshoppe"
+    },
     "cordova-plugin-file-transfer": {
       "PACKAGE_NAME": "com.diviso.graeshoppe"
     },
@@ -45,10 +49,6 @@
       "PACKAGE_NAME": "com.diviso.graeshoppe"
     },
     "phonegap-plugin-barcodescanner": {
-      "ANDROID_SUPPORT_V4_VERSION": "27.+",
-      "PACKAGE_NAME": "com.diviso.graeshoppe"
-    },
-    "cordova-plugin-file-opener2": {
       "ANDROID_SUPPORT_V4_VERSION": "27.+",
       "PACKAGE_NAME": "com.diviso.graeshoppe"
     }
