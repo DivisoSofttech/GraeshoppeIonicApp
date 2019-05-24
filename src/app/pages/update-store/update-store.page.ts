@@ -1,3 +1,4 @@
+import { Type } from './../../api/models/type';
 import { DateService } from './../../date/date.service';
 import { RESIZE_OPTIONS } from './../../image-resize-options';
 import { ImageCompressService } from 'ng2-image-compress';
@@ -14,7 +15,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateStorePage implements OnInit {
 
-  private store: Store = {};
+  private store: Store = {
+    deliveryInfo: {
+      types:[]
+    }
+  };
+  private types: Type[] = [
+    {
+      name: "collection"
+    },
+    {
+      name: "delivery"
+    }
+  ];
   private storeName: string;
   private storeRegNo: string;
   private storeEmail: string;
@@ -41,6 +54,9 @@ export class UpdateStorePage implements OnInit {
               console.log(data.content);
               if ((data.content.length > 0)) {
                 this.store = data.content[0];
+                if(this.store.deliveryInfo==null){
+                  this.store.deliveryInfo={};
+                }
               }
             }
           );
@@ -62,10 +78,15 @@ export class UpdateStorePage implements OnInit {
 
     this.store.openingTime = this.dateService.convertToInstantFromHourTime(this.store.openingTime);
     this.store.closingTime = this.dateService.convertToInstantFromHourTime(this.store.closingTime);
+
+    if ((this.store.deliveryInfo.types == "delivery") && this.store.deliveryInfo.startingTime) {
+      this.store.deliveryInfo.startingTime = this.dateService.convertToInstantFromHourTime(this.store.deliveryInfo.startingTime);
+    }
+
     console.log("converted Time", this.store.openingTime, this.store.closingTime);
     this.store.regNo = this.storeRegNo;
     this.store.email = this.storeEmail;
-    this.store.name = this.storeName;
+    //this.store.name = this.storeName;
     if (this.store.id) {
 
       this.commandservice.updateStoreUsingPUT(this.store)

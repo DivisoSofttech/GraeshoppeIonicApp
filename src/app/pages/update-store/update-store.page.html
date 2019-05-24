@@ -2,8 +2,8 @@
   <ion-toolbar color="danger">
     <ion-title>update-store</ion-title>
     <ion-buttons slot="start">
-        <ion-back-button defaultHref="/sale"></ion-back-button>
-      </ion-buttons>
+      <ion-back-button defaultHref="/sale"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -11,38 +11,61 @@
 
   <ion-grid>
     <ion-row>
-        <ion-col padding>
-          <ion-item>
-            <ion-label position="floating">Logo</ion-label>
-            <img src="{{imageToDisplay}}" class="image">
-            <input hidden id="logo" type="file" accept="image/*" color="primary" (change)="onSelectFile($event)">
-            <ion-button fill="none" (click)="triggerUpload($event)">
-              <ion-icon slot="start" color="danger" size="large" name="camera" slot="icon-only"></ion-icon>
-            </ion-button>
-          </ion-item>
-<!--           <ion-item>
+      <ion-col padding>
+        <ion-item>
+          <ion-label position="floating">Logo</ion-label>
+          <img src="{{imageToDisplay}}" class="image">
+          <input hidden id="logo" type="file" accept="image/*" color="primary" (change)="onSelectFile($event)">
+          <ion-button fill="none" (click)="triggerUpload($event)">
+            <ion-icon slot="start" color="danger" size="large" name="camera" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <!--           <ion-item>
             <ion-label position="floating">Opening time</ion-label>
             <ion-input type="text" [(ngModel)]="store.openingTime"></ion-input>
           </ion-item> -->
-          <ion-item>
-              <ion-label>Opening time</ion-label>
-              <ion-datetime display-format="hh:mm A" [(ngModel)]="store.openingTime"></ion-datetime>
-            </ion-item>
-            <ion-item>
-                <ion-label>Closing time</ion-label>
-                <ion-datetime display-format="hh:mm A" [(ngModel)]="store.closingTime"></ion-datetime>
-              </ion-item>
+        <ion-item>
+          <ion-label position="floating">Opening time</ion-label>
+          <ion-datetime display-format="hh:mm A" [(ngModel)]="store.openingTime"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Closing time</ion-label>
+          <ion-datetime display-format="hh:mm A" [(ngModel)]="store.closingTime"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Name</ion-label>
+          <ion-input type="text" [(ngModel)]="store.name">
+          </ion-input>
+        </ion-item>
 
+        <ion-item>
+          <ion-label position="floating">Info</ion-label>
+          <ion-input [(ngModel)]="store.info">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Delivery Type</ion-label>
+          <ion-select multiple=true [(ngModel)]="store.deliveryInfo.types">
+            <ion-select-option *ngFor="let type of types" [value]="type.name" required>{{type.name}}
+            </ion-select-option>
+<!--             <ion-select-option [value]="delivery" required>Delivery
+            </ion-select-option> -->
+          </ion-select>
+        </ion-item>
+<!--         <ion-item *ngIf="store.deliveryInfo?.type=='delivery'">
+          <ion-label position="floating">Delivery starting time</ion-label>
+          <ion-datetime display-format="hh:mm A" [(ngModel)]="store.deliveryInfo.startingTime"></ion-datetime>
+        </ion-item> -->
 
-          <!-- <ion-item>
+        <!-- <ion-item>
               <ion-label position="floating">UOM</ion-label>
               <ion-select [(ngModel)]="productUOM" >
                 <ion-select-option *ngFor="let um of uom" value="{{um.id}}" required>{{um.name}}
                 </ion-select-option>
               </ion-select>
             </ion-item> -->
-          <ion-button (click)="save()" margin mode="ios" expand="block" fill="solid" color="danger">Save</ion-button>
-        </ion-col>
+        <ion-button (click)="save()" margin mode="ios" expand="block" fill="solid" color="danger">Save</ion-button>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
