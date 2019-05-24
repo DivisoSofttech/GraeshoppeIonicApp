@@ -1,10 +1,10 @@
 <app-header></app-header>
 <ion-content>
-    <ion-item >
+    <!-- <ion-item >
         <ion-icon *ngIf="accending" name="arrow-dropdown-circle" (click)="sort()"></ion-icon>  
         <ion-icon *ngIf="!accending" name="arrow-dropup-circle" (click)="sort()"></ion-icon>  
-        <!-- <ion-icon name="funnel" class="rightAlignIcon"></ion-icon> -->
-    </ion-item>
+        <ion-icon name="funnel" class="rightAlignIcon"></ion-icon>
+    </ion-item> -->
   <ion-list show-delete="false" can-swipe="true">
     <ion-item-sliding *ngFor="let uom of uoms">
       <ion-item-options side="start" (click)="edit(uom)">

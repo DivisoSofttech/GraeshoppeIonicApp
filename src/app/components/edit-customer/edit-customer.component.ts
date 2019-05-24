@@ -1,7 +1,7 @@
 import { ContactDTO } from './../../api/models/contact-dto';
 import { Contact } from './../../api/models/contact';
 import { CommandResourceService } from 'src/app/api/services';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { Customer } from './../../api/models/customer';
 import { Component, OnInit, Input } from '@angular/core';
 import { CustomerAggregator } from 'src/app/api/models/customer-aggregator';
@@ -15,26 +15,36 @@ import { CustomerDTO } from 'src/app/api/models';
 export class EditCustomerComponent implements OnInit {
   @Input()
  customer: Customer = {};
-  constructor(private modalController:ModalController,
-    private commandResourceService : CommandResourceService) { }
+  constructor(private modalController: ModalController,
+    private toast: ToastController,
+    private commandResourceService: CommandResourceService) { }
 
   ngOnInit() {}
-  update(customer : Customer)
-  {
-    let tempCustomer: CustomerDTO = {};
-    tempCustomer.id=customer.id;
-    tempCustomer.name=customer.name;
-    tempCustomer.contactId=customer.contact.id;
-    let tempContact : ContactDTO={};
-    tempContact.id=customer.contact.id;
-    tempContact.mobileNumber=customer.contact.mobileNumber;
-    this.commandResourceService.updateCustomerUsingPUT(tempCustomer).subscribe(succ=>{console.log('succes updating customer ',succ);
-    this.commandResourceService.updateContactUsingPUT(tempContact).subscribe(succ=>{console.log('success updating contact with rs ',succ);
-    this.dismiss();},err=>{console.log('error updating contact with rs',err)});
-  },err=>{console.log('error updating customer ',err)});
+  update(customer: Customer) {
+    const tempCustomer: CustomerDTO = {};
+    tempCustomer.id = customer.id;
+    tempCustomer.name = customer.name;
+    tempCustomer.contactId = customer.contact.id;
+    const tempContact: ContactDTO = {};
+    tempContact.id = customer.contact.id;
+    tempContact.mobileNumber = customer.contact.mobileNumber;
+    this.commandResourceService.updateCustomerUsingPUT(tempCustomer).subscribe(succ => {
+    this.commandResourceService.updateContactUsingPUT(tempContact).subscribe(success => {
+      this.showToast('Edited Successfully');
+      this.dismiss();
+    }, err => {  this.showToast('Some fields could not be updated'); });
+  }, err => {this.showToast('Error updating customer'); });
   }
-  dismiss()
-  {
+  dismiss() {
     this.modalController.dismiss();
+  }
+
+  async showToast(message) {
+   const tst = await this.toast.create({
+      message,
+      duration: 2000,
+      cssClass: 'toast'
+    });
+    await tst.present();
   }
 }
