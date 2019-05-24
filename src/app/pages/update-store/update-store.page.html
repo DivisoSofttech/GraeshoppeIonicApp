@@ -14,7 +14,7 @@
       <ion-col padding>
         <ion-item>
           <ion-label position="floating">Logo</ion-label>
-          <img src="{{imageToDisplay}}" class="image">
+          <img *ngIf="store.imageContentType" src="data:{{store.imageContentType}};base64,{{store.image}}" class="image">
           <input hidden id="logo" type="file" accept="image/*" color="primary" (change)="onSelectFile($event)">
           <ion-button fill="none" (click)="triggerUpload($event)">
             <ion-icon slot="start" color="danger" size="large" name="camera" slot="icon-only"></ion-icon>

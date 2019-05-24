@@ -1,8 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Type } from './../../api/models/type';
 import { DateService } from './../../date/date.service';
 import { RESIZE_OPTIONS } from './../../image-resize-options';
 import { ImageCompressService } from 'ng2-image-compress';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { Store } from './../../api/models/store';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { QueryResourceService, CommandResourceService } from 'src/app/api/services';
@@ -34,7 +35,7 @@ export class UpdateStorePage implements OnInit {
 
   private fileToUpload: File;
   private imageToDisplay: string;
-  constructor(private queryService: QueryResourceService, private oauthService: OAuthService, private commandservice: CommandResourceService, private navcntrl: NavController, private dateService: DateService) { }
+  constructor(private queryService: QueryResourceService, private oauthService: OAuthService, private commandservice: CommandResourceService, private navcntrl: NavController, private dateService: DateService,public toastController: ToastController) { }
 
   ngOnInit() {
 
@@ -79,10 +80,6 @@ export class UpdateStorePage implements OnInit {
     this.store.openingTime = this.dateService.convertToInstantFromHourTime(this.store.openingTime);
     this.store.closingTime = this.dateService.convertToInstantFromHourTime(this.store.closingTime);
 
-    if ((this.store.deliveryInfo.types == "delivery") && this.store.deliveryInfo.startingTime) {
-      this.store.deliveryInfo.startingTime = this.dateService.convertToInstantFromHourTime(this.store.deliveryInfo.startingTime);
-    }
-
     console.log("converted Time", this.store.openingTime, this.store.closingTime);
     this.store.regNo = this.storeRegNo;
     this.store.email = this.storeEmail;
@@ -92,16 +89,23 @@ export class UpdateStorePage implements OnInit {
       this.commandservice.updateStoreUsingPUT(this.store)
         .subscribe(data => {
           console.log("store updated", this.store);
+          this.presentToast("Your store information has been successfully saved");
           this.navcntrl.navigateBack("/settings");
 
+        },(err:HttpErrorResponse)=>{
+          console.log("store updated", this.store);
+          this.presentToast("Your store information could not be saved, "+err.message);
         });
     }
     else {
       this.commandservice.createStoreUsingPOST(this.store)
         .subscribe(data => {
           console.log("store updated", this.store);
+          this.presentToast("Your store information has been successfully updated");
           this.navcntrl.navigateBack("/settings");
 
+        },(error:HttpErrorResponse)=>{
+          this.presentToast("Your settings could not be updated, "+error.message);
         });
     }
   }
@@ -136,8 +140,9 @@ export class UpdateStorePage implements OnInit {
                     }); */
 
           this.imageToDisplay = images.pop().compressedImage.imageDataUrl;
+          this.store.imageContentType=(this.imageToDisplay.split(","))[0].split(";")[0].split(":")[1];
           this.store.image = (this.imageToDisplay.split(","))[1];
-          console.log("image", this.store.image);
+          console.log("image\nimageConverted", this.store.image,this.store.imageContentType);
         }
       );
     });
@@ -145,5 +150,12 @@ export class UpdateStorePage implements OnInit {
 
   triggerUpload(ev: Event) {
     document.getElementById("logo").click();
+  }
+  async presentToast(messageToShow:string) {
+    const toast = await this.toastController.create({
+      message: messageToShow,
+      duration: 2000
+    });
+    toast.present();
   }
 }
