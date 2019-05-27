@@ -15,8 +15,6 @@ export class DateService {
     this.day = String(this.date.getDate()).padStart(2, '0');
     this.month = String(this.date.getMonth() + 1).padStart(2, '0'); //January is 0!
     this.year = (String)(this.date.getFullYear());
-
-    console.log(this.date);
   }
 
   public convertToInstantFromHourTime(timeToBeConverted: string) {
@@ -33,5 +31,21 @@ export class DateService {
     return (timeHourPeriod == "AM") ? (today + 'T' + time + ':00Z') : (today + 'T' + hour + ':' + minute + ':00Z'); */
     //return ((timeToBeConverted.split("+"))[0])+'Z';
     return (timeToBeConverted.split("+")[1])?((timeToBeConverted.split("+"))[0])+'Z':timeToBeConverted;
+  }
+
+  deductTimeZone(timeToBeDeducted: string) {
+    let extractedResult= (timeToBeDeducted.split("+"));
+    let timeZone=extractedResult[1].split(":");
+    let hour;
+    let minute;
+    
+    let extractedTime=extractedResult[0].split("T")[1];
+    if((minute=(+extractedTime[1]-(+timeZone[1])))<0){
+      minute=-(minute);
+      hour=+(extractedTime[0])-1;
+    }
+    hour=hour-(+timeZone[1]);
+
+
   }
 }

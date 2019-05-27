@@ -23,7 +23,7 @@
                         [src]="'data:' + productDTO.imageContentType + ';base64,' + productDTO.image" class="image" />
                     <input hidden id="image" type="file" accept="image/*" color="primary"
                         (change)="onSelectFile($event)">
-                    <ion-button fill="none" (click)="triggerUpload($event)">
+                    <ion-button fill="none" (click)="triggerUpload($event)" slot="end">
                         <ion-icon name="camera" slot="icon-only"></ion-icon>
                     </ion-button>
                     <ion-button hidden fill="none">
