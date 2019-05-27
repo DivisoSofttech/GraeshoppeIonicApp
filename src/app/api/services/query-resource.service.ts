@@ -16,13 +16,13 @@ import { PageOfProduct } from '../models/page-of-product';
 import { PageOfStockCurrent } from '../models/page-of-stock-current';
 import { UomDTO } from '../models/uom-dto';
 import { StockCurrent } from '../models/stock-current';
+import { StockCurrentDTO } from '../models/stock-current-dto';
 import { StockDiary } from '../models/stock-diary';
 import { ProductDTO } from '../models/product-dto';
 import { Review } from '../models/review';
 import { PageOfSale } from '../models/page-of-sale';
 import { PageOfSaleAggregate } from '../models/page-of-sale-aggregate';
 import { SaleDTO } from '../models/sale-dto';
-import { StockCurrentDTO } from '../models/stock-current-dto';
 import { StockDiaryDTO } from '../models/stock-diary-dto';
 import { StockLine } from '../models/stock-line';
 import { PageOfStore } from '../models/page-of-store';
@@ -51,6 +51,7 @@ class QueryResourceService extends __BaseService {
   static readonly findAllUomUsingGETPath = '/api/query/findAllUom';
   static readonly findAllProductBySearchTermUsingGETPath = '/api/query/findProductBySearchTerm/{searchTerm}';
   static readonly findStockCurrentByProductIdUsingGETPath = '/api/query/findStockCurrentByProductId/{productId}';
+  static readonly findStockCurrentDTOByProductIdUsingGETPath = '/api/query/findStockCurrentDTOByProductId/{productId}';
   static readonly findStockDiaryByProductIdUsingGETPath = '/api/query/findStockDiaryByProductId/{productId}';
   static readonly findAllProductUsingGETPath = '/api/query/products';
   static readonly exportProductsUsingGETPath = '/api/query/products/export';
@@ -763,6 +764,42 @@ class QueryResourceService extends __BaseService {
   findStockCurrentByProductIdUsingGET(productId: number): __Observable<StockCurrent> {
     return this.findStockCurrentByProductIdUsingGETResponse(productId).pipe(
       __map(_r => _r.body as StockCurrent)
+    );
+  }
+
+  /**
+   * @param productId productId
+   * @return OK
+   */
+  findStockCurrentDTOByProductIdUsingGETResponse(productId: number): __Observable<__StrictHttpResponse<StockCurrentDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/findStockCurrentDTOByProductId/${productId}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<StockCurrentDTO>;
+      })
+    );
+  }
+  /**
+   * @param productId productId
+   * @return OK
+   */
+  findStockCurrentDTOByProductIdUsingGET(productId: number): __Observable<StockCurrentDTO> {
+    return this.findStockCurrentDTOByProductIdUsingGETResponse(productId).pipe(
+      __map(_r => _r.body as StockCurrentDTO)
     );
   }
 

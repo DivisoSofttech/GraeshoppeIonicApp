@@ -8,6 +8,7 @@ import {
 } from 'src/app/api/services';
 import { Component, OnInit, Input } from '@angular/core';
 import { ProductDTO } from 'src/app/api/models/product-dto';
+import { StockCurrentDTO } from 'src/app/api/models';
 
 @Component({
   selector: 'app-edit-product-modal',
@@ -19,6 +20,8 @@ export class EditProductModalComponent implements OnInit {
   id;
   productDTO: ProductDTO;
   categories: CategoryDTO[];
+  price: number;
+  stockCurrentDto: StockCurrentDTO;
   fileToUpload: File;
   fileUrl = null;
   constructor(
@@ -38,6 +41,13 @@ export class EditProductModalComponent implements OnInit {
       result => {
         console.log('sucess finding product ' + result);
         this.productDTO = result;
+        this.queryResourceService.findStockCurrentDTOByProductIdUsingGET(result.id).subscribe(
+          value=>{
+            this.stockCurrentDto=value;
+            this.price=value.sellPrice;
+            console.log("Stock current Gotten Id",value.id);
+          });
+
       },
       err => {
         console.log('error in finding product ' + err);
@@ -64,8 +74,16 @@ export class EditProductModalComponent implements OnInit {
       .subscribe(
         sucess => {
           console.log('updating product sucess ' + sucess);
-          this.dismiss();
-        },
+            this.stockCurrentDto.sellPrice=this.price;
+            console.log("Sell price",this.stockCurrentDto);
+              this.commandResourceService.updateStockCurrentUsingPUT(this.stockCurrentDto).subscribe(
+                result=>{
+                  console.log("updated stock product id"+result.productId);
+                  this.dismiss();
+                }
+              );
+
+            },
         err => {
           console.log('error updating product ' + err);
         }

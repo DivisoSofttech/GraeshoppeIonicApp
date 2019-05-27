@@ -31,6 +31,7 @@ export class ProductListPage implements OnInit {
       this.products = res.content;
       this.products.forEach(pr => {
         this.queryResourceService.findStockCurrentByProductIdUsingGET(pr.id).subscribe(result => {
+
           this.stockCurrent.push(result);
         }, err => {
           console.log(err);
