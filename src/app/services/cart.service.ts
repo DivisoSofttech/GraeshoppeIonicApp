@@ -14,6 +14,7 @@ export class CartService {
   }
 
   addProduct(product: Product,stockCurrent: StockCurrent) {
+    console.log('Cart Service Name' + product.name + ' Price ' + stockCurrent.sellPrice);
     let added = false;
     this.ticketLines.forEach(ticket => {
       if (ticket.productId === product.id) {

@@ -35,6 +35,9 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { ProductNamePipe } from './components/product-name-pipe';
+import { ProductsNamePipe } from './products-name.pipe';
+
 
 
 @NgModule({

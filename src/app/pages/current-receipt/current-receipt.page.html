@@ -89,8 +89,9 @@
             </ion-col> -->
             <!-- <ion-col *ngIf="noOfBills.length == 1" size="2">
             </ion-col> -->
-            
-              <ion-label text-start class="wrap">{{products[i].name}}</ion-label>
+
+              <ion-label  text-start class="wrap">{{((ticket.productId|productsName)|async)?.name}}</ion-label>
+
               <ion-label text-center>{{'x' +ticket.quantity}}</ion-label>
               <ion-label text-end>&#x20b9;{{ticket.total + '   '}}</ion-label>
         </ion-item>
@@ -147,9 +148,9 @@
   </ion-grid>
   <ion-grid>
     <ion-row>
-      <ion-col>
+      <ion-col justify-content-center>
         <ion-card>
-          <ion-card-content>
+          <ion-card-content text-center>
             <ion-icon class="cart" name="cart"></ion-icon>
           </ion-card-content>
         </ion-card>
