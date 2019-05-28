@@ -28,16 +28,18 @@ export class ProductListPage implements OnInit {
   getProducts() {
     const param: QueryResourceService.FindAllProductsByCategoryIdUsingGETParams = {categoryId: this.id};
     this.queryResourceService.findAllProductsByCategoryIdUsingGET(param).subscribe(res => {
+      console.log('sucess finding all product by catgory  id ',res);
       this.products = res.content;
       this.products.forEach(pr => {
         this.queryResourceService.findStockCurrentByProductIdUsingGET(pr.id).subscribe(result => {
+          console.log('sucss finding stock current by  product id ',result);
           this.stockCurrent.push(result);
         }, err => {
-          console.log(err);
+          console.log('error finding stock current by  product id ',err);
         });
       });
     }, err => {
-      console.log(err);
+      console.log('error finding all product by  category id ',err);
     });
     // const param: QueryResourceService.FindAllStockCurrentByCategoryUsingGETParams = {categoryId: this.id};
     // this.queryResourceService.findAllStockCurrentByCategoryUsingGET(param).subscribe(res => {

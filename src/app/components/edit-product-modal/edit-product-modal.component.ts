@@ -63,11 +63,11 @@ export class EditProductModalComponent implements OnInit {
       .updateProductUsingPUT(this.productDTO)
       .subscribe(
         sucess => {
-          console.log('updating product sucess ' + sucess);
+          console.log('updating product sucess ',sucess);
           this.dismiss();
         },
         err => {
-          console.log('error updating product ' + err);
+          console.log('error updating product ',err);
         }
       );
   }

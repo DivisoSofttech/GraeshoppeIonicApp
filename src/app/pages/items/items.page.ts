@@ -53,7 +53,8 @@ export class ItemsPage implements OnInit {
       component: EditProductModalComponent,
       componentProps: { id: product.id }
     });
-    return await modal.present();
+    await modal.present();
+    modal.onDidDismiss().then(()=>{ this.getproducts();});
     // console.log('...............[][][][]');
     // this.getproducts();
   }
