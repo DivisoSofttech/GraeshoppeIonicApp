@@ -9,6 +9,8 @@ import { MakePaymentPage } from './../make-payment/make-payment.page';
 import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { ProductDTO } from 'src/app/api/models';
+import { ProductNamePipe } from 'src/app/components/product-name-pipe';
+
 
 @Component({
   selector: 'app-current-receipt',

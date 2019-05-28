@@ -13,7 +13,7 @@ import { IonInfiniteScroll } from '@ionic/angular';
 })
 export class ReceiptsPage implements OnInit {
 
-
+   dateSet = new Set<string>();
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
    params: QueryResourceService.FindAllSaleAggregatesUsingGETParams={
@@ -29,6 +29,17 @@ export class ReceiptsPage implements OnInit {
     private queryResourceService: QueryResourceService,
     private loadingService:LoadingService,
     private saleService: SaleService) { }
+
+    addDate(date: string)
+    {
+        this.dateSet.add(date);
+    }
+
+    checkDate(date: string): boolean
+    {
+     return this.dateSet.has(date);
+    }
+
 
   ngOnInit() {
 

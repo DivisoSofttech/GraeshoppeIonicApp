@@ -33,6 +33,8 @@ export class ProductListPage implements OnInit {
       this.products.forEach(pr => {
         this.queryResourceService.findStockCurrentByProductIdUsingGET(pr.id).subscribe(result => {
           console.log('sucss finding stock current by  product id ',result);
+
+          
           this.stockCurrent.push(result);
         }, err => {
           console.log('error finding stock current by  product id ',err);

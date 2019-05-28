@@ -14,6 +14,8 @@ import { MakePaymentPageModule } from '../make-payment/make-payment.module';
 import { CustomersPageModule } from '../customers/customers.module';
 import { CustomersPage } from '../customers/customers.page';
 import { BilloptionsComponent } from 'src/app/components/billoptions/billoptions.component';
+import { ProductNamePipe } from 'src/app/components/product-name-pipe';
+import { ProductsNamePipe } from 'src/app/products-name.pipe';
 
 const routes: Routes = [
   {
@@ -32,7 +34,7 @@ const routes: Routes = [
     // CustomersPageModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [CurrentReceiptPage],
+  declarations: [CurrentReceiptPage,ProductsNamePipe],
   entryComponents: [MakePaymentPage , ProductQuantityModalComponent,BilloptionsComponent]
 })
 export class CurrentReceiptPageModule {}
