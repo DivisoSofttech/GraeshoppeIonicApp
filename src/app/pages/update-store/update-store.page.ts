@@ -86,26 +86,27 @@ export class UpdateStorePage implements OnInit {
     //this.store.name = this.storeName;
     if (this.store.id) {
 
-      this.commandservice.updateStoreUsingPUT(this.store)
+      this.commandservice.updateDenormalizedStoreUsingPUT(this.store)
         .subscribe(data => {
-          console.log("store updated", this.store);
+          console.log("store updated", data);
           this.presentToast("Your store information has been successfully saved");
           this.navcntrl.navigateBack("/settings");
 
         },(err:HttpErrorResponse)=>{
-          console.log("store updated", this.store);
+          console.log("store updation failed", err);
           this.presentToast("Your store information could not be saved, "+err.message);
         });
     }
     else {
-      this.commandservice.createStoreUsingPOST(this.store)
+      this.commandservice.createDenormalizedStoreUsingPOST(this.store)
         .subscribe(data => {
-          console.log("store updated", this.store);
+          console.log("store created", data);
           this.presentToast("Your store information has been successfully updated");
           this.navcntrl.navigateBack("/settings");
 
         },(error:HttpErrorResponse)=>{
           this.presentToast("Your settings could not be updated, "+error.message);
+          console.log("store creation failed",error);
         });
     }
   }

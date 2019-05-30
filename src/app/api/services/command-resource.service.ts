@@ -18,6 +18,7 @@ import { SaleDTO } from '../models/sale-dto';
 import { StockCurrentDTO } from '../models/stock-current-dto';
 import { StockDiaryDTO } from '../models/stock-diary-dto';
 import { StockLineDTO } from '../models/stock-line-dto';
+import { Store } from '../models/store';
 import { StoreDTO } from '../models/store-dto';
 import { TicketLineDTO } from '../models/ticket-line-dto';
 import { UomDTO } from '../models/uom-dto';
@@ -58,6 +59,8 @@ class CommandResourceService extends __BaseService {
   static readonly createStockLineUsingPOSTPath = '/api/command/stocklines';
   static readonly updateStockLineUsingPUTPath = '/api/command/stocklines';
   static readonly deleteStockLineUsingDELETEPath = '/api/command/stocklines/{id}';
+  static readonly createDenormalizedStoreUsingPOSTPath = '/api/command/store-denormalized';
+  static readonly updateDenormalizedStoreUsingPUTPath = '/api/command/store-denormalized';
   static readonly createStoreUsingPOSTPath = '/api/command/stores';
   static readonly updateStoreUsingPUTPath = '/api/command/stores';
   static readonly deleteStoreUsingDELETEPath = '/api/command/stores/{id}';
@@ -1067,6 +1070,78 @@ class CommandResourceService extends __BaseService {
   deleteStockLineUsingDELETE(id: number): __Observable<null> {
     return this.deleteStockLineUsingDELETEResponse(id).pipe(
       __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param store store
+   * @return OK
+   */
+  createDenormalizedStoreUsingPOSTResponse(store: Store): __Observable<__StrictHttpResponse<Store>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = store;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/command/store-denormalized`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Store>;
+      })
+    );
+  }
+  /**
+   * @param store store
+   * @return OK
+   */
+  createDenormalizedStoreUsingPOST(store: Store): __Observable<Store> {
+    return this.createDenormalizedStoreUsingPOSTResponse(store).pipe(
+      __map(_r => _r.body as Store)
+    );
+  }
+
+  /**
+   * @param store store
+   * @return OK
+   */
+  updateDenormalizedStoreUsingPUTResponse(store: Store): __Observable<__StrictHttpResponse<Store>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = store;
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/api/command/store-denormalized`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Store>;
+      })
+    );
+  }
+  /**
+   * @param store store
+   * @return OK
+   */
+  updateDenormalizedStoreUsingPUT(store: Store): __Observable<Store> {
+    return this.updateDenormalizedStoreUsingPUTResponse(store).pipe(
+      __map(_r => _r.body as Store)
     );
   }
 

@@ -46,7 +46,7 @@
         <ion-item>
           <ion-label position="floating">Delivery Type</ion-label>
           <ion-select multiple=true [(ngModel)]="store.deliveryInfo.types">
-            <ion-select-option *ngFor="let type of types" [value]="type.name" required>{{type.name}}
+            <ion-select-option *ngFor="let type of types" [value]="type" required>{{type.name}}
             </ion-select-option>
 <!--             <ion-select-option [value]="delivery" required>Delivery
             </ion-select-option> -->
