@@ -11,6 +11,7 @@ import { CategoryDTO } from '../models/category-dto';
 import { ContactDTO } from '../models/contact-dto';
 import { CustomerDTO } from '../models/customer-dto';
 import { CustomerAggregator } from '../models/customer-aggregator';
+import { DeliveryInfoDTO } from '../models/delivery-info-dto';
 import { ProductDTO } from '../models/product-dto';
 import { ReplyDTO } from '../models/reply-dto';
 import { ReviewDTO } from '../models/review-dto';
@@ -18,9 +19,10 @@ import { SaleDTO } from '../models/sale-dto';
 import { StockCurrentDTO } from '../models/stock-current-dto';
 import { StockDiaryDTO } from '../models/stock-diary-dto';
 import { StockLineDTO } from '../models/stock-line-dto';
-import { Store } from '../models/store';
+import { StoreBundleDTO } from '../models/store-bundle-dto';
 import { StoreDTO } from '../models/store-dto';
 import { TicketLineDTO } from '../models/ticket-line-dto';
+import { TypeDTO } from '../models/type-dto';
 import { UomDTO } from '../models/uom-dto';
 import { UserRatingDTO } from '../models/user-rating-dto';
 
@@ -38,6 +40,9 @@ class CommandResourceService extends __BaseService {
   static readonly updateCustomerUsingPUTPath = '/api/command/customers';
   static readonly createCustomerUsingPOSTPath = '/api/command/customers/register-customer';
   static readonly deleteCustomerUsingDELETEPath = '/api/command/customers/{id}';
+  static readonly createDeliveryInfoUsingPOSTPath = '/api/command/delivery-infos';
+  static readonly updateDeliveryInfoUsingPUTPath = '/api/command/delivery-infos';
+  static readonly deleteDeliveryInfoUsingDELETEPath = '/api/command/delivery-infos/{id}';
   static readonly createProductCategoryUsingPOSTPath = '/api/command/productCategory';
   static readonly createProductUsingPOSTPath = '/api/command/products';
   static readonly updateProductUsingPUTPath = '/api/command/products';
@@ -59,14 +64,17 @@ class CommandResourceService extends __BaseService {
   static readonly createStockLineUsingPOSTPath = '/api/command/stocklines';
   static readonly updateStockLineUsingPUTPath = '/api/command/stocklines';
   static readonly deleteStockLineUsingDELETEPath = '/api/command/stocklines/{id}';
-  static readonly createDenormalizedStoreUsingPOSTPath = '/api/command/store-denormalized';
   static readonly updateDenormalizedStoreUsingPUTPath = '/api/command/store-denormalized';
   static readonly createStoreUsingPOSTPath = '/api/command/stores';
   static readonly updateStoreUsingPUTPath = '/api/command/stores';
+  static readonly createDeNormalizedStoreUsingPOSTPath = '/api/command/stores-denormalized';
   static readonly deleteStoreUsingDELETEPath = '/api/command/stores/{id}';
   static readonly createTickerLineUsingPOSTPath = '/api/command/ticket-lines';
   static readonly updateTicketLineUsingPUTPath = '/api/command/ticket-lines';
   static readonly deleteTicketlineUsingDELETEPath = '/api/command/ticket-lines/{id}';
+  static readonly createTypeUsingPOSTPath = '/api/command/types';
+  static readonly updateTypeUsingPUTPath = '/api/command/types';
+  static readonly deleteTypeUsingDELETEPath = '/api/command/types/{id}';
   static readonly createUOMUsingPOSTPath = '/api/command/unit-of-meassurement';
   static readonly updateUOMUsingPUTPath = '/api/command/uoms';
   static readonly deleteUOMUsingDELETEPath = '/api/command/uoms/{id}';
@@ -323,6 +331,112 @@ class CommandResourceService extends __BaseService {
    */
   deleteCustomerUsingDELETE(id: number): __Observable<null> {
     return this.deleteCustomerUsingDELETEResponse(id).pipe(
+      __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param deliveryInfoDTO deliveryInfoDTO
+   * @return OK
+   */
+  createDeliveryInfoUsingPOSTResponse(deliveryInfoDTO: DeliveryInfoDTO): __Observable<__StrictHttpResponse<DeliveryInfoDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = deliveryInfoDTO;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/command/delivery-infos`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<DeliveryInfoDTO>;
+      })
+    );
+  }
+  /**
+   * @param deliveryInfoDTO deliveryInfoDTO
+   * @return OK
+   */
+  createDeliveryInfoUsingPOST(deliveryInfoDTO: DeliveryInfoDTO): __Observable<DeliveryInfoDTO> {
+    return this.createDeliveryInfoUsingPOSTResponse(deliveryInfoDTO).pipe(
+      __map(_r => _r.body as DeliveryInfoDTO)
+    );
+  }
+
+  /**
+   * @param deliveryInfoDTO deliveryInfoDTO
+   * @return OK
+   */
+  updateDeliveryInfoUsingPUTResponse(deliveryInfoDTO: DeliveryInfoDTO): __Observable<__StrictHttpResponse<DeliveryInfoDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = deliveryInfoDTO;
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/api/command/delivery-infos`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<DeliveryInfoDTO>;
+      })
+    );
+  }
+  /**
+   * @param deliveryInfoDTO deliveryInfoDTO
+   * @return OK
+   */
+  updateDeliveryInfoUsingPUT(deliveryInfoDTO: DeliveryInfoDTO): __Observable<DeliveryInfoDTO> {
+    return this.updateDeliveryInfoUsingPUTResponse(deliveryInfoDTO).pipe(
+      __map(_r => _r.body as DeliveryInfoDTO)
+    );
+  }
+
+  /**
+   * @param id id
+   */
+  deleteDeliveryInfoUsingDELETEResponse(id: number): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/api/command/delivery-infos/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+  /**
+   * @param id id
+   */
+  deleteDeliveryInfoUsingDELETE(id: number): __Observable<null> {
+    return this.deleteDeliveryInfoUsingDELETEResponse(id).pipe(
       __map(_r => _r.body as null)
     );
   }
@@ -1074,50 +1188,26 @@ class CommandResourceService extends __BaseService {
   }
 
   /**
-   * @param store store
+   * @param params The `CommandResourceService.UpdateDenormalizedStoreUsingPUTParams` containing the following parameters:
+   *
+   * - `storebundle`: storebundle
+   *
+   * - `sort`: sort
+   *
+   * - `size`: size
+   *
+   * - `page`: page
+   *
    * @return OK
    */
-  createDenormalizedStoreUsingPOSTResponse(store: Store): __Observable<__StrictHttpResponse<Store>> {
+  updateDenormalizedStoreUsingPUTResponse(params: CommandResourceService.UpdateDenormalizedStoreUsingPUTParams): __Observable<__StrictHttpResponse<StoreBundleDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = store;
-    let req = new HttpRequest<any>(
-      'POST',
-      this.rootUrl + `/api/command/store-denormalized`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<Store>;
-      })
-    );
-  }
-  /**
-   * @param store store
-   * @return OK
-   */
-  createDenormalizedStoreUsingPOST(store: Store): __Observable<Store> {
-    return this.createDenormalizedStoreUsingPOSTResponse(store).pipe(
-      __map(_r => _r.body as Store)
-    );
-  }
-
-  /**
-   * @param store store
-   * @return OK
-   */
-  updateDenormalizedStoreUsingPUTResponse(store: Store): __Observable<__StrictHttpResponse<Store>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    __body = store;
+    __body = params.storebundle;
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
     let req = new HttpRequest<any>(
       'PUT',
       this.rootUrl + `/api/command/store-denormalized`,
@@ -1131,17 +1221,26 @@ class CommandResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<Store>;
+        return _r as __StrictHttpResponse<StoreBundleDTO>;
       })
     );
   }
   /**
-   * @param store store
+   * @param params The `CommandResourceService.UpdateDenormalizedStoreUsingPUTParams` containing the following parameters:
+   *
+   * - `storebundle`: storebundle
+   *
+   * - `sort`: sort
+   *
+   * - `size`: size
+   *
+   * - `page`: page
+   *
    * @return OK
    */
-  updateDenormalizedStoreUsingPUT(store: Store): __Observable<Store> {
-    return this.updateDenormalizedStoreUsingPUTResponse(store).pipe(
-      __map(_r => _r.body as Store)
+  updateDenormalizedStoreUsingPUT(params: CommandResourceService.UpdateDenormalizedStoreUsingPUTParams): __Observable<StoreBundleDTO> {
+    return this.updateDenormalizedStoreUsingPUTResponse(params).pipe(
+      __map(_r => _r.body as StoreBundleDTO)
     );
   }
 
@@ -1214,6 +1313,63 @@ class CommandResourceService extends __BaseService {
   updateStoreUsingPUT(storeDTO: StoreDTO): __Observable<StoreDTO> {
     return this.updateStoreUsingPUTResponse(storeDTO).pipe(
       __map(_r => _r.body as StoreDTO)
+    );
+  }
+
+  /**
+   * @param params The `CommandResourceService.CreateDeNormalizedStoreUsingPOSTParams` containing the following parameters:
+   *
+   * - `storebundle`: storebundle
+   *
+   * - `sort`: sort
+   *
+   * - `size`: size
+   *
+   * - `page`: page
+   *
+   * @return OK
+   */
+  createDeNormalizedStoreUsingPOSTResponse(params: CommandResourceService.CreateDeNormalizedStoreUsingPOSTParams): __Observable<__StrictHttpResponse<StoreBundleDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = params.storebundle;
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/command/stores-denormalized`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<StoreBundleDTO>;
+      })
+    );
+  }
+  /**
+   * @param params The `CommandResourceService.CreateDeNormalizedStoreUsingPOSTParams` containing the following parameters:
+   *
+   * - `storebundle`: storebundle
+   *
+   * - `sort`: sort
+   *
+   * - `size`: size
+   *
+   * - `page`: page
+   *
+   * @return OK
+   */
+  createDeNormalizedStoreUsingPOST(params: CommandResourceService.CreateDeNormalizedStoreUsingPOSTParams): __Observable<StoreBundleDTO> {
+    return this.createDeNormalizedStoreUsingPOSTResponse(params).pipe(
+      __map(_r => _r.body as StoreBundleDTO)
     );
   }
 
@@ -1353,6 +1509,112 @@ class CommandResourceService extends __BaseService {
    */
   deleteTicketlineUsingDELETE(id: number): __Observable<null> {
     return this.deleteTicketlineUsingDELETEResponse(id).pipe(
+      __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param typeDTO typeDTO
+   * @return OK
+   */
+  createTypeUsingPOSTResponse(typeDTO: TypeDTO): __Observable<__StrictHttpResponse<TypeDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = typeDTO;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/command/types`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<TypeDTO>;
+      })
+    );
+  }
+  /**
+   * @param typeDTO typeDTO
+   * @return OK
+   */
+  createTypeUsingPOST(typeDTO: TypeDTO): __Observable<TypeDTO> {
+    return this.createTypeUsingPOSTResponse(typeDTO).pipe(
+      __map(_r => _r.body as TypeDTO)
+    );
+  }
+
+  /**
+   * @param typeDTO typeDTO
+   * @return OK
+   */
+  updateTypeUsingPUTResponse(typeDTO: TypeDTO): __Observable<__StrictHttpResponse<TypeDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = typeDTO;
+    let req = new HttpRequest<any>(
+      'PUT',
+      this.rootUrl + `/api/command/types`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<TypeDTO>;
+      })
+    );
+  }
+  /**
+   * @param typeDTO typeDTO
+   * @return OK
+   */
+  updateTypeUsingPUT(typeDTO: TypeDTO): __Observable<TypeDTO> {
+    return this.updateTypeUsingPUTResponse(typeDTO).pipe(
+      __map(_r => _r.body as TypeDTO)
+    );
+  }
+
+  /**
+   * @param id id
+   */
+  deleteTypeUsingDELETEResponse(id: number): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'DELETE',
+      this.rootUrl + `/api/command/types/${id}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+  /**
+   * @param id id
+   */
+  deleteTypeUsingDELETE(id: number): __Observable<null> {
+    return this.deleteTypeUsingDELETEResponse(id).pipe(
       __map(_r => _r.body as null)
     );
   }
@@ -1571,6 +1833,58 @@ class CommandResourceService extends __BaseService {
 }
 
 module CommandResourceService {
+
+  /**
+   * Parameters for updateDenormalizedStoreUsingPUT
+   */
+  export interface UpdateDenormalizedStoreUsingPUTParams {
+
+    /**
+     * storebundle
+     */
+    storebundle: StoreBundleDTO;
+
+    /**
+     * sort
+     */
+    sort?: Array<string>;
+
+    /**
+     * size
+     */
+    size?: number;
+
+    /**
+     * page
+     */
+    page?: number;
+  }
+
+  /**
+   * Parameters for createDeNormalizedStoreUsingPOST
+   */
+  export interface CreateDeNormalizedStoreUsingPOSTParams {
+
+    /**
+     * storebundle
+     */
+    storebundle: StoreBundleDTO;
+
+    /**
+     * sort
+     */
+    sort?: Array<string>;
+
+    /**
+     * size
+     */
+    size?: number;
+
+    /**
+     * page
+     */
+    page?: number;
+  }
 }
 
 export { CommandResourceService }

@@ -14,7 +14,8 @@
       <ion-col padding>
         <ion-item>
           <ion-label position="floating">Logo</ion-label>
-          <img *ngIf="store.imageContentType" src="data:{{store.imageContentType}};base64,{{store.image}}" class="image">
+          <img *ngIf="store.imageContentType" src="data:{{store.imageContentType}};base64,{{store.image}}"
+            class="image">
           <input hidden id="logo" type="file" accept="image/*" color="primary" (change)="onSelectFile($event)">
           <ion-button fill="none" (click)="triggerUpload($event)">
             <ion-icon slot="start" color="danger" size="large" name="camera" slot="icon-only"></ion-icon>
@@ -25,6 +26,11 @@
             <ion-input type="text" [(ngModel)]="store.openingTime"></ion-input>
           </ion-item> -->
         <ion-item>
+          <ion-label position="floating">Name</ion-label>
+          <ion-input type="text" [(ngModel)]="store.name">
+          </ion-input>
+        </ion-item>
+        <ion-item>
           <ion-label position="floating">Opening time</ion-label>
           <ion-datetime display-format="hh:mm A" [(ngModel)]="store.openingTime"></ion-datetime>
         </ion-item>
@@ -33,26 +39,20 @@
           <ion-datetime display-format="hh:mm A" [(ngModel)]="store.closingTime"></ion-datetime>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Name</ion-label>
-          <ion-input type="text" [(ngModel)]="store.name">
-          </ion-input>
-        </ion-item>
-
-        <ion-item>
           <ion-label position="floating">Info</ion-label>
           <ion-input [(ngModel)]="store.info">
           </ion-input>
         </ion-item>
-        <ion-item>
+        <!--    <ion-item>
           <ion-label position="floating">Delivery Type</ion-label>
           <ion-select multiple=true [(ngModel)]="store.deliveryInfo.types">
             <ion-select-option *ngFor="let type of types" [value]="type" required>{{type.name}}
-            </ion-select-option>
-<!--             <ion-select-option [value]="delivery" required>Delivery
             </ion-select-option> -->
-          </ion-select>
-        </ion-item>
-<!--         <ion-item *ngIf="store.deliveryInfo?.type=='delivery'">
+        <!--             <ion-select-option [value]="delivery" required>Delivery
+            </ion-select-option> -->
+        <!--           </ion-select>
+        </ion-item> -->
+        <!--         <ion-item *ngIf="store.deliveryInfo?.type=='delivery'">
           <ion-label position="floating">Delivery starting time</ion-label>
           <ion-datetime display-format="hh:mm A" [(ngModel)]="store.deliveryInfo.startingTime"></ion-datetime>
         </ion-item> -->
@@ -64,6 +64,85 @@
                 </ion-select-option>
               </ion-select>
             </ion-item> -->
+        <ion-item-group>
+          <ion-item-divider>
+            <ion-label>Delivery details</ion-label>
+            <ion-icon name="add-circle" (click)="addNewDeliveryInfo()" color="danger" slot="end"></ion-icon>
+            <ion-icon name="arrow-down" *ngIf="!isDeliveryInfosShowing" mode="ios" (click)="showDeliveryInfos()"
+              slot="start"></ion-icon>
+            <ion-icon name="arrow-forward" *ngIf="isDeliveryInfosShowing" mode="ios" (click)="hideDeliveryInfos()"
+              slot="start"></ion-icon>
+          </ion-item-divider>
+          <ion-item *ngIf="isAddingNewDeliveryInfo">
+            <ion-row class="delivery-info" margin>
+              <ion-col size="10">
+                <ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-item>
+                      <ion-select [(ngModel)]="newDeliveryInfo.typeId" placeholder="select type">
+                        <ion-select-option *ngFor="let type of types" [value]="type.id" required>{{type.name}}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-item>
+                        <ion-label position="floating">Starting time</ion-label>
+                        <ion-datetime display-format="hh:mm A" [(ngModel)]="newDeliveryInfo.startingTime">
+                        </ion-datetime>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-item>
+                        <ion-label position="floating">Ending time</ion-label>
+                        <ion-datetime display-format="hh:mm A" [(ngModel)]="newDeliveryInfo.endTime"></ion-datetime>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-row>
+              </ion-col>
+              <ion-col size="2">
+                <ion-row>
+                  <ion-item lines="none">
+                    <ion-icon name="save" color="danger"></ion-icon>
+                  </ion-item>
+                </ion-row>
+                <ion-row>
+                  <ion-item lines="none">
+                    <ion-icon name="close" color="danger"></ion-icon>
+                  </ion-item>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+
+          <ion-item *ngFor="let deliveryInfo of deliveryInfos;let i=index">
+
+            <ion-row class="delivery-info" margin>
+              <ion-col size="12">
+                <ion-select [(ngModel)]="deliveryInfo.typeId">
+                  <ion-select-option *ngFor="let type of types" [value]="type.id" required>{{type.name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+              <ion-col size="6">
+                <ion-item>
+                  <ion-label position="floating">Starting time</ion-label>
+                  <ion-datetime display-format="hh:mm A" [(ngModel)]="deliveryInfo.startingTime"></ion-datetime>
+                </ion-item>
+              </ion-col>
+              <ion-col size="6">
+                <ion-item>
+                  <ion-label position="floating">Ending time</ion-label>
+                  <ion-datetime display-format="hh:mm A" [(ngModel)]="deliveryInfo.endTime"></ion-datetime>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+        </ion-item-group>
         <ion-button (click)="save()" margin mode="ios" expand="block" fill="solid" color="danger">Save</ion-button>
       </ion-col>
     </ion-row>

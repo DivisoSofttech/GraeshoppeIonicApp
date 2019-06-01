@@ -25,7 +25,8 @@ import { PageOfSaleAggregate } from '../models/page-of-sale-aggregate';
 import { SaleDTO } from '../models/sale-dto';
 import { StockDiaryDTO } from '../models/stock-diary-dto';
 import { StockLine } from '../models/stock-line';
-import { PageOfStore } from '../models/page-of-store';
+import { StoreBundleDTO } from '../models/store-bundle-dto';
+import { Store } from '../models/store';
 import { TicketLineDTO } from '../models/ticket-line-dto';
 import { TicketLine } from '../models/ticket-line';
 import { UserRating } from '../models/user-rating';
@@ -68,6 +69,7 @@ class QueryResourceService extends __BaseService {
   static readonly findOneStockDiaryUsingGETPath = '/api/query/stock-diaries/{id}';
   static readonly searchStockDiariesUsingGETPath = '/api/query/stock-diary/{searchTerm}';
   static readonly findAllStockLinesUsingGETPath = '/api/query/stocklines';
+  static readonly getStoreBundleUsingGETPath = '/api/query/storeBundle/{regNo}';
   static readonly findStoreByRegNoUsingGETPath = '/api/query/stores/{regNo}';
   static readonly findAllTicketlinesUsingGETPath = '/api/query/ticket-lines';
   static readonly findOneTicketLinesUsingGETPath = '/api/query/ticket-lines/{id}';
@@ -1528,29 +1530,29 @@ class QueryResourceService extends __BaseService {
   }
 
   /**
-   * @param params The `QueryResourceService.FindStoreByRegNoUsingGETParams` containing the following parameters:
-   *
-   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-   *
-   * - `size`: Size of a page
+   * @param params The `QueryResourceService.GetStoreBundleUsingGETParams` containing the following parameters:
    *
    * - `regNo`: regNo
    *
-   * - `page`: Page number of the requested page
+   * - `sort`: sort
+   *
+   * - `size`: size
+   *
+   * - `page`: page
    *
    * @return OK
    */
-  findStoreByRegNoUsingGETResponse(params: QueryResourceService.FindStoreByRegNoUsingGETParams): __Observable<__StrictHttpResponse<PageOfStore>> {
+  getStoreBundleUsingGETResponse(params: QueryResourceService.GetStoreBundleUsingGETParams): __Observable<__StrictHttpResponse<StoreBundleDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+
     (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
     if (params.size != null) __params = __params.set('size', params.size.toString());
-    if (params.regNo != null) __params = __params.set('regNo', params.regNo.toString());
     if (params.page != null) __params = __params.set('page', params.page.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/query/stores/${params.regNo}`,
+      this.rootUrl + `/api/query/storeBundle/${params.regNo}`,
       __body,
       {
         headers: __headers,
@@ -1561,26 +1563,62 @@ class QueryResourceService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<PageOfStore>;
+        return _r as __StrictHttpResponse<StoreBundleDTO>;
       })
     );
   }
   /**
-   * @param params The `QueryResourceService.FindStoreByRegNoUsingGETParams` containing the following parameters:
-   *
-   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-   *
-   * - `size`: Size of a page
+   * @param params The `QueryResourceService.GetStoreBundleUsingGETParams` containing the following parameters:
    *
    * - `regNo`: regNo
    *
-   * - `page`: Page number of the requested page
+   * - `sort`: sort
+   *
+   * - `size`: size
+   *
+   * - `page`: page
    *
    * @return OK
    */
-  findStoreByRegNoUsingGET(params: QueryResourceService.FindStoreByRegNoUsingGETParams): __Observable<PageOfStore> {
-    return this.findStoreByRegNoUsingGETResponse(params).pipe(
-      __map(_r => _r.body as PageOfStore)
+  getStoreBundleUsingGET(params: QueryResourceService.GetStoreBundleUsingGETParams): __Observable<StoreBundleDTO> {
+    return this.getStoreBundleUsingGETResponse(params).pipe(
+      __map(_r => _r.body as StoreBundleDTO)
+    );
+  }
+
+  /**
+   * @param regNo regNo
+   * @return OK
+   */
+  findStoreByRegNoUsingGETResponse(regNo?: string): __Observable<__StrictHttpResponse<Store>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (regNo != null) __params = __params.set('regNo', regNo.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/stores/${regNo}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Store>;
+      })
+    );
+  }
+  /**
+   * @param regNo regNo
+   * @return OK
+   */
+  findStoreByRegNoUsingGET(regNo?: string): __Observable<Store> {
+    return this.findStoreByRegNoUsingGETResponse(regNo).pipe(
+      __map(_r => _r.body as Store)
     );
   }
 
@@ -2198,27 +2236,27 @@ module QueryResourceService {
   }
 
   /**
-   * Parameters for findStoreByRegNoUsingGET
+   * Parameters for getStoreBundleUsingGET
    */
-  export interface FindStoreByRegNoUsingGETParams {
-
-    /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     */
-    sort?: Array<string>;
-
-    /**
-     * Size of a page
-     */
-    size?: number;
+  export interface GetStoreBundleUsingGETParams {
 
     /**
      * regNo
      */
-    regNo?: string;
+    regNo: string;
 
     /**
-     * Page number of the requested page
+     * sort
+     */
+    sort?: Array<string>;
+
+    /**
+     * size
+     */
+    size?: number;
+
+    /**
+     * page
      */
     page?: number;
   }

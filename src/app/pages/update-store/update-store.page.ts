@@ -1,13 +1,14 @@
+import { TypeDTO } from './../../api/models/type-dto';
+import { DeliveryInfoDTO } from './../../api/models/delivery-info-dto';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Type } from './../../api/models/type';
 import { DateService } from './../../date/date.service';
 import { RESIZE_OPTIONS } from './../../image-resize-options';
 import { ImageCompressService } from 'ng2-image-compress';
 import { NavController, ToastController } from '@ionic/angular';
-import { Store } from './../../api/models/store';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { QueryResourceService, CommandResourceService } from 'src/app/api/services';
 import { Component, OnInit } from '@angular/core';
+import { StoreBundleDTO, StoreDTO } from 'src/app/api/models';
 
 @Component({
   selector: 'app-update-store',
@@ -16,20 +17,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateStorePage implements OnInit {
 
-  private store: Store = {
-    deliveryInfo: {
-      types:[]
-    }
-  };
-  private types: Type[] = [
-    {
-      name: "collection"
-    },
-    {
-      name: "delivery"
-    }
-  ];
-  private storeName: string;
+  private store:StoreDTO={};
+  private deliveryInfos:DeliveryInfoDTO[]=[];
+  private types: TypeDTO[] = [];
+  private isAddingNewDeliveryInfo: boolean=false;
+  private newDeliveryInfo: DeliveryInfoDTO={};
+  private isDeliveryInfosShowing:boolean=false;
+
+  //private storeName: string;
   private storeRegNo: string;
   private storeEmail: string;
 
@@ -40,25 +35,25 @@ export class UpdateStorePage implements OnInit {
   ngOnInit() {
 
     /*     this.queryService.findStoreByRegNoUsingGET({regNo:}) */
-    let username;
+    let username:string;
     if (this.oauthService.hasValidAccessToken()) {
 
       this.oauthService.loadUserProfile()
         .then((data: any) => {
-          this.storeName = data.preferred_username;
+          //this.storeName = data.preferred_username;
           this.storeEmail = data.email;
           username = data.preferred_username;
           this.storeRegNo = username;
           console.log("store-user", data);
-          this.queryService.findStoreByRegNoUsingGET({ regNo: username }).subscribe(
-            data => {
-              console.log(data.content);
-              if ((data.content.length > 0)) {
-                this.store = data.content[0];
-                if(this.store.deliveryInfo==null){
-                  this.store.deliveryInfo={};
+          this.queryService.getStoreBundleUsingGET( {regNo:this.storeRegNo} ).subscribe(
+           (data:StoreBundleDTO) => {
+              console.log("received store",data);
+                this.store = data.store;
+                if(data.deliveryInfos){
+                  this.deliveryInfos=data.deliveryInfos;
                 }
-              }
+                
+                this.types=data.types;
             }
           );
         })
@@ -86,7 +81,7 @@ export class UpdateStorePage implements OnInit {
     //this.store.name = this.storeName;
     if (this.store.id) {
 
-      this.commandservice.updateDenormalizedStoreUsingPUT(this.store)
+      this.commandservice.updateStoreUsingPUT(this.store)
         .subscribe(data => {
           console.log("store updated", data);
           this.presentToast("Your store information has been successfully saved");
@@ -98,7 +93,7 @@ export class UpdateStorePage implements OnInit {
         });
     }
     else {
-      this.commandservice.createDenormalizedStoreUsingPOST(this.store)
+      this.commandservice.createStoreUsingPOST(this.store)
         .subscribe(data => {
           console.log("store created", data);
           this.presentToast("Your store information has been successfully updated");
@@ -158,5 +153,18 @@ export class UpdateStorePage implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  getType(index:number) {
+    return this.types[index].name;
+  }
+  addNewDeliveryInfo() {
+    this.isAddingNewDeliveryInfo=true;
+  }
+  hideDeliveryInfos() {
+    this.isDeliveryInfosShowing=false;
+  }
+  showDeliveryInfos() {
+    this.isDeliveryInfosShowing=true;
   }
 }

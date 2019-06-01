@@ -1,5 +1,5 @@
 /* tslint:disable */
-export interface Type {
+export interface TypeDTO {
   id?: number;
   name?: string;
 }
