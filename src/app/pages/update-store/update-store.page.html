@@ -68,51 +68,52 @@
           <ion-item-divider>
             <ion-label>Delivery details</ion-label>
             <ion-icon name="add-circle" (click)="addNewDeliveryInfo()" color="danger" slot="end"></ion-icon>
-            <ion-icon name="arrow-down" *ngIf="!isDeliveryInfosShowing" mode="ios" (click)="showDeliveryInfos()"
+            <ion-icon name="arrow-down" *ngIf="isDeliveryInfosShowing" mode="ios" (click)="hideDeliveryInfos()"
               slot="start"></ion-icon>
-            <ion-icon name="arrow-forward" *ngIf="isDeliveryInfosShowing" mode="ios" (click)="hideDeliveryInfos()"
+            <ion-icon name="arrow-forward" *ngIf="!isDeliveryInfosShowing" mode="ios" (click)="showDeliveryInfos()"
               slot="start"></ion-icon>
           </ion-item-divider>
           <ion-item *ngIf="isAddingNewDeliveryInfo">
-            <ion-row class="delivery-info" margin>
+            <ion-row class="delivery-info">
               <ion-col size="10">
                 <ion-row>
-                  <ion-row>
-                    <ion-col size="12">
-                      <ion-item>
+
+                  <ion-col>
+                    <ion-item>
                       <ion-select [(ngModel)]="newDeliveryInfo.typeId" placeholder="select type">
                         <ion-select-option *ngFor="let type of types" [value]="type.id" required>{{type.name}}
                         </ion-select-option>
                       </ion-select>
                     </ion-item>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row>
-                    <ion-col size="6">
-                      <ion-item>
-                        <ion-label position="floating">Starting time</ion-label>
-                        <ion-datetime display-format="hh:mm A" [(ngModel)]="newDeliveryInfo.startingTime">
-                        </ion-datetime>
-                      </ion-item>
-                    </ion-col>
-                    <ion-col size="6">
-                      <ion-item>
-                        <ion-label position="floating">Ending time</ion-label>
-                        <ion-datetime display-format="hh:mm A" [(ngModel)]="newDeliveryInfo.endTime"></ion-datetime>
-                      </ion-item>
-                    </ion-col>
-                  </ion-row>
+                  </ion-col>
                 </ion-row>
+
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-item>
+                      <ion-label position="floating">Starting time</ion-label>
+                      <ion-datetime display-format="hh:mm A" [(ngModel)]="newDeliveryInfo.startingTime">
+                      </ion-datetime>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item>
+                      <ion-label position="floating">Ending time</ion-label>
+                      <ion-datetime display-format="hh:mm A" [(ngModel)]="newDeliveryInfo.endTime"></ion-datetime>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
               </ion-col>
               <ion-col size="2">
                 <ion-row>
                   <ion-item lines="none">
-                    <ion-icon name="save" color="danger"></ion-icon>
+                    <ion-icon name="save" (click)="saveNewDeliveryInfo()" color="danger"></ion-icon>
                   </ion-item>
                 </ion-row>
                 <ion-row>
                   <ion-item lines="none">
-                    <ion-icon name="close" color="danger"></ion-icon>
+                    <ion-icon name="close" (click)="closeNewDeliveryInfo()" color="danger"></ion-icon>
                   </ion-item>
                 </ion-row>
               </ion-col>
@@ -121,27 +122,45 @@
 
           <ion-item *ngFor="let deliveryInfo of deliveryInfos;let i=index">
 
-            <ion-row class="delivery-info" margin>
-              <ion-col size="12">
-                <ion-select [(ngModel)]="deliveryInfo.typeId">
-                  <ion-select-option *ngFor="let type of types" [value]="type.id" required>{{type.name}}
-                  </ion-select-option>
-                </ion-select>
+            <ion-row class="delivery-info">
+              <ion-col size="10">
+                <ion-row>
+                  <ion-select [(ngModel)]="deliveryInfo.typeId">
+                    <ion-select-option *ngFor="let type of types" [value]="type.id" required>{{type.name}}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-item>
+                      <ion-label position="floating">Starting time</ion-label>
+                      <ion-datetime display-format="hh:mm A" [(ngModel)]="deliveryInfo.startingTime"></ion-datetime>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-item>
+                      <ion-label position="floating">Ending time</ion-label>
+                      <ion-datetime display-format="hh:mm A" [(ngModel)]="deliveryInfo.endTime"></ion-datetime>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
               </ion-col>
-              <ion-col size="6">
-                <ion-item>
-                  <ion-label position="floating">Starting time</ion-label>
-                  <ion-datetime display-format="hh:mm A" [(ngModel)]="deliveryInfo.startingTime"></ion-datetime>
-                </ion-item>
-              </ion-col>
-              <ion-col size="6">
-                <ion-item>
-                  <ion-label position="floating">Ending time</ion-label>
-                  <ion-datetime display-format="hh:mm A" [(ngModel)]="deliveryInfo.endTime"></ion-datetime>
-                </ion-item>
+
+              <ion-col size="2">
+                <ion-row>
+                  <ion-item lines="none">
+                    <ion-icon name="save" (click)="updateDeliveryInfo(i)" color="danger"></ion-icon>
+                  </ion-item>
+                </ion-row>
+                <ion-row>
+                  <ion-item lines="none">
+                    <ion-icon name="close" (click)="deleteDeliveryInfo(i)" color="danger"></ion-icon>
+                  </ion-item>
+                </ion-row>
               </ion-col>
             </ion-row>
           </ion-item>
+
         </ion-item-group>
         <ion-button (click)="save()" margin mode="ios" expand="block" fill="solid" color="danger">Save</ion-button>
       </ion-col>

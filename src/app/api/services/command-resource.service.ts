@@ -19,7 +19,6 @@ import { SaleDTO } from '../models/sale-dto';
 import { StockCurrentDTO } from '../models/stock-current-dto';
 import { StockDiaryDTO } from '../models/stock-diary-dto';
 import { StockLineDTO } from '../models/stock-line-dto';
-import { StoreBundleDTO } from '../models/store-bundle-dto';
 import { StoreDTO } from '../models/store-dto';
 import { TicketLineDTO } from '../models/ticket-line-dto';
 import { TypeDTO } from '../models/type-dto';
@@ -56,18 +55,15 @@ class CommandResourceService extends __BaseService {
   static readonly createSaleUsingPOSTPath = '/api/command/sales';
   static readonly updateSaleUsingPUTPath = '/api/command/sales';
   static readonly deleteSaleUsingDELETEPath = '/api/command/sales/{id}';
-  static readonly createStockCurrentUsingPOSTPath = '/api/command/stock-currents';
   static readonly updateStockCurrentUsingPUTPath = '/api/command/stock-currents';
-  static readonly createStockCurrentUsingPOST1Path = '/api/command/stock-diaries';
+  static readonly createStockCurrentUsingPOSTPath = '/api/command/stock-diaries';
   static readonly updateStockDiaryUsingPUTPath = '/api/command/stock-diaries';
   static readonly createStockOfProductUsingPOSTPath = '/api/command/stock-of-product';
   static readonly createStockLineUsingPOSTPath = '/api/command/stocklines';
   static readonly updateStockLineUsingPUTPath = '/api/command/stocklines';
   static readonly deleteStockLineUsingDELETEPath = '/api/command/stocklines/{id}';
-  static readonly updateDenormalizedStoreUsingPUTPath = '/api/command/store-denormalized';
   static readonly createStoreUsingPOSTPath = '/api/command/stores';
   static readonly updateStoreUsingPUTPath = '/api/command/stores';
-  static readonly createDeNormalizedStoreUsingPOSTPath = '/api/command/stores-denormalized';
   static readonly deleteStoreUsingDELETEPath = '/api/command/stores/{id}';
   static readonly createTickerLineUsingPOSTPath = '/api/command/ticket-lines';
   static readonly updateTicketLineUsingPUTPath = '/api/command/ticket-lines';
@@ -902,42 +898,6 @@ class CommandResourceService extends __BaseService {
   }
 
   /**
-   * @param stockCurrent stockCurrent
-   * @return OK
-   */
-  createStockCurrentUsingPOSTResponse(stockCurrent: StockCurrentDTO): __Observable<__StrictHttpResponse<StockCurrentDTO>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    __body = stockCurrent;
-    let req = new HttpRequest<any>(
-      'POST',
-      this.rootUrl + `/api/command/stock-currents`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<StockCurrentDTO>;
-      })
-    );
-  }
-  /**
-   * @param stockCurrent stockCurrent
-   * @return OK
-   */
-  createStockCurrentUsingPOST(stockCurrent: StockCurrentDTO): __Observable<StockCurrentDTO> {
-    return this.createStockCurrentUsingPOSTResponse(stockCurrent).pipe(
-      __map(_r => _r.body as StockCurrentDTO)
-    );
-  }
-
-  /**
    * @param StockCurrent StockCurrent
    * @return OK
    */
@@ -977,7 +937,7 @@ class CommandResourceService extends __BaseService {
    * @param stockDiary stockDiary
    * @return OK
    */
-  createStockCurrentUsingPOST1Response(stockDiary: StockDiaryDTO): __Observable<__StrictHttpResponse<StockDiaryDTO>> {
+  createStockCurrentUsingPOSTResponse(stockDiary: StockDiaryDTO): __Observable<__StrictHttpResponse<StockDiaryDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -1003,8 +963,8 @@ class CommandResourceService extends __BaseService {
    * @param stockDiary stockDiary
    * @return OK
    */
-  createStockCurrentUsingPOST1(stockDiary: StockDiaryDTO): __Observable<StockDiaryDTO> {
-    return this.createStockCurrentUsingPOST1Response(stockDiary).pipe(
+  createStockCurrentUsingPOST(stockDiary: StockDiaryDTO): __Observable<StockDiaryDTO> {
+    return this.createStockCurrentUsingPOSTResponse(stockDiary).pipe(
       __map(_r => _r.body as StockDiaryDTO)
     );
   }
@@ -1188,63 +1148,6 @@ class CommandResourceService extends __BaseService {
   }
 
   /**
-   * @param params The `CommandResourceService.UpdateDenormalizedStoreUsingPUTParams` containing the following parameters:
-   *
-   * - `storebundle`: storebundle
-   *
-   * - `sort`: sort
-   *
-   * - `size`: size
-   *
-   * - `page`: page
-   *
-   * @return OK
-   */
-  updateDenormalizedStoreUsingPUTResponse(params: CommandResourceService.UpdateDenormalizedStoreUsingPUTParams): __Observable<__StrictHttpResponse<StoreBundleDTO>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    __body = params.storebundle;
-    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
-    if (params.size != null) __params = __params.set('size', params.size.toString());
-    if (params.page != null) __params = __params.set('page', params.page.toString());
-    let req = new HttpRequest<any>(
-      'PUT',
-      this.rootUrl + `/api/command/store-denormalized`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<StoreBundleDTO>;
-      })
-    );
-  }
-  /**
-   * @param params The `CommandResourceService.UpdateDenormalizedStoreUsingPUTParams` containing the following parameters:
-   *
-   * - `storebundle`: storebundle
-   *
-   * - `sort`: sort
-   *
-   * - `size`: size
-   *
-   * - `page`: page
-   *
-   * @return OK
-   */
-  updateDenormalizedStoreUsingPUT(params: CommandResourceService.UpdateDenormalizedStoreUsingPUTParams): __Observable<StoreBundleDTO> {
-    return this.updateDenormalizedStoreUsingPUTResponse(params).pipe(
-      __map(_r => _r.body as StoreBundleDTO)
-    );
-  }
-
-  /**
    * @param storeDTO storeDTO
    * @return OK
    */
@@ -1313,63 +1216,6 @@ class CommandResourceService extends __BaseService {
   updateStoreUsingPUT(storeDTO: StoreDTO): __Observable<StoreDTO> {
     return this.updateStoreUsingPUTResponse(storeDTO).pipe(
       __map(_r => _r.body as StoreDTO)
-    );
-  }
-
-  /**
-   * @param params The `CommandResourceService.CreateDeNormalizedStoreUsingPOSTParams` containing the following parameters:
-   *
-   * - `storebundle`: storebundle
-   *
-   * - `sort`: sort
-   *
-   * - `size`: size
-   *
-   * - `page`: page
-   *
-   * @return OK
-   */
-  createDeNormalizedStoreUsingPOSTResponse(params: CommandResourceService.CreateDeNormalizedStoreUsingPOSTParams): __Observable<__StrictHttpResponse<StoreBundleDTO>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    __body = params.storebundle;
-    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
-    if (params.size != null) __params = __params.set('size', params.size.toString());
-    if (params.page != null) __params = __params.set('page', params.page.toString());
-    let req = new HttpRequest<any>(
-      'POST',
-      this.rootUrl + `/api/command/stores-denormalized`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<StoreBundleDTO>;
-      })
-    );
-  }
-  /**
-   * @param params The `CommandResourceService.CreateDeNormalizedStoreUsingPOSTParams` containing the following parameters:
-   *
-   * - `storebundle`: storebundle
-   *
-   * - `sort`: sort
-   *
-   * - `size`: size
-   *
-   * - `page`: page
-   *
-   * @return OK
-   */
-  createDeNormalizedStoreUsingPOST(params: CommandResourceService.CreateDeNormalizedStoreUsingPOSTParams): __Observable<StoreBundleDTO> {
-    return this.createDeNormalizedStoreUsingPOSTResponse(params).pipe(
-      __map(_r => _r.body as StoreBundleDTO)
     );
   }
 
@@ -1833,58 +1679,6 @@ class CommandResourceService extends __BaseService {
 }
 
 module CommandResourceService {
-
-  /**
-   * Parameters for updateDenormalizedStoreUsingPUT
-   */
-  export interface UpdateDenormalizedStoreUsingPUTParams {
-
-    /**
-     * storebundle
-     */
-    storebundle: StoreBundleDTO;
-
-    /**
-     * sort
-     */
-    sort?: Array<string>;
-
-    /**
-     * size
-     */
-    size?: number;
-
-    /**
-     * page
-     */
-    page?: number;
-  }
-
-  /**
-   * Parameters for createDeNormalizedStoreUsingPOST
-   */
-  export interface CreateDeNormalizedStoreUsingPOSTParams {
-
-    /**
-     * storebundle
-     */
-    storebundle: StoreBundleDTO;
-
-    /**
-     * sort
-     */
-    sort?: Array<string>;
-
-    /**
-     * size
-     */
-    size?: number;
-
-    /**
-     * page
-     */
-    page?: number;
-  }
 }
 
 export { CommandResourceService }

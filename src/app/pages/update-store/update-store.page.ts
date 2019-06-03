@@ -52,8 +52,9 @@ export class UpdateStorePage implements OnInit {
                 if(data.deliveryInfos){
                   this.deliveryInfos=data.deliveryInfos;
                 }
-                
-                this.types=data.types;
+                  this.types=data.types;
+
+
             }
           );
         })
@@ -166,5 +167,44 @@ export class UpdateStorePage implements OnInit {
   }
   showDeliveryInfos() {
     this.isDeliveryInfosShowing=true;
+  }
+  closeNewDeliveryInfo() {
+    this.isAddingNewDeliveryInfo=false;
+  }
+  saveNewDeliveryInfo() {
+    this.newDeliveryInfo.storeId=this.store.id;
+    this.commandservice.createDeliveryInfoUsingPOST(this.newDeliveryInfo).subscribe(response=>{
+      console.log("delvery info created",response);
+      this.deliveryInfos.push(response);
+      this.presentToast("Your delivery info successfully saved");
+      this.isAddingNewDeliveryInfo=false;
+      this.newDeliveryInfo={};
+    },(err:HttpErrorResponse)=>{
+      console.log("delivery info creation failed", err);
+      this.presentToast("Your delivery info could not be saved, "+err.message);
+    });
+  }
+
+  updateDeliveryInfo(index: number) {
+    
+    this.commandservice.updateDeliveryInfoUsingPUT(this.deliveryInfos[index]).subscribe(response=>{
+      console.log("delvery info updated",response);
+      this.presentToast("Your delivery info successfully updated");
+    },(err:HttpErrorResponse)=>{
+      console.log("delivery info updation failed", err);
+      this.presentToast("Your delivery info could not be updated, "+err.message);
+    });
+  }
+
+  deleteDeliveryInfo(index: number) {
+    
+    this.commandservice.deleteDeliveryInfoUsingDELETE(this.deliveryInfos[index].id).subscribe(response=>{
+      console.log("delvery info deleted",response);
+      this.deliveryInfos.splice(index,0);
+      this.presentToast("Your delivery info successfully deleted");
+    },(err:HttpErrorResponse)=>{
+      console.log("delivery info deleted", err);
+      this.presentToast("Your delivery info could not be deleted, "+err.message);
+    });
   }
 }

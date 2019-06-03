@@ -54,6 +54,7 @@ class QueryResourceService extends __BaseService {
   static readonly findStockCurrentByProductIdUsingGETPath = '/api/query/findStockCurrentByProductId/{productId}';
   static readonly findStockCurrentDTOByProductIdUsingGETPath = '/api/query/findStockCurrentDTOByProductId/{productId}';
   static readonly findStockDiaryByProductIdUsingGETPath = '/api/query/findStockDiaryByProductId/{productId}';
+  static readonly loadProductsUsingGETPath = '/api/query/loadProducts';
   static readonly findAllProductUsingGETPath = '/api/query/products';
   static readonly exportProductsUsingGETPath = '/api/query/products/export';
   static readonly exportProductsAsPdfUsingGETPath = '/api/query/products/pdf';
@@ -838,6 +839,31 @@ class QueryResourceService extends __BaseService {
   findStockDiaryByProductIdUsingGET(productId: number): __Observable<StockDiary> {
     return this.findStockDiaryByProductIdUsingGETResponse(productId).pipe(
       __map(_r => _r.body as StockDiary)
+    );
+  }
+  loadProductsUsingGETResponse(): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/loadProducts`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }  loadProductsUsingGET(): __Observable<null> {
+    return this.loadProductsUsingGETResponse().pipe(
+      __map(_r => _r.body as null)
     );
   }
 
