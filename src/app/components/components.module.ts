@@ -14,6 +14,7 @@ import { NgModule } from '@angular/core';
 import { RefundQuantityModalComponent } from './refund-quantity-modal/refund-quantity-modal.component';
 import { AddStockComponent } from './add-stock/add-stock.component';
 import { SearchProductsPage } from './search-products/search-products.page';
+import { AddItemFromCSVComponent } from './add-item-from-csv/add-item-from-csv.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -29,9 +30,10 @@ import { SearchProductsPage } from './search-products/search-products.page';
                     EditCategoryComponent,
                     EditUomComponent,
                     EditCustomerComponent,
-                 AddStockComponent,
+                    AddStockComponent,
                     BilloptionsComponent,
                     SearchProductsPage,
+                    AddItemFromCSVComponent
                     ],
     exports : [ EditProductModalComponent,
                 EditUOMModalComponent,
@@ -44,7 +46,8 @@ import { SearchProductsPage } from './search-products/search-products.page';
                 EditCustomerComponent,
                 AddStockComponent,
                 BilloptionsComponent,
-               SearchProductsPage
+                SearchProductsPage,
+                AddItemFromCSVComponent
                 ]
     })
 export class ComponentsModule { }

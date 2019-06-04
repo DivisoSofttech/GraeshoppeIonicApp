@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { QueryResourceService } from 'src/app/api/services';
+import { Order, OrderLine } from 'src/app/api/models';
+import { ModalController, IonSlides } from '@ionic/angular';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-orders',
@@ -7,9 +11,54 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrdersPage implements OnInit {
 
-  constructor() { }
+  orders: Order[] = [];
+
+
+  currentPage = 'all';
+
+  @ViewChild('slides') slides: IonSlides;
+
+  selectedFilter: string = 'all';
+
+  constructor(
+    private queryResourceService: QueryResourceService,
+    private modalController: ModalController,
+    private oauthService: OAuthService
+  ) { }
 
   ngOnInit() {
+   this.oauthService.loadUserProfile()
+   .then((userData: any) => {
+    this.queryResourceService.findOrderLineByStoreIdUsingGET('whitesand')
+    .subscribe(data => {
+      console.log(data.content);
+      this.orders = data.content;
+    });
+   });
+  }
+
+  slideChange() {
+    let index: any;
+    this.slides.getActiveIndex().then(num => {
+      index = num;
+      if (index === 0) {
+        this.currentPage = 'all';
+      } else if (index === 1) {
+        this.currentPage = 'delivery';
+      } else if (index === 2) {
+        this.currentPage = 'collections';
+      }
+    });
+  }
+
+  segmentChange(ev) {
+    if (ev.detail.value === 'all') {
+      this.slides.slideTo(0);
+    } else if (ev.detail.value === 'delivery') {
+      this.slides.slideTo(1);
+    } else if (ev.detail.value === 'collections') {
+      this.slides.slideTo(2);
+    }
   }
 
 }

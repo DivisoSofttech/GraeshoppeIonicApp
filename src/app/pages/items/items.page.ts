@@ -13,6 +13,7 @@ import { File } from '@ionic-native/file/ngx';
 import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { AddItemFromCSVComponent } from 'src/app/components/add-item-from-csv/add-item-from-csv.component';
 @Component({
   selector: 'app-items',
   templateUrl: './items.page.html',
@@ -43,6 +44,14 @@ export class ItemsPage implements OnInit {
     await modal.present();
     await modal.onDidDismiss();
     this.getproducts();
+  }
+
+  async createItemFromCSVModal() {
+    const modal = await this.modalController.create({
+      component: AddItemFromCSVComponent
+    });
+    await modal.present();
+    await modal.onDidDismiss();
   }
 
   async editProductModal(product: Product) {
@@ -110,9 +119,6 @@ export class ItemsPage implements OnInit {
             .catch(e => console.log('Error opening file', e));
             // this.documentViewer.viewDocument(this.file.externalCacheDirectory + 'items.pdf', 'application/pdf',
             // {print: {enabled: true}, openWith: {enabled: true}});
-
-
-
         });
       });
     });

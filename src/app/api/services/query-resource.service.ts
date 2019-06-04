@@ -18,6 +18,7 @@ import { UomDTO } from '../models/uom-dto';
 import { StockCurrent } from '../models/stock-current';
 import { StockCurrentDTO } from '../models/stock-current-dto';
 import { StockDiary } from '../models/stock-diary';
+import { PageOfOrder } from '../models/page-of-order';
 import { ProductDTO } from '../models/product-dto';
 import { Review } from '../models/review';
 import { PageOfSale } from '../models/page-of-sale';
@@ -55,6 +56,7 @@ class QueryResourceService extends __BaseService {
   static readonly findStockCurrentDTOByProductIdUsingGETPath = '/api/query/findStockCurrentDTOByProductId/{productId}';
   static readonly findStockDiaryByProductIdUsingGETPath = '/api/query/findStockDiaryByProductId/{productId}';
   static readonly loadProductsUsingGETPath = '/api/query/loadProducts';
+  static readonly findOrderLineByStoreIdUsingGETPath = '/api/query/ordersbystoreId/{storeId}';
   static readonly findAllProductUsingGETPath = '/api/query/products';
   static readonly exportProductsUsingGETPath = '/api/query/products/export';
   static readonly exportProductsAsPdfUsingGETPath = '/api/query/products/pdf';
@@ -841,10 +843,18 @@ class QueryResourceService extends __BaseService {
       __map(_r => _r.body as StockDiary)
     );
   }
-  loadProductsUsingGETResponse(): __Observable<__StrictHttpResponse<null>> {
+
+  /**
+   * @param file file
+   */
+  loadProductsUsingGETResponse(file: Blob): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    __headers.append('Content-Type', 'multipart/form-data');
+    let __formData = new FormData();
+    __body = __formData;
+   if(file !== null && typeof file !== "undefined") { __formData.append('file', file as string | Blob);}
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/api/query/loadProducts`,
@@ -861,9 +871,49 @@ class QueryResourceService extends __BaseService {
         return _r as __StrictHttpResponse<null>;
       })
     );
-  }  loadProductsUsingGET(): __Observable<null> {
-    return this.loadProductsUsingGETResponse().pipe(
+  }
+  /**
+   * @param file file
+   */
+  loadProductsUsingGET(file: Blob): __Observable<null> {
+    return this.loadProductsUsingGETResponse(file).pipe(
       __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param storeId storeId
+   * @return OK
+   */
+  findOrderLineByStoreIdUsingGETResponse(storeId: string): __Observable<__StrictHttpResponse<PageOfOrder>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/ordersbystoreId/${storeId}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<PageOfOrder>;
+      })
+    );
+  }
+  /**
+   * @param storeId storeId
+   * @return OK
+   */
+  findOrderLineByStoreIdUsingGET(storeId: string): __Observable<PageOfOrder> {
+    return this.findOrderLineByStoreIdUsingGETResponse(storeId).pipe(
+      __map(_r => _r.body as PageOfOrder)
     );
   }
 

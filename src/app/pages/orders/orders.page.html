@@ -9,97 +9,83 @@
 </ion-header>
 
 <ion-content>
-  
+
   <ion-item lines="none" class="border-bottom">
     <ion-icon name="search" class="search-icon"></ion-icon>
     <ion-input class="ion-margin-start" clearInput="true" placeholder="Enter Order Number"></ion-input>
   </ion-item>
-  
-  <ion-item lines="none" class="border-bottom">
-    <ion-label class="date">Wednesday, May 1, 2019</ion-label>
-  </ion-item>
 
-  <div>
-    <ion-grid >
-      <ion-row (click)="navigateToDetails()" >
-        <ion-col size="2" class="vertical-align-center">
-            <ion-icon name="basket" class="fs-20"></ion-icon>
+  <!--No Order Container Start-->
+  <div class="vertical-align-center" *ngIf="test">
+    <ion-grid>
+      <ion-row>
+        <ion-col text-center>
+          <ion-icon class="no-receipt-icon" src="./assets/receipt.svg"></ion-icon>
         </ion-col>
-        <ion-col size="6" class="border-bottom">
-          <ion-grid>
-            <ion-row>
-                <ion-label>002</ion-label>
-            </ion-row>
-            <ion-row>
-                <ion-label class="time">9.48 AM</ion-label>
-            </ion-row>
-          </ion-grid>
-        </ion-col>
-        <ion-col size="4" text-right class="border-bottom ">
-          <ion-label class="order-id">{{id}}</ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center class="ion-padding-top">
+          <ion-label class="fs-20">You have no orders yet</ion-label>
         </ion-col>
       </ion-row>
     </ion-grid>
-
   </div>
+  <!--No Order Container End-->
 
-  <div  class="vertical-align-center" *ngIf="test">
-      <ion-grid>
-
-          <ion-row>
-            <ion-col text-center>
-              <ion-icon class="no-receipt-icon" src="./assets/receipt.svg"></ion-icon>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col text-center class="ion-padding-top">
-              <ion-label class="fs-20">You have no orders yet</ion-label>
-            </ion-col>
-          </ion-row>
-      
-        </ion-grid>
-  </div>
-
+  <!--Segment Button Container Start-->
   <div>
-    <ion-grid >
-      <ion-row (click)="navigateToDetails()" >
-        <ion-col size="2" class="vertical-align-center">
-            <ion-icon name="basket" class="fs-20"></ion-icon>
-        </ion-col>
-        <ion-col size="6" class="border-bottom">
-          <ion-grid>
-            <ion-row>
-                <ion-label>001</ion-label>
-            </ion-row>
-            <ion-row>
-                <ion-label class="time">9.48 AM</ion-label>
-            </ion-row>
-          </ion-grid>
-        </ion-col>
-        <ion-col size="4" text-right class="border-bottom ">
-          <ion-label class="order-id">{{id}}</ion-label>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
+    <ion-segment (ionChange)="segmentChange($event)" [value]="currentPage" color="secondary">
+      <ion-segment-button value="all">
+        <ion-label>All</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="delivery">
+        <ion-label>Delivery</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="collections">
+        <ion-label>Collections</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </div>
+  <!--Segment Button Container End-->
 
-  <div  class="vertical-align-center" *ngIf="test">
-      <ion-grid>
-
-          <ion-row>
-            <ion-col text-center>
-              <ion-icon class="no-receipt-icon" src="./assets/receipt.svg"></ion-icon>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col text-center class="ion-padding-top">
-              <ion-label class="fs-20">You have no orders yet</ion-label>
-            </ion-col>
-          </ion-row>
-      
-        </ion-grid>
-  </div>
-
+  <!--Order List Container Start-->
+  <ion-slides #slides (ionSlideDidChange)="slideChange()" class="vertical-align-center">
+    <ion-slide>
+      <ion-list>
+        <ion-card *ngFor="let order of orders">
+          <ion-item>
+            <ion-text>
+              <p>{{order.date}}</p>
+            </ion-text>
+            <ion-text slot="end">
+              <p>{{order.orderId}}</p>
+            </ion-text>
+          </ion-item>
+          <ion-card-content>
+            
+          </ion-card-content>
+      </ion-card>
+      </ion-list>
+    </ion-slide>
+    <ion-slide>2</ion-slide>
+    <ion-slide>3</ion-slide>
+  </ion-slides>
+  <!--Order List Container End-->
 
 </ion-content>
+
+<ion-footer>
+
+  <ion-item>
+    <ion-label>
+      <ion-icon name="funnel"></ion-icon>
+    </ion-label>
+    <ion-select okText="Okay" cancelText="Dismiss" [(ngModel)]="orderTabSelected">
+      <ion-select-option value="all" >All</ion-select-option>
+      <ion-select-option value="paid">Paid</ion-select-option>
+      <ion-select-option value="paid">Unpaid</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+
+</ion-footer>

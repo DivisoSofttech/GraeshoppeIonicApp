@@ -7,10 +7,18 @@
       </ion-button>
     </ion-label>
   </ion-item> -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" margin>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button size="small">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+   <ion-fab-list side="top">
     <ion-fab-button color="primary" (click)="presentModal()" color="danger">
       <ion-icon name="pricetag"></ion-icon>
     </ion-fab-button>
+    <ion-fab-button color="secondary" (click)="createItemFromCSVModal()">
+      <ion-icon name="grid"></ion-icon>
+    </ion-fab-button>
+   </ion-fab-list>
   </ion-fab>
   <ion-list show-delete="false" can-swipe="true">
     <ion-item-sliding *ngFor="let product of products">

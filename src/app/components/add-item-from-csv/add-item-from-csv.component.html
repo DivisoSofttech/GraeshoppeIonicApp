@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-toolbar color="danger">
+        <ion-buttons  (click)="dismiss()" slot="start">
+          <ion-button>
+            <ion-icon name="close" slot="icon-only" ></ion-icon>
+          </ion-button>
+            <ion-title text-center><strong>Add Items From CSV File</strong></ion-title>
+       </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+<ion-content>
+
+  <ion-item (click)="fileSelectBox()">
+    <ion-label>Select CSV File</ion-label>
+    <ion-text *ngIf="fileName != null">
+      <p>{{fileName}}</p>
+    </ion-text>
+    <ion-icon name="document"></ion-icon>
+    <input hidden id="uploadElement" type="file" accept="csv/*" color="danger" (change)="onSelectFile($event)"/>
+  </ion-item>
+
+  <ion-grid>
+    <ion-row>
+    
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
