@@ -1,12 +1,12 @@
 /* tslint:disable */
 export interface StoreDTO {
+  info?: string;
   closingTime?: string;
-  contactNo?: number;
   email?: string;
   id?: number;
   image?: string;
   imageContentType?: string;
-  info?: string;
+  contactNo?: number;
   location?: string;
   name?: string;
   openingTime?: string;

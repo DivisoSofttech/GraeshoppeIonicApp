@@ -55,8 +55,9 @@ class CommandResourceService extends __BaseService {
   static readonly createSaleUsingPOSTPath = '/api/command/sales';
   static readonly updateSaleUsingPUTPath = '/api/command/sales';
   static readonly deleteSaleUsingDELETEPath = '/api/command/sales/{id}';
+  static readonly createStockCurrentUsingPOSTPath = '/api/command/stock-currents';
   static readonly updateStockCurrentUsingPUTPath = '/api/command/stock-currents';
-  static readonly createStockCurrentUsingPOSTPath = '/api/command/stock-diaries';
+  static readonly createStockDiaryUsingPOSTPath = '/api/command/stock-diaries';
   static readonly updateStockDiaryUsingPUTPath = '/api/command/stock-diaries';
   static readonly createStockOfProductUsingPOSTPath = '/api/command/stock-of-product';
   static readonly createStockLineUsingPOSTPath = '/api/command/stocklines';
@@ -898,6 +899,42 @@ class CommandResourceService extends __BaseService {
   }
 
   /**
+   * @param stockCurrent stockCurrent
+   * @return OK
+   */
+  createStockCurrentUsingPOSTResponse(stockCurrent: StockCurrentDTO): __Observable<__StrictHttpResponse<StockCurrentDTO>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = stockCurrent;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/command/stock-currents`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<StockCurrentDTO>;
+      })
+    );
+  }
+  /**
+   * @param stockCurrent stockCurrent
+   * @return OK
+   */
+  createStockCurrentUsingPOST(stockCurrent: StockCurrentDTO): __Observable<StockCurrentDTO> {
+    return this.createStockCurrentUsingPOSTResponse(stockCurrent).pipe(
+      __map(_r => _r.body as StockCurrentDTO)
+    );
+  }
+
+  /**
    * @param StockCurrent StockCurrent
    * @return OK
    */
@@ -937,7 +974,7 @@ class CommandResourceService extends __BaseService {
    * @param stockDiary stockDiary
    * @return OK
    */
-  createStockCurrentUsingPOSTResponse(stockDiary: StockDiaryDTO): __Observable<__StrictHttpResponse<StockDiaryDTO>> {
+  createStockDiaryUsingPOSTResponse(stockDiary: StockDiaryDTO): __Observable<__StrictHttpResponse<StockDiaryDTO>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -963,8 +1000,8 @@ class CommandResourceService extends __BaseService {
    * @param stockDiary stockDiary
    * @return OK
    */
-  createStockCurrentUsingPOST(stockDiary: StockDiaryDTO): __Observable<StockDiaryDTO> {
-    return this.createStockCurrentUsingPOSTResponse(stockDiary).pipe(
+  createStockDiaryUsingPOST(stockDiary: StockDiaryDTO): __Observable<StockDiaryDTO> {
+    return this.createStockDiaryUsingPOSTResponse(stockDiary).pipe(
       __map(_r => _r.body as StockDiaryDTO)
     );
   }

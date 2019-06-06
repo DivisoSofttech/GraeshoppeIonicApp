@@ -4,15 +4,15 @@ import { Propreitor } from './propreitor';
 import { Review } from './review';
 import { UserRating } from './user-rating';
 export interface Store {
+  location?: string;
   closingTime?: string;
-  contactNo?: number;
   deliveryInfos?: Array<DeliveryInfo>;
   email?: string;
   id?: number;
   image?: string;
   imageContentType?: string;
   info?: string;
-  location?: string;
+  contactNo?: number;
   name?: string;
   openingTime?: string;
   propreitor?: Propreitor;

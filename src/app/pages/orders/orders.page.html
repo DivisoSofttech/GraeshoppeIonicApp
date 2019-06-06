@@ -16,7 +16,7 @@
   </ion-item>
 
   <!--No Order Container Start-->
-  <div class="vertical-align-center" *ngIf="test">
+  <div class="vertical-align-center" *ngIf="orders.length === 0">
     <ion-grid>
       <ion-row>
         <ion-col text-center>
@@ -33,7 +33,7 @@
   <!--No Order Container End-->
 
   <!--Segment Button Container Start-->
-  <div>
+  <div *ngIf="orders.length !== 0">
     <ion-segment (ionChange)="segmentChange($event)" [value]="currentPage" color="secondary">
       <ion-segment-button value="all">
         <ion-label>All</ion-label>
@@ -49,22 +49,23 @@
   <!--Segment Button Container End-->
 
   <!--Order List Container Start-->
-  <ion-slides #slides (ionSlideDidChange)="slideChange()" class="vertical-align-center">
+  <ion-slides  #slides (ionSlideDidChange)="slideChange()" class="vertical-align-center">
     <ion-slide>
       <ion-list>
-        <ion-card *ngFor="let order of orders">
-          <ion-item>
-            <ion-text>
-              <p>{{order.date}}</p>
+          <ion-item lines="none" class="order" *ngFor="let order of orders">
+            <ion-text slot="start">
+              <p>Date : {{order.date}}</p>
+             <p> Order id : {{order.orderId}}</p>
+             <p>Number of products : {{order.grandTotal}}</p>
+             <p>Total Amount : {{order.payment.total}}</p>
             </ion-text>
-            <ion-text slot="end">
-              <p>{{order.orderId}}</p>
+            <ion-text slot="end" no-margin>
+              <p>Customer id : {{order.customerId}}</p>
+              <p>Payment : {{order.payment.status}}</p>
+              <p>Delivery Type : {{order.deliveryInfo.deliveryType}}</p>
+              <p>Delivery Charge : {{order.deliveryInfo.deliveryCharge}}</p>  
             </ion-text>
           </ion-item>
-          <ion-card-content>
-            
-          </ion-card-content>
-      </ion-card>
       </ion-list>
     </ion-slide>
     <ion-slide>2</ion-slide>
@@ -80,7 +81,7 @@
     <ion-label>
       <ion-icon name="funnel"></ion-icon>
     </ion-label>
-    <ion-select okText="Okay" cancelText="Dismiss" [(ngModel)]="orderTabSelected">
+    <ion-select okText="Okay" cancelText="Dismiss" [(ngModel)]="selectedFilter">
       <ion-select-option value="all" >All</ion-select-option>
       <ion-select-option value="paid">Paid</ion-select-option>
       <ion-select-option value="paid">Unpaid</ion-select-option>

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QueryResourceService } from 'src/app/api/services';
 import { Order, OrderLine } from 'src/app/api/models';
-import { ModalController, IonSlides } from '@ionic/angular';
+import { ModalController, IonSlides, LoadingController } from '@ionic/angular';
 import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
@@ -13,7 +13,6 @@ export class OrdersPage implements OnInit {
 
   orders: Order[] = [];
 
-
   currentPage = 'all';
 
   @ViewChild('slides') slides: IonSlides;
@@ -23,18 +22,21 @@ export class OrdersPage implements OnInit {
   constructor(
     private queryResourceService: QueryResourceService,
     private modalController: ModalController,
-    private oauthService: OAuthService
+    private oauthService: OAuthService,
+    private loadingController: LoadingController
   ) { }
 
+
   ngOnInit() {
-   this.oauthService.loadUserProfile()
-   .then((userData: any) => {
-    this.queryResourceService.findOrderLineByStoreIdUsingGET('whitesand')
-    .subscribe(data => {
-      console.log(data.content);
-      this.orders = data.content;
+    
+    this.oauthService.loadUserProfile()
+    .then((userData: any) => {
+     this.queryResourceService.findOrderLineByStoreIdUsingGET('whitesand')
+     .subscribe(data => {
+       console.log(data.content);
+       this.orders = data.content;
+     });
     });
-   });
   }
 
   slideChange() {

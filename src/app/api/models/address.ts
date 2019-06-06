@@ -2,15 +2,15 @@
 import { Country } from './country';
 import { Customer } from './customer';
 export interface Address {
+  houseNoOrBuildingName?: string;
   addressLine1?: string;
-  addressLine2?: string;
   addressType?: string;
   alternatePhone?: number;
   city?: string;
   country?: Country;
   customer?: Customer;
   customerId?: string;
-  houseNoOrBuildingName?: string;
+  addressLine2?: string;
   id?: number;
   landmark?: string;
   name?: string;

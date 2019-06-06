@@ -2,13 +2,13 @@
 import { Product } from './product';
 import { Uom } from './uom';
 export interface StockLine {
+  product?: Product;
   buyPrice?: number;
-  grossProfit?: number;
   id?: number;
   infrastructureId?: number;
   locationId?: string;
   margin?: number;
-  product?: Product;
+  grossProfit?: number;
   reference: string;
   sellPriceExclusive?: number;
   sellPriceInclusive?: number;
