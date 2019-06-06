@@ -15,6 +15,7 @@ import { RefundQuantityModalComponent } from './refund-quantity-modal/refund-qua
 import { AddStockComponent } from './add-stock/add-stock.component';
 import { SearchProductsPage } from './search-products/search-products.page';
 import { AddItemFromCSVComponent } from './add-item-from-csv/add-item-from-csv.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -33,7 +34,8 @@ import { AddItemFromCSVComponent } from './add-item-from-csv/add-item-from-csv.c
                     AddStockComponent,
                     BilloptionsComponent,
                     SearchProductsPage,
-                    AddItemFromCSVComponent
+                    AddItemFromCSVComponent,
+                    ProductDetailComponent
                     ],
     exports : [ EditProductModalComponent,
                 EditUOMModalComponent,
@@ -47,7 +49,8 @@ import { AddItemFromCSVComponent } from './add-item-from-csv/add-item-from-csv.c
                 AddStockComponent,
                 BilloptionsComponent,
                 SearchProductsPage,
-                AddItemFromCSVComponent
+                AddItemFromCSVComponent,
+                ProductDetailComponent
                 ]
     })
 export class ComponentsModule { }

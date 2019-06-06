@@ -12,6 +12,7 @@ import { IonicModule } from '@ionic/angular';
 import { ItemsPage } from './items.page';
 import { HeaderComponent } from 'src/app/components/header/header.component';
 import { AddItemFromCSVComponent } from 'src/app/components/add-item-from-csv/add-item-from-csv.component';
+import { ProductDetailComponent } from 'src/app/components/product-detail/product-detail.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,6 @@ const routes: Routes = [
   ],
   declarations: [ItemsPage],
   entryComponents: [EditProductModalComponent,AddItemFromCSVComponent,
-    HeaderComponent]
+    HeaderComponent, ProductDetailComponent]
 })
 export class ItemsPageModule {}

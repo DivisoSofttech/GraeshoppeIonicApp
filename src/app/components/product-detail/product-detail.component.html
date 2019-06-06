@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss(true)">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{product.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <ion-item>
+    <img  *ngIf="product!=null && product.image != null"
+      [src]="'data:' + product.imageContentType + ';base64,' + product.image" class="image" />
+  </ion-item>
+  <ion-item>
+      <small slot="start">Name : </small>
+    <ion-text slot="end">{{product.name}}</ion-text>
+  </ion-item>
+  <ion-item>
+    <small slot="start">Categories : </small>
+    <ion-text slot="end">
+      <p *ngFor="let category of product.categories">{{category.name}}</p>
+    </ion-text>
+  </ion-item>
+  <ion-item>
+    <small slot="start">Price : </small>
+    <ion-text slot="end">{{stockCurrentDto.sellPrice}}</ion-text>
+  </ion-item>
+  <ion-item>
+      <small slot="start">Description : </small>
+    <ion-text slot="end">{{product.description}}</ion-text>
+  </ion-item>
+</ion-content>

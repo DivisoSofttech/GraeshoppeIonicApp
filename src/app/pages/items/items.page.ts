@@ -3,7 +3,7 @@ import {
   QueryResourceService,
   CommandResourceService
 } from 'src/app/api/services';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController } from '@ionic/angular';
 import { Component, OnInit, Input } from '@angular/core';
 import { AddItemsPage } from '../add-items/add-items.page';
 import { ProductDTO } from 'src/app/api/models';
@@ -14,6 +14,7 @@ import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { AddItemFromCSVComponent } from 'src/app/components/add-item-from-csv/add-item-from-csv.component';
+import { ProductDetailComponent } from 'src/app/components/product-detail/product-detail.component';
 @Component({
   selector: 'app-items',
   templateUrl: './items.page.html',
@@ -22,9 +23,12 @@ import { AddItemFromCSVComponent } from 'src/app/components/add-item-from-csv/ad
 export class ItemsPage implements OnInit {
   products: Product[] = [];
   accending = true;
+  
   sort() {
     this.accending = !this.accending;
   }
+
+  loading: HTMLIonLoadingElement;
 
   constructor(
     private modalController: ModalController,
@@ -34,16 +38,31 @@ export class ItemsPage implements OnInit {
     private file: File,
     private documentViewer: DocumentViewer,
     private fileTransfer: FileTransfer,
-    private fileOpener: FileOpener
+    private fileOpener: FileOpener,
+    private loadingController: LoadingController
   ) {}
+
+  async createLoader() {
+
+    this.loading = await this.loadingController.create({
+      spinner: 'circles',
+      translucent: true,
+      cssClass: 'loading'
+    });
+  }
 
   async presentModal() {
     const modal = await this.modalController.create({
       component: AddItemsPage
     });
     await modal.present();
-    await modal.onDidDismiss();
-    this.getproducts();
+    await modal.onDidDismiss()
+    .then(value => {
+      console.log(value.data);
+      if(value.data===true) {
+        this.getproducts();
+      }
+    })
   }
 
   async createItemFromCSVModal() {
@@ -54,6 +73,16 @@ export class ItemsPage implements OnInit {
     await modal.onDidDismiss();
   }
 
+  async showDetails(product: Product){
+    const modal = await this.modalController.create({
+      component: ProductDetailComponent,
+      componentProps: {product: product}
+    });
+    await modal.present();
+    await modal.onDidDismiss();
+    
+  }
+
   async editProductModal(product: Product) {
     console.log(
       ' editProductModal method working with product id =' + product.id
@@ -62,27 +91,40 @@ export class ItemsPage implements OnInit {
       component: EditProductModalComponent,
       componentProps: { id: product.id }
     });
-    await modal.present();
-    modal.onDidDismiss().then(()=>{ this.getproducts();});
-    // console.log('...............[][][][]');
-    // this.getproducts();
-  }
-  getproducts() {
-    this.queryResourceservice.findAllProductUsingGET({}).subscribe(
-      result => {
-        console.log('-----', result);
-        this.products = result;
-      },
-      err => {
-        console.log('error getting products');
+
+    modal.onDidDismiss().then((value)=>{ 
+      console.log(value.data);
+      if(value.data===true) {
+        this.getproducts();
       }
-    );
+    });
+
+    await modal.present();
+  }
+
+  getproducts() {
+    this.createLoader()
+    .then(()=> {
+      this.loading.present();
+      this.queryResourceservice.findAllProductUsingGET({}).subscribe(
+        result => {
+          console.log('-----', result);
+          this.products = result;
+          this.loading.dismiss();
+        },
+        err => {
+          console.log('error getting products');
+          this.loading.dismiss();
+        }
+      );
+    })
   }
   ngOnInit() {
     this.getproducts();
   }
 
   delete(product: Product) {
+    console.log('Deleting')
     this.commandResource.deleteProductUsingDELETE(product.id).subscribe(
       res => {
         this.products.splice(this.products.indexOf(product), 1);

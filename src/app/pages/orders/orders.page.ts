@@ -19,6 +19,10 @@ export class OrdersPage implements OnInit {
 
   selectedFilter: string = 'all';
 
+  loading: HTMLIonLoadingElement;
+
+  showView = false;
+
   constructor(
     private queryResourceService: QueryResourceService,
     private modalController: ModalController,
@@ -26,17 +30,33 @@ export class OrdersPage implements OnInit {
     private loadingController: LoadingController
   ) { }
 
+  async createLoader() {
+
+    this.loading = await this.loadingController.create({
+      spinner: 'circles',
+      translucent: true,
+      cssClass: 'loading'
+    });
+  }
 
   ngOnInit() {
     
-    this.oauthService.loadUserProfile()
-    .then((userData: any) => {
-     this.queryResourceService.findOrderLineByStoreIdUsingGET('whitesand')
-     .subscribe(data => {
-       console.log(data.content);
-       this.orders = data.content;
-     });
-    });
+    this.createLoader()
+    .then(() => {
+        this.loading.present();
+        this.oauthService.loadUserProfile()
+        .then((userData: any) => {
+         this.queryResourceService.findOrderLineByStoreIdUsingGET('whitesand')
+         .subscribe(data => {
+           console.log(data.content);
+           this.orders = data.content;
+           this.loading.dismiss();
+           this.showView = true;
+         } , err => {
+           this.loading.dismiss();
+         });
+        });    
+    })
   }
 
   slideChange() {

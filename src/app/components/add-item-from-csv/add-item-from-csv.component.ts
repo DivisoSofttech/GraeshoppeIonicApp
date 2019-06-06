@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { CommandResourceService } from 'src/app/api/services';
 
 @Component({
   selector: 'app-add-item-from-csv',
@@ -15,7 +16,8 @@ export class AddItemFromCSVComponent implements OnInit {
   fileName = null;
 
   constructor(
-    private modalController: ModalController
+    private modalController: ModalController,
+    private commandResourceService: CommandResourceService
   ) { }
 
   ngOnInit() {}
@@ -42,6 +44,10 @@ export class AddItemFromCSVComponent implements OnInit {
 
     freader.readAsDataURL(this.fileToUpload);
 
+  }
+
+  save() {
+    
   }
 
 }

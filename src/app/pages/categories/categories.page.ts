@@ -1,7 +1,7 @@
 import { EditCategoryComponent } from './../../components/edit-category/edit-category.component';
 import { CategoryDTO } from './../../api/models/category-dto';
 import { QueryResourceService, CommandResourceService } from 'src/app/api/services';
-import { ModalController, ActionSheetController } from '@ionic/angular';
+import { ModalController, ActionSheetController, LoadingController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import {AddCategoriesPage} from '../add-categories/add-categories.page';
 
@@ -12,6 +12,8 @@ import {AddCategoriesPage} from '../add-categories/add-categories.page';
 })
 export class CategoriesPage implements OnInit {
 
+  loading: HTMLIonLoadingElement;
+
   categories: CategoryDTO[] = [];
   accending = true;
   sort() {
@@ -19,15 +21,33 @@ export class CategoriesPage implements OnInit {
   }
   constructor(public actionSheetController: ActionSheetController,
     private modalController: ModalController,
-    private queryResourceService: QueryResourceService, public commandResource: CommandResourceService
+    private queryResourceService: QueryResourceService, public commandResource: CommandResourceService,
+    private loadingController: LoadingController
   ) { }
 
-  ngOnInit() {
-    this.queryResourceService.findAllCategoriesUsingGET({})
-    .subscribe(result => {
-      this.categories = result;
-      console.log('---------', this.categories);
+  async createLoader() {
+
+    this.loading = await this.loadingController.create({
+      spinner: 'circles',
+      translucent: true,
+      cssClass: 'loading'
     });
+  }
+
+  ngOnInit() {
+    this.createLoader()
+    .then(() => {
+      this.loading.present();
+      this.queryResourceService.findAllCategoriesUsingGET({})
+      .subscribe(result => {
+        this.categories = result;
+        console.log('---------', this.categories);
+        this.loading.dismiss();
+      },
+      err => {
+        this.loading.dismiss();
+      });  
+    })
   }
 
   async presentModal() {

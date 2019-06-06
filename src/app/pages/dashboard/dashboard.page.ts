@@ -7,6 +7,7 @@ import { Chart } from 'chart.js';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
+
   @ViewChild('barCanvas') barCanvas;
   @ViewChild('doughnutCanvas') doughnutCanvas;
   @ViewChild('lineCanvas') lineCanvas;
@@ -15,9 +16,7 @@ export class DashboardPage implements OnInit {
   doughnutChart: any;
   lineChart: any;
 
-  constructor() {
-
-  }
+  constructor() {}
 
   ngOnInit() {
     this.barChartMethod();

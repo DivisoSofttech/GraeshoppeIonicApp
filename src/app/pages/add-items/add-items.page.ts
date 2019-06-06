@@ -5,7 +5,7 @@ import {
   QueryResourceService
 } from "src/app/api/services";
 import { Component, OnInit, ElementRef, ViewChild, Input } from "@angular/core";
-import { ModalController } from "@ionic/angular";
+import { ModalController, LoadingController } from "@ionic/angular";
 import {
   ProductDTO,
   StockLine,
@@ -57,12 +57,15 @@ export class AddItemsPage implements OnInit {
 
   uoms: UomDTO[] = [];
 
+  loading: HTMLIonLoadingElement;
+
   constructor(
     private modalController: ModalController,
     private commandResourceService: CommandResourceService,
     private queryResourceService: QueryResourceService,
     private http: HttpClient,
-    private barcodeScanner: BarcodeScanner
+    private barcodeScanner: BarcodeScanner,
+    private loadingController: LoadingController
   ) {}
 
   ngOnInit() {
@@ -76,32 +79,51 @@ export class AddItemsPage implements OnInit {
     });
   }
 
-  dismiss() {
-    this.modalController.dismiss();
+  async createLoader() {
+
+    this.loading = await this.loadingController.create({
+      spinner: 'circles',
+      translucent: true,
+      cssClass: 'loading'
+    });
+  }
+
+  dismiss(val) {
+    this.modalController.dismiss(val);
   }
 
   save(): void {
-    if (this.fileUrl != null) {
-      this.product.image = this.fileUrl.substring(
-        this.fileUrl.indexOf(",") + 1
-      );
-      this.product.imageContentType = this.fileToUpload.type;
-    }
-    console.log(this.product);
 
-    this.commandResourceService
-      .createProductUsingPOST(this.product)
-      .subscribe(result => {
-        console.log("saved", result);
-        this.stockCurrent.productId = result.id;
-        this.stockCurrent.units = 0;
-        this.commandResourceService
-          .createStockCurrentUsingPOST(this.stockCurrent)
-          .subscribe(result => {
-            console.log("Stock Current saved ", result);
-            this.dismiss();
-          });
-      });
+    this.createLoader()
+    .then(() => {
+      this.loading.present();
+      if (this.fileUrl != null) {
+        this.product.image = this.fileUrl.substring(
+          this.fileUrl.indexOf(",") + 1
+        );
+        this.product.imageContentType = this.fileToUpload.type;
+      }
+      console.log(this.product);
+  
+      this.commandResourceService
+        .createProductUsingPOST(this.product)
+        .subscribe(result => {
+          console.log("saved", result);
+          this.stockCurrent.productId = result.id;
+          this.stockCurrent.units = 0;
+          this.commandResourceService
+            .createStockCurrentUsingPOST(this.stockCurrent)
+            .subscribe(result => {
+              console.log("Stock Current saved ", result);
+              this.loading.dismiss();
+              this.dismiss(true);
+            },
+            err => {
+              this.loading.dismiss(true);
+            });
+        });
+    })
+
   }
 
   onSelectFile(event) {

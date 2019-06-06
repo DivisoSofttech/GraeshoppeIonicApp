@@ -3,7 +3,7 @@
     <ion-buttons>
       <ion-menu-button slot="start"></ion-menu-button>
       <ion-title><strong>Orders</strong></ion-title>
-      <ion-icon name="notifications" class="larger"></ion-icon>
+      <ion-icon name="notifications" slot="icon-only" class="larger"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -16,7 +16,7 @@
   </ion-item>
 
   <!--No Order Container Start-->
-  <div class="vertical-align-center" *ngIf="orders.length === 0">
+  <div class="vertical-align-center" *ngIf="orders.length === 0 && showView === true">
     <ion-grid>
       <ion-row>
         <ion-col text-center>

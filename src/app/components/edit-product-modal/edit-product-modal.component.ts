@@ -79,7 +79,7 @@ export class EditProductModalComponent implements OnInit {
               this.commandResourceService.updateStockCurrentUsingPUT(this.stockCurrentDto).subscribe(
                 result=>{
                   console.log("updated stock product id"+result.productId);
-                  this.dismiss();
+                  this.dismiss(true);
                 }
               );
 
@@ -90,8 +90,8 @@ export class EditProductModalComponent implements OnInit {
       );
   }
 
-  dismiss() {
-    this.modalController.dismiss();
+  dismiss(val) {
+    this.modalController.dismiss(val);
   }
 
   onSelectFile(event) {
