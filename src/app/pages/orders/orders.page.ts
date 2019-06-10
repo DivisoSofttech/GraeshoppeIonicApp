@@ -46,7 +46,7 @@ export class OrdersPage implements OnInit {
         this.loading.present();
         this.oauthService.loadUserProfile()
         .then((userData: any) => {
-         this.queryResourceService.findOrderLineByStoreIdUsingGET('whitesand')
+         this.queryResourceService.findOrderLineByStoreIdUsingGET(userData.preferred_username)
          .subscribe(data => {
            console.log(data.content);
            this.orders = data.content;

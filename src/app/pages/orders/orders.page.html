@@ -78,10 +78,7 @@
 <ion-footer>
 
   <ion-item>
-    <ion-label>
-      <ion-icon name="funnel"></ion-icon>
-    </ion-label>
-    <ion-select okText="Okay" cancelText="Dismiss" [(ngModel)]="selectedFilter">
+    <ion-select slot="end" okText="Okay" cancelText="Dismiss" [(ngModel)]="selectedFilter">
       <ion-select-option value="all" >All</ion-select-option>
       <ion-select-option value="paid">Paid</ion-select-option>
       <ion-select-option value="paid">Unpaid</ion-select-option>
