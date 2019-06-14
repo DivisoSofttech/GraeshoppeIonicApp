@@ -23,6 +23,7 @@
     "@ionic-native/barcode-scanner": "^5.5.1",
     "@ionic-native/camera": "^5.5.1",
     "@ionic-native/core": "^5.0.0",
+    "@ionic-native/crop": "^5.8.0",
     "@ionic-native/document-viewer": "^5.5.1",
     "@ionic-native/file": "^5.5.1",
     "@ionic-native/file-opener": "^5.6.0",
@@ -39,6 +40,7 @@
     "cordova-android": "7.1.4",
     "cordova-browser": "5.0.4",
     "cordova-plugin-camera": "4.0.3",
+    "cordova-plugin-crop": "0.4.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-document-viewer": "0.9.10",
     "cordova-plugin-file": "6.0.1",
@@ -107,7 +109,8 @@
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-file-opener2": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
-      }
+      },
+      "cordova-plugin-crop": {}
     },
     "platforms": [
       "browser",

@@ -20,6 +20,9 @@ import {
   BarcodeScanner,
   BarcodeScanResult
 } from "@ionic-native/barcode-scanner/ngx";
+import { Crop } from '@ionic-native/crop/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+
 
 @Component({
   selector: "app-add-items",
@@ -65,7 +68,9 @@ export class AddItemsPage implements OnInit {
     private queryResourceService: QueryResourceService,
     private http: HttpClient,
     private barcodeScanner: BarcodeScanner,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private crop: Crop,
+    private transfer: FileTransfer
   ) {}
 
   ngOnInit() {
@@ -165,8 +170,17 @@ export class AddItemsPage implements OnInit {
 
   triggerUpload(ev: Event) {
     document.getElementById("image").click();
+    this.crop.crop(this.fileUrl,{ quality: 100 })
+    .then(
+      newImage => {
+        console.log('new image path is: ' + this.fileUrl);
+        const fileTransfer: FileTransferObject = this.transfer.create();
+        const uploadOpts: FileUploadOptions = {
+           fileKey: 'file',
+           fileName: newImage.substr(newImage.lastIndexOf('/') + 1)
+        };
+  });
   }
-
   scanBarcode() {
     this.barcodeScanner
       .scan()

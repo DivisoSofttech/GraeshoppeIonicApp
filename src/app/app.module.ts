@@ -1,3 +1,4 @@
+import { Crop } from '@ionic-native/crop/ngx';
 import { ItemsPageModule } from './pages/items/items.module';
 import { CustomersPageModule } from './pages/customers/customers.module';
 import { NgModule } from '@angular/core';
@@ -75,6 +76,7 @@ import { ProductsNamePipe } from './products-name.pipe';
   providers: [
     StatusBar,
     SplashScreen,
+    Crop,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,
