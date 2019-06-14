@@ -6,4 +6,5 @@ export interface Sale {
   grandTotal?: number;
   id?: number;
   ticketLines?: Array<TicketLine>;
+  userId?: string;
 }

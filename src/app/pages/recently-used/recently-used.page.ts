@@ -3,6 +3,7 @@ import { Product, StockCurrent } from 'src/app/api/models';
 import { QueryResourceService } from 'src/app/api/services';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-recently-used',
@@ -13,6 +14,7 @@ export class RecentlyUsedPage implements OnInit {
   products: Product[] = [];
   stockCurrent: StockCurrent[] = [];
   constructor(
+    private oauthService: OAuthService,
     private queryResourceService: QueryResourceService,
     private cartService: CartService
   ) {}
@@ -21,8 +23,12 @@ export class RecentlyUsedPage implements OnInit {
     this.getProducts();
   }
   getProducts() {
-    this.queryResourceService.getAllStockCurrentsUsingGET({}).subscribe( result => {
-      this.stockCurrent = result;
+    this.oauthService.loadUserProfile().then((user: any) => {
+      this.queryResourceService.getAllStockCurrentsUsingGET({
+        storeId: user.preferred_username
+      }).subscribe( result => {
+        this.stockCurrent = result.content;
+      });
     });
   }
 

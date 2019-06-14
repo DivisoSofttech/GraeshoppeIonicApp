@@ -1,3 +1,4 @@
+import { OAuthService } from 'angular-oauth2-oidc';
 import { Product } from './../../api/models/product';
 import {
   QueryResourceService,
@@ -21,16 +22,9 @@ import { ProductDetailComponent } from 'src/app/components/product-detail/produc
   styleUrls: ['./items.page.scss']
 })
 export class ItemsPage implements OnInit {
-  products: Product[] = [];
-  accending = true;
-  
-  sort() {
-    this.accending = !this.accending;
-  }
-
-  loading: HTMLIonLoadingElement;
 
   constructor(
+    private oauthService: OAuthService,
     private modalController: ModalController,
     private queryResourceservice: QueryResourceService,
     private commandResource: CommandResourceService,
@@ -40,7 +34,15 @@ export class ItemsPage implements OnInit {
     private fileTransfer: FileTransfer,
     private fileOpener: FileOpener,
     private loadingController: LoadingController
-  ) {}
+  ) { }
+  products: Product[] = [];
+  accending = true;
+
+  loading: HTMLIonLoadingElement;
+
+  sort() {
+    this.accending = !this.accending;
+  }
 
   async createLoader() {
 
@@ -57,12 +59,12 @@ export class ItemsPage implements OnInit {
     });
     await modal.present();
     await modal.onDidDismiss()
-    .then(value => {
-      console.log(value.data);
-      if(value.data===true) {
-        this.getproducts();
-      }
-    })
+      .then(value => {
+        console.log(value.data);
+        if (value.data === true) {
+          this.getproducts();
+        }
+      })
   }
 
   async createItemFromCSVModal() {
@@ -73,14 +75,14 @@ export class ItemsPage implements OnInit {
     await modal.onDidDismiss();
   }
 
-  async showDetails(product: Product){
+  async showDetails(product: Product) {
     const modal = await this.modalController.create({
       component: ProductDetailComponent,
-      componentProps: {product: product}
+      componentProps: { product: product }
     });
     await modal.present();
     await modal.onDidDismiss();
-    
+
   }
 
   async editProductModal(product: Product) {
@@ -92,9 +94,9 @@ export class ItemsPage implements OnInit {
       componentProps: { id: product.id }
     });
 
-    modal.onDidDismiss().then((value)=>{ 
+    modal.onDidDismiss().then((value) => {
       console.log(value.data);
-      if(value.data===true) {
+      if (value.data === true) {
         this.getproducts();
       }
     });
@@ -103,22 +105,27 @@ export class ItemsPage implements OnInit {
   }
 
   getproducts() {
-    this.createLoader()
-    .then(()=> {
-      this.loading.present();
-      this.queryResourceservice.findAllProductUsingGET({}).subscribe(
-        result => {
-          console.log('-----', result);
-          this.products = result;
-          this.loading.dismiss();
-        },
-        err => {
-          console.log('error getting products');
-          this.loading.dismiss();
-        }
-      );
-    })
+    this.oauthService.loadUserProfile().then((user: any) => {
+      this.createLoader()
+        .then(() => {
+          this.loading.present();
+          this.queryResourceservice.findAllProductUsingGET({
+            storeId: user.preferred_username
+          }).subscribe(
+            result => {
+              console.log('-----', result);
+              this.products = result;
+              this.loading.dismiss();
+            },
+            err => {
+              console.log('error getting products');
+              this.loading.dismiss();
+            }
+          );
+        });
+    });
   }
+  
   ngOnInit() {
     this.getproducts();
   }
@@ -154,14 +161,14 @@ export class ItemsPage implements OnInit {
       this.file.createFile(this.file.externalCacheDirectory, 'items.pdf', true).then(() => {
         console.log('file created' + blob);
 
-        this.file.writeFile(this.file.externalCacheDirectory, 'items.pdf', blob, {replace: true}).then(
+        this.file.writeFile(this.file.externalCacheDirectory, 'items.pdf', blob, { replace: true }).then(
           (value) => {
             console.log('file writed' + value);
             this.fileOpener.showOpenWithDialog(this.file.externalCacheDirectory + 'items.pdf', result.contentType).then(() => console.log('File is opened'))
-            .catch(e => console.log('Error opening file', e));
+              .catch(e => console.log('Error opening file', e));
             // this.documentViewer.viewDocument(this.file.externalCacheDirectory + 'items.pdf', 'application/pdf',
             // {print: {enabled: true}, openWith: {enabled: true}});
-        });
+          });
       });
     });
   }

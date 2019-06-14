@@ -1,3 +1,4 @@
+import { OAuthService } from 'angular-oauth2-oidc';
 import {
   DocumentViewer,
   DocumentViewerOptions
@@ -27,6 +28,7 @@ const options: DocumentViewerOptions = {
 })
 export class CustomersPage implements OnInit {
   constructor(
+    private oauthService: OAuthService,
     private modalController: ModalController,
     private queryResource: QueryResourceService,
     private commandResourceService: CommandResourceService,
@@ -40,10 +42,14 @@ export class CustomersPage implements OnInit {
 
   searchTerm = '';
   params: QueryResourceService.FindAllCustomersUsingGETParams = {
-    searchTerm: undefined
+    searchTerm: undefined,
+    storeId: null
   };
 
   ngOnInit() {
+    this.oauthService.loadUserProfile().then((user: any) => {
+      this.params.storeId= user.preferred_username
+    });
     this.queryResource
       .findAllCustomersWithoutSearchUsingGET({})
       .subscribe(result => {

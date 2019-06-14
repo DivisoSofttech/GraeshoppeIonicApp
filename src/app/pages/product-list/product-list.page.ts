@@ -6,6 +6,7 @@ import {
   GatewayResourceService,
   QueryResourceService
 } from 'src/app/api/services';
+import { OAuthService } from 'angular-oauth2-oidc';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.page.html',
@@ -16,6 +17,7 @@ export class ProductListPage implements OnInit {
   products: Product[] = [];
   stockCurrent: StockCurrent[] = [];
   constructor(
+    private oauthService: OAuthService,
     private queryResourceService: QueryResourceService,
     private route: ActivatedRoute,
     private cartService: CartService
@@ -26,22 +28,29 @@ export class ProductListPage implements OnInit {
     this.getProducts();
   }
   getProducts() {
-    const param: QueryResourceService.FindAllProductsByCategoryIdUsingGETParams = {categoryId: this.id};
-    this.queryResourceService.findAllProductsByCategoryIdUsingGET(param).subscribe(res => {
-      console.log('sucess finding all product by catgory  id ',res);
-      this.products = res.content;
-      this.products.forEach(pr => {
-        this.queryResourceService.findStockCurrentByProductIdUsingGET(pr.id).subscribe(result => {
-          console.log('sucss finding stock current by  product id ',result);
-
-          
-          this.stockCurrent.push(result);
-        }, err => {
-          console.log('error finding stock current by  product id ',err);
+    this.oauthService.loadUserProfile().then((user: any) => {
+ 
+      const param: QueryResourceService.FindAllProductsByCategoryIdUsingGETParams = {categoryId: this.id, storeId:user.preferred_username};
+      this.queryResourceService.findAllProductsByCategoryIdUsingGET(param).subscribe(res => {
+        console.log('sucess finding all product by catgory  id ',res);
+        this.products = res.content;
+        this.products.forEach(pr => {
+          this.queryResourceService.findStockCurrentByProductIdUsingGET({
+            storeId:user.preferred_username,
+            productId: pr.id
+          }).subscribe(result => {
+            console.log('sucss finding stock current by  product id ',result);
+  
+            
+            this.stockCurrent.push(result);
+          }, err => {
+            console.log('error finding stock current by  product id ',err);
+          });
         });
+      }, err => {
+        console.log('error finding all product by  category id ',err);
       });
-    }, err => {
-      console.log('error finding all product by  category id ',err);
+
     });
     // const param: QueryResourceService.FindAllStockCurrentByCategoryUsingGETParams = {categoryId: this.id};
     // this.queryResourceService.findAllStockCurrentByCategoryUsingGET(param).subscribe(res => {
