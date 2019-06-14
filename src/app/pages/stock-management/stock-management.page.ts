@@ -10,6 +10,7 @@ import {
 import { StockCurrent, ProductDTO } from 'src/app/api/models';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-stock-management',
@@ -26,7 +27,10 @@ export class StockManagementPage implements OnInit {
   selectedProduct: any;
   public searchTerm: any;
 
+  username;
+
   constructor(
+    private oauthService: OAuthService,
     private modalController: ModalController,
     private queryResource: QueryResourceService,
     private file: File,
@@ -35,16 +39,21 @@ export class StockManagementPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.oauthService.loadUserProfile().then((user: any) => {
+      this.username = user.preferred_username;
     this.getAllStocks();
+    });
   }
 
   getAllStocks() {
-    this.params = {};
+   
+    this.params = {storeId: this.username};
     this.queryResource
       .getAllStockCurrentsUsingGET(this.params)
       .subscribe(result => {
-        this.stock = result;
+        this.stock = result.content;
       });
+  
   }
 
   async presentModal(item: StockCurrent) {
@@ -63,15 +72,15 @@ export class StockManagementPage implements OnInit {
     if (searchTerm.length > 3) {
       const paramsProductName = { name: searchTerm };
       this.queryResource
-        .findAllStockCurrentByProductNameUsingGET(paramsProductName)
-        .subscribe(
-          result => {
-            this.stock = result.content;
-          },
-          err => {
-            console.log('error getting data', err);
-          }
-        );
+      .findAllStockCurrentByProductNameUsingGET({name: searchTerm, storeId: this.username})
+      .subscribe(
+        result => {
+          this.stock = result.content;
+        },
+        err => {
+          console.log('error getting data', err);
+        }
+      );
     } else if (searchTerm === '') {
       this.getAllStocks();
     }
