@@ -13,10 +13,24 @@
   <div>
     <div margin>
       <ion-item>
-        <img *ngIf="fileUrl != null"  src="{{fileUrl}}" class="image">
+        <!-- <img *ngIf="fileUrl != null"  src="{{fileUrl}}" class="image"> -->
+        <image-cropper 
+    [imageChangedEvent]="imageChangedEvent"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="1 / 1"
+    [resizeToWidth]="128"
+    format="png"
+    (imageCropped)="imageCropped($event)"
+    (imageLoaded)="imageLoaded()"
+    (cropperReady)="cropperReady()"
+    (loadImageFailed)="loadImageFailed()"
+></image-cropper>
         <input hidden id="image" type="file" accept="image/*" color="primary" (change)="onSelectFile($event)">
-        <ion-button fill="none" (click)="triggerUpload($event)">
+        <ion-button *ngIf="fileUrl == null" fill="none"  (click)="triggerUpload($event)">
           <ion-icon name="camera" slot="icon-only"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="fileUrl != null" fill="none"  (click)="imageCropped($event)">
+          <ion-icon name="checkmark"></ion-icon>
         </ion-button>
         <ion-button hidden fill="none">
           <ion-icon name="barcode" slot="icon-only"></ion-icon>

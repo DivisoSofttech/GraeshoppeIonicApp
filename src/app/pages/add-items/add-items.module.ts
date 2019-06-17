@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { AddItemsPage } from './add-items.page';
-
+import { ImageCropperModule } from 'ngx-image-cropper';
 const routes: Routes = [
   {
     path: '',
@@ -16,6 +16,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    ImageCropperModule,
     CommonModule,
     FormsModule,
     IonicModule,

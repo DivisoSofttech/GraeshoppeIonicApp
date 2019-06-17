@@ -20,9 +20,7 @@ import {
   BarcodeScanner,
   BarcodeScanResult
 } from "@ionic-native/barcode-scanner/ngx";
-import { Crop } from '@ionic-native/crop/ngx';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 @Component({
   selector: "app-add-items",
@@ -69,8 +67,6 @@ export class AddItemsPage implements OnInit {
     private http: HttpClient,
     private barcodeScanner: BarcodeScanner,
     private loadingController: LoadingController,
-    private crop: Crop,
-    private transfer: FileTransfer
   ) {}
 
   ngOnInit() {
@@ -139,7 +135,6 @@ export class AddItemsPage implements OnInit {
     freader.onload = (ev: any) => {
       this.fileUrl = ev.target.result;
     };
-
     //Array to store the converted source images
     let images: Array<IImage> = [];
 
@@ -166,21 +161,13 @@ export class AddItemsPage implements OnInit {
         }
       );
     });
+    this.fileChangeEvent(event);
   }
 
   triggerUpload(ev: Event) {
     document.getElementById("image").click();
-    this.crop.crop(this.fileUrl,{ quality: 100 })
-    .then(
-      newImage => {
-        console.log('new image path is: ' + this.fileUrl);
-        const fileTransfer: FileTransferObject = this.transfer.create();
-        const uploadOpts: FileUploadOptions = {
-           fileKey: 'file',
-           fileName: newImage.substr(newImage.lastIndexOf('/') + 1)
-        };
-  });
-  }
+  
+}
   scanBarcode() {
     this.barcodeScanner
       .scan()
@@ -192,5 +179,22 @@ export class AddItemsPage implements OnInit {
       .catch(err => {
         console.log("Error", err);
       });
+  }
+  imageChangedEvent: any = '';
+  
+  fileChangeEvent(event: any): void {
+      this.imageChangedEvent = event;
+  }
+  imageCropped(event: ImageCroppedEvent) {
+      this.fileUrl = event.base64;
+  }
+  imageLoaded() {
+      // show cropper
+  }
+  cropperReady() {
+      // cropper ready
+  }
+  loadImageFailed() {
+      // show message
   }
 }

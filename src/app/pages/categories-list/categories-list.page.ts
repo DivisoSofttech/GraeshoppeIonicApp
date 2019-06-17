@@ -1,8 +1,12 @@
+import { UserRatingDTO } from './../../api/models/user-rating-dto';
+
 import { QueryResourceService } from 'src/app/api/services';
 import { CategoryDTO } from './../../api/models/category-dto';
 import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/api/models';
 import { LoadingController } from '@ionic/angular';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-categories-list',
@@ -16,7 +20,9 @@ export class CategoriesListPage implements OnInit {
 
   constructor(
     private queryResourceService: QueryResourceService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private oathService:OAuthService,
+    private userService : UserService
   ) { }
 
   async createLoader() {
@@ -27,12 +33,16 @@ export class CategoriesListPage implements OnInit {
       cssClass: 'loading'
     });
   }
-
+  userData: any;
   ngOnInit() {
+   this.userService.getCurrentUser(false).then(user=>{
+    this.userData=user;
+    console.log('userData is ',this.userData);
+    console.log('userData is ',user);
     this.createLoader()
-    .then(()=> {
+    .then(()=>{
       this.loading.present();
-      this.queryResourceService.findAllCategoriesUsingGET({})
+      this.queryResourceService.findAllCategoriesUsingGET(this.userData.preferred_username)
       .subscribe(result => {
         this.loading.dismiss();
         this.categoriesList = result;
@@ -40,8 +50,8 @@ export class CategoriesListPage implements OnInit {
       err => {
         this.loading.dismiss();
       });
-    })
-
+    });
+  });
   }
 
 }

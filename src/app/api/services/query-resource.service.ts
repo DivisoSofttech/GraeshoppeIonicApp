@@ -43,7 +43,7 @@ class QueryResourceService extends __BaseService {
   static readonly exportCustomersUsingGETPath = '/api/query/customers/export';
   static readonly findCustomerByIdUsingGETPath = '/api/query/customers/{id}';
   static readonly findAllCategoriesWithOutImageUsingGETPath = '/api/query/findAllCategoriesWithOutImage';
-  static readonly findAllCategoriesUsingGETPath = '/api/query/findAllCateogories';
+  static readonly findAllCategoriesUsingGETPath = '/api/query/findAllCateogories/{storeId}';
   static readonly findAllCustomersUsingGETPath = '/api/query/findAllCustomer/{searchTerm}';
   static readonly findAllCustomersWithoutSearchUsingGETPath = '/api/query/findAllCustomers';
   static readonly findAllProductsByCategoryIdUsingGETPath = '/api/query/findAllProductByCategoryId/{categoryId}/{storeId}';
@@ -67,10 +67,10 @@ class QueryResourceService extends __BaseService {
   static readonly findSalesUsingGETPath = '/api/query/sales/{storeId}';
   static readonly searchStockCurrentsUsingGETPath = '/api/query/stock-current/{searchTerm}';
   static readonly findOneStockCurrentUsingGETPath = '/api/query/stock-currents/{id}';
-  static readonly getAllStockCurrentsUsingGETPath = '/api/query/stock-currents/{storeId}';
   static readonly findOneStockDiaryUsingGETPath = '/api/query/stock-diaries/{id}';
   static readonly findAllStockDiariesUsingGETPath = '/api/query/stock-diaries/{storeId}';
   static readonly searchStockDiariesUsingGETPath = '/api/query/stock-diary/{searchTerm}';
+  static readonly getAllStockCurrentsUsingGETPath = '/api/query/stockcurrentByStoreId/{storeId}';
   static readonly findAllStockLinesUsingGETPath = '/api/query/stocklines/{storeId}';
   static readonly getStoreBundleUsingGETPath = '/api/query/storeBundle/{regNo}';
   static readonly findStoreByRegNoUsingGETPath = '/api/query/stores/{regNo}';
@@ -244,26 +244,17 @@ class QueryResourceService extends __BaseService {
   }
 
   /**
-   * @param params The `QueryResourceService.FindAllCategoriesUsingGETParams` containing the following parameters:
-   *
-   * - `sort`: sort
-   *
-   * - `size`: size
-   *
-   * - `page`: page
-   *
+   * @param storeId storeId
    * @return OK
    */
-  findAllCategoriesUsingGETResponse(params: QueryResourceService.FindAllCategoriesUsingGETParams): __Observable<__StrictHttpResponse<Array<CategoryDTO>>> {
+  findAllCategoriesUsingGETResponse(storeId: string): __Observable<__StrictHttpResponse<Array<CategoryDTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
-    if (params.size != null) __params = __params.set('size', params.size.toString());
-    if (params.page != null) __params = __params.set('page', params.page.toString());
+
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/query/findAllCateogories`,
+      this.rootUrl + `/api/query/findAllCateogories/${storeId}`,
       __body,
       {
         headers: __headers,
@@ -279,18 +270,11 @@ class QueryResourceService extends __BaseService {
     );
   }
   /**
-   * @param params The `QueryResourceService.FindAllCategoriesUsingGETParams` containing the following parameters:
-   *
-   * - `sort`: sort
-   *
-   * - `size`: size
-   *
-   * - `page`: page
-   *
+   * @param storeId storeId
    * @return OK
    */
-  findAllCategoriesUsingGET(params: QueryResourceService.FindAllCategoriesUsingGETParams): __Observable<Array<CategoryDTO>> {
-    return this.findAllCategoriesUsingGETResponse(params).pipe(
+  findAllCategoriesUsingGET(storeId: string): __Observable<Array<CategoryDTO>> {
+    return this.findAllCategoriesUsingGETResponse(storeId).pipe(
       __map(_r => _r.body as Array<CategoryDTO>)
     );
   }
@@ -1450,63 +1434,6 @@ class QueryResourceService extends __BaseService {
   }
 
   /**
-   * @param params The `QueryResourceService.GetAllStockCurrentsUsingGETParams` containing the following parameters:
-   *
-   * - `storeId`: storeId
-   *
-   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-   *
-   * - `size`: Size of a page
-   *
-   * - `page`: Page number of the requested page
-   *
-   * @return OK
-   */
-  getAllStockCurrentsUsingGETResponse(params: QueryResourceService.GetAllStockCurrentsUsingGETParams): __Observable<__StrictHttpResponse<PageOfStockCurrent>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
-    if (params.size != null) __params = __params.set('size', params.size.toString());
-    if (params.page != null) __params = __params.set('page', params.page.toString());
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/api/query/stock-currents/${params.storeId}`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<PageOfStockCurrent>;
-      })
-    );
-  }
-  /**
-   * @param params The `QueryResourceService.GetAllStockCurrentsUsingGETParams` containing the following parameters:
-   *
-   * - `storeId`: storeId
-   *
-   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-   *
-   * - `size`: Size of a page
-   *
-   * - `page`: Page number of the requested page
-   *
-   * @return OK
-   */
-  getAllStockCurrentsUsingGET(params: QueryResourceService.GetAllStockCurrentsUsingGETParams): __Observable<PageOfStockCurrent> {
-    return this.getAllStockCurrentsUsingGETResponse(params).pipe(
-      __map(_r => _r.body as PageOfStockCurrent)
-    );
-  }
-
-  /**
    * @param id id
    * @return OK
    */
@@ -1653,6 +1580,63 @@ class QueryResourceService extends __BaseService {
   searchStockDiariesUsingGET(params: QueryResourceService.SearchStockDiariesUsingGETParams): __Observable<Array<StockDiaryDTO>> {
     return this.searchStockDiariesUsingGETResponse(params).pipe(
       __map(_r => _r.body as Array<StockDiaryDTO>)
+    );
+  }
+
+  /**
+   * @param params The `QueryResourceService.GetAllStockCurrentsUsingGETParams` containing the following parameters:
+   *
+   * - `storeId`: storeId
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `page`: Page number of the requested page
+   *
+   * @return OK
+   */
+  getAllStockCurrentsUsingGETResponse(params: QueryResourceService.GetAllStockCurrentsUsingGETParams): __Observable<__StrictHttpResponse<PageOfStockCurrent>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/query/stockcurrentByStoreId/${params.storeId}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<PageOfStockCurrent>;
+      })
+    );
+  }
+  /**
+   * @param params The `QueryResourceService.GetAllStockCurrentsUsingGETParams` containing the following parameters:
+   *
+   * - `storeId`: storeId
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `page`: Page number of the requested page
+   *
+   * @return OK
+   */
+  getAllStockCurrentsUsingGET(params: QueryResourceService.GetAllStockCurrentsUsingGETParams): __Observable<PageOfStockCurrent> {
+    return this.getAllStockCurrentsUsingGETResponse(params).pipe(
+      __map(_r => _r.body as PageOfStockCurrent)
     );
   }
 
@@ -1994,27 +1978,6 @@ module QueryResourceService {
    * Parameters for findAllCategoriesWithOutImageUsingGET
    */
   export interface FindAllCategoriesWithOutImageUsingGETParams {
-
-    /**
-     * sort
-     */
-    sort?: Array<string>;
-
-    /**
-     * size
-     */
-    size?: number;
-
-    /**
-     * page
-     */
-    page?: number;
-  }
-
-  /**
-   * Parameters for findAllCategoriesUsingGET
-   */
-  export interface FindAllCategoriesUsingGETParams {
 
     /**
      * sort
@@ -2444,32 +2407,6 @@ module QueryResourceService {
   }
 
   /**
-   * Parameters for getAllStockCurrentsUsingGET
-   */
-  export interface GetAllStockCurrentsUsingGETParams {
-
-    /**
-     * storeId
-     */
-    storeId: string;
-
-    /**
-     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     */
-    sort?: Array<string>;
-
-    /**
-     * Size of a page
-     */
-    size?: number;
-
-    /**
-     * Page number of the requested page
-     */
-    page?: number;
-  }
-
-  /**
    * Parameters for findAllStockDiariesUsingGET
    */
   export interface FindAllStockDiariesUsingGETParams {
@@ -2517,6 +2454,32 @@ module QueryResourceService {
 
     /**
      * page
+     */
+    page?: number;
+  }
+
+  /**
+   * Parameters for getAllStockCurrentsUsingGET
+   */
+  export interface GetAllStockCurrentsUsingGETParams {
+
+    /**
+     * storeId
+     */
+    storeId: string;
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     */
+    sort?: Array<string>;
+
+    /**
+     * Size of a page
+     */
+    size?: number;
+
+    /**
+     * Page number of the requested page
      */
     page?: number;
   }

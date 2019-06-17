@@ -4,6 +4,7 @@ import { QueryResourceService, CommandResourceService } from 'src/app/api/servic
 import { ModalController, ActionSheetController, LoadingController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import {AddCategoriesPage} from '../add-categories/add-categories.page';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-categories',
@@ -22,7 +23,8 @@ export class CategoriesPage implements OnInit {
   constructor(public actionSheetController: ActionSheetController,
     private modalController: ModalController,
     private queryResourceService: QueryResourceService, public commandResource: CommandResourceService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private userservice : UserService
   ) { }
 
   async createLoader() {
@@ -33,12 +35,13 @@ export class CategoriesPage implements OnInit {
       cssClass: 'loading'
     });
   }
-
+  userData: any;
   ngOnInit() {
+    this.userservice.getCurrentUser(false).then(user=>{this.userData=user});
     this.createLoader()
     .then(() => {
       this.loading.present();
-      this.queryResourceService.findAllCategoriesUsingGET({})
+      this.queryResourceService.findAllCategoriesUsingGET(this.userData)
       .subscribe(result => {
         this.categories = result;
         console.log('---------', this.categories);
