@@ -39,9 +39,8 @@ export class ProductListPage implements OnInit {
             storeId:user.preferred_username,
             productId: pr.id
           }).subscribe(result => {
-            console.log('sucss finding stock current by  product id ',result);
-  
-            
+            console.log('sucss finding stock current by  product id ',user.preferred_username, pr.id);
+            console.log('sucss finding stock current by  product id ',result); 
             this.stockCurrent.push(result);
           }, err => {
             console.log('error finding stock current by  product id ',err);
