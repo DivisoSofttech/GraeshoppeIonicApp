@@ -16,6 +16,7 @@ import { AddStockComponent } from './add-stock/add-stock.component';
 import { SearchProductsPage } from './search-products/search-products.page';
 import { AddItemFromCSVComponent } from './add-item-from-csv/add-item-from-csv.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { AddLocationComponent } from './add-location/add-location.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -35,7 +36,8 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
                     BilloptionsComponent,
                     SearchProductsPage,
                     AddItemFromCSVComponent,
-                    ProductDetailComponent
+                    ProductDetailComponent,
+                    AddLocationComponent
                     ],
     exports : [ EditProductModalComponent,
                 EditUOMModalComponent,
@@ -50,7 +52,8 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
                 BilloptionsComponent,
                 SearchProductsPage,
                 AddItemFromCSVComponent,
-                ProductDetailComponent
+                ProductDetailComponent,
+                AddLocationComponent
                 ]
     })
 export class ComponentsModule { }

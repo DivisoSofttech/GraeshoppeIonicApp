@@ -41,7 +41,7 @@ export class CategoriesPage implements OnInit {
     this.createLoader()
     .then(() => {
       this.loading.present();
-      this.queryResourceService.findAllCategoriesUsingGET(this.userData)
+      this.queryResourceService.findAllCategoriesUsingGET(this.userData.preferred_username)
       .subscribe(result => {
         this.categories = result;
         console.log('---------', this.categories);
