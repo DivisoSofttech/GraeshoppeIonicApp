@@ -45,6 +45,7 @@ export class CategoriesListPage implements OnInit {
       this.queryResourceService.findAllCategoriesUsingGET(this.userData.preferred_username)
       .subscribe(result => {
         this.loading.dismiss();
+        console.log(result);
         this.categoriesList = result;
       },
       err => {

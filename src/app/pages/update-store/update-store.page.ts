@@ -4,11 +4,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { DateService } from './../../date/date.service';
 import { RESIZE_OPTIONS } from './../../image-resize-options';
 import { ImageCompressService } from 'ng2-image-compress';
-import { NavController, ToastController } from '@ionic/angular';
+import { NavController, ToastController, ModalController } from '@ionic/angular';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { QueryResourceService, CommandResourceService } from 'src/app/api/services';
 import { Component, OnInit } from '@angular/core';
 import { StoreBundleDTO, StoreDTO } from 'src/app/api/models';
+import { AddLocationComponent } from 'src/app/components/add-location/add-location.component';
 
 @Component({
   selector: 'app-update-store',
@@ -30,7 +31,8 @@ export class UpdateStorePage implements OnInit {
 
   private fileToUpload: File;
   private imageToDisplay: string;
-  constructor(private queryService: QueryResourceService, private oauthService: OAuthService, private commandservice: CommandResourceService, private navcntrl: NavController, private dateService: DateService,public toastController: ToastController) { }
+  constructor(private queryService: QueryResourceService, private oauthService: OAuthService, private commandservice: CommandResourceService, private navcntrl: NavController, private dateService: DateService,public toastController: ToastController,
+    private modalController: ModalController) { }
 
   ngOnInit() {
 
@@ -206,5 +208,16 @@ export class UpdateStorePage implements OnInit {
       console.log("delivery info deleted", err);
       this.presentToast("Your delivery info could not be deleted, "+err.message);
     });
+  }
+
+  async addLocationModal() {
+
+    const modal = await this.modalController.create(
+      {
+        component: AddLocationComponent
+      }
+    );
+
+    modal.present();
   }
 }
