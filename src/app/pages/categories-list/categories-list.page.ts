@@ -35,7 +35,7 @@ export class CategoriesListPage implements OnInit {
   }
   userData: any;
   ngOnInit() {
-   this.userService.getCurrentUser(false).then(user=>{
+   this.userService.getCurrentUser(true).then(user=>{
     this.userData=user;
     console.log('userData is ',this.userData);
     console.log('userData is ',user);

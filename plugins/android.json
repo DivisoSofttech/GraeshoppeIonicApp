@@ -10,6 +10,9 @@
     "cordova-plugin-camera": {
       "PACKAGE_NAME": "com.diviso.graeshoppe"
     },
+    "cordova-plugin-crop": {
+      "PACKAGE_NAME": "com.diviso.graeshoppe"
+    },
     "cordova-plugin-device": {
       "PACKAGE_NAME": "com.diviso.graeshoppe"
     },
