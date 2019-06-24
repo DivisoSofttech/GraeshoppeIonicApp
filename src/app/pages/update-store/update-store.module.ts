@@ -8,7 +8,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { UpdateStorePage } from './update-store.page';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { AddLocationComponent } from 'src/app/components/add-location/add-location.component';
 
 const routes: Routes = [
   {
@@ -26,6 +25,6 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [UpdateStorePage],
-  entryComponents: [AddLocationComponent]
+  entryComponents: []
 })
 export class UpdateStorePageModule {}

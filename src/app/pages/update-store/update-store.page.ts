@@ -17,7 +17,6 @@ import {
 } from 'src/app/api/services';
 import { Component, OnInit } from '@angular/core';
 import { StoreBundleDTO, StoreDTO } from 'src/app/api/models';
-import { AddLocationComponent } from 'src/app/components/add-location/add-location.component';
 import { Environment } from '@ionic-native/google-maps';
 import { store } from '@angular/core/src/render3';
 
@@ -274,11 +273,11 @@ export class UpdateStorePage implements OnInit {
   }
 
   async addLocationModal() {
-    const modal = await this.modalController.create({
-      component: AddLocationComponent
-    });
+    // const modal = await this.modalController.create({
+    //   component: AddLocationComponent
+    // });
 
-    modal.present();
+    // modal.present();
   }
 
   doPlaceSearch(event) {
