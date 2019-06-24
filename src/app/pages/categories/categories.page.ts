@@ -37,7 +37,7 @@ export class CategoriesPage implements OnInit {
   }
   userData: any;
   ngOnInit() {
-    this.userservice.getCurrentUser(false).then(user=>{this.userData=user});
+    this.userservice.getCurrentUser(false).then(user=>{this.userData = user});
     this.createLoader()
     .then(() => {
       this.loading.present();

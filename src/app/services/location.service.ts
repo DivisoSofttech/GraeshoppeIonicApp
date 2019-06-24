@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 
 declare var google: any;
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -37,11 +38,10 @@ export class LocationService {
   }
 
   getCurrentLocation() {
-    this.geolocation.getCurrentPosition().then(resp => {
+    return this.geolocation.getCurrentPosition().then(resp => {
       this.currentLat = resp.coords.latitude;
       this.currentLon = resp.coords.longitude;
-      console.log('Lat is ' + this.currentLat);
-      console.log('Lon is ' + this.currentLon);
+      return [this.currentLat,this.currentLon];
     });
   }
 
@@ -91,5 +91,18 @@ export class LocationService {
       resolve(latlon);
       });
     });
+  }
+
+  async getLocationName(latitude , longitude) {
+    console.log(latitude ,',', longitude)
+    let latlng = {lat: latitude, lng: longitude};
+    this.geocoder = new google.maps.Geocoder();
+    await this.geocoder.geocode({'location': latlng}, function(results) {
+      if (results[0]) {
+        console.log('Got Location Name' ,results);
+      } else {
+        console.log('No results found');
+      }
+  });
   }
 }

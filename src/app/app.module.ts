@@ -1,3 +1,5 @@
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { GoogleMapsAPIWrapper, AgmCoreModule } from '@agm/core';
 import { Crop } from '@ionic-native/crop/ngx';
 import { ItemsPageModule } from './pages/items/items.module';
 import { CustomersPageModule } from './pages/customers/customers.module';
@@ -45,6 +47,10 @@ import { ProductsNamePipe } from './products-name.pipe';
   declarations: [AppComponent, UserComponent],
   entryComponents: [],
   imports: [
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBMiG49LE8jalJZrgYTKcauhhSGkZHfUcw',
+      libraries: ['places', 'geometry']
+    }),
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
@@ -74,6 +80,8 @@ import { ProductsNamePipe } from './products-name.pipe';
 
   ],
   providers: [
+    Geolocation,
+    GoogleMapsAPIWrapper,
     StatusBar,
     SplashScreen,
     Crop,

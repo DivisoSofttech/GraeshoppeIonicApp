@@ -4,29 +4,29 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/sale"></ion-back-button>
     </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button (click)="addLocationModal()">
-        <ion-icon name="locate"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <ion-grid>
+    <ion-row text-center>
+      <ion-label class="profileLogo" *ngIf="!store.imageContentType" position="floating">Logo</ion-label>
+      <img class="profileLogo image" *ngIf="store.imageContentType" src="data:{{store.imageContentType}};base64,{{store.image}}">
+      <input hidden id="logo" type="file" accept="image/*" color="primary" (change)="onSelectFile($event)">
+    </ion-row>
+    <ion-row>
+        <ion-item class="imageUpload">
+            <ion-button slot="end" fill="none" (click)="triggerUpload($event)">
+              <ion-icon slot="start" color="danger" size="large" name="camera" slot="icon-only"></ion-icon>
+            </ion-button>
+    
+          </ion-item>
+    
+    </ion-row>
     <ion-row>
       <ion-col padding>
-        <ion-item>
-          <ion-label position="floating">Logo</ion-label>
-          <img *ngIf="store.imageContentType" src="data:{{store.imageContentType}};base64,{{store.image}}"
-            class="image">
-          <input hidden id="logo" type="file" accept="image/*" color="primary" (change)="onSelectFile($event)">
-          <ion-button fill="none" (click)="triggerUpload($event)">
-            <ion-icon slot="start" color="danger" size="large" name="camera" slot="icon-only"></ion-icon>
-          </ion-button>
-        </ion-item>
-        <!--           <ion-item>
+        <!--<ion-item>
             <ion-label position="floating">Opening time</ion-label>
             <ion-input type="text" [(ngModel)]="store.openingTime"></ion-input>
           </ion-item> -->
@@ -165,10 +165,24 @@
               </ion-col>
             </ion-row>
           </ion-item>
-
         </ion-item-group>
-        <ion-button (click)="save()" margin mode="ios" expand="block" fill="solid" color="danger">Save</ion-button>
+        <ion-item>
+          <ion-label position="floating">Add Location</ion-label>
+          <ion-input debounce="1500" (ionChange)="doPlaceSearch($event)" [(ngModel)]="placeName">
+          </ion-input>
+          <button class="currentLocation" slot="end" item-right (click)="getCurrentLocation()">
+              <ion-icon name="locate"></ion-icon>
+           </button>
+        </ion-item>
+        <ion-list no-margin class="placeSuggestion" *ngIf="places.length > 0">
+          <ion-item *ngFor="let place of places" (click)="decodeLatLongByPlaceId(place);">
+            {{place.description}}</ion-item>
+        </ion-list>
       </ion-col>
     </ion-row>
   </ion-grid>
+
 </ion-content>
+<ion-footer>
+  <ion-button (click)="save()" margin mode="ios" expand="block" fill="solid" color="danger">Save</ion-button>
+</ion-footer>

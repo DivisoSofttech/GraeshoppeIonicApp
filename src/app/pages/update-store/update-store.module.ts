@@ -1,3 +1,4 @@
+import { LocationService } from './../../services/location.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

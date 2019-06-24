@@ -17,6 +17,7 @@ import { SearchProductsPage } from './search-products/search-products.page';
 import { AddItemFromCSVComponent } from './add-item-from-csv/add-item-from-csv.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { AddLocationComponent } from './add-location/add-location.component';
+import { LocationService } from '../services/location.service';
 @NgModule({
     imports: [
         CommonModule,
@@ -54,6 +55,7 @@ import { AddLocationComponent } from './add-location/add-location.component';
                 AddItemFromCSVComponent,
                 ProductDetailComponent,
                 AddLocationComponent
-                ]
+                ],
+                providers:[LocationService]
     })
 export class ComponentsModule { }
