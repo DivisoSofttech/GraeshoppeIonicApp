@@ -16,46 +16,41 @@ import { AddStockComponent } from './add-stock/add-stock.component';
 import { SearchProductsPage } from './search-products/search-products.page';
 import { AddItemFromCSVComponent } from './add-item-from-csv/add-item-from-csv.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { AddLocationComponent } from './add-location/add-location.component';
 import { LocationService } from '../services/location.service';
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule
-    ],
-    declarations: [ EditProductModalComponent,
-                    EditUOMModalComponent,
-                    HeaderComponent,
-                    ReceiptDetailPopoverComponent,
-                    RefundQuantityModalComponent,
-                    ProductQuantityModalComponent,
-                    EditCategoryComponent,
-                    EditUomComponent,
-                    EditCustomerComponent,
-                    AddStockComponent,
-                    BilloptionsComponent,
-                    SearchProductsPage,
-                    AddItemFromCSVComponent,
-                    ProductDetailComponent,
-                    AddLocationComponent
-                    ],
-    exports : [ EditProductModalComponent,
-                EditUOMModalComponent,
-                HeaderComponent,
-                ReceiptDetailPopoverComponent,
-                RefundQuantityModalComponent,
-                ProductQuantityModalComponent,
-                EditCategoryComponent,
-                EditUomComponent,
-                EditCustomerComponent,
-                AddStockComponent,
-                BilloptionsComponent,
-                SearchProductsPage,
-                AddItemFromCSVComponent,
-                ProductDetailComponent,
-                AddLocationComponent
-                ],
-                providers:[LocationService]
-    })
-export class ComponentsModule { }
+  imports: [CommonModule, FormsModule, IonicModule],
+  declarations: [
+    EditProductModalComponent,
+    EditUOMModalComponent,
+    HeaderComponent,
+    ReceiptDetailPopoverComponent,
+    RefundQuantityModalComponent,
+    ProductQuantityModalComponent,
+    EditCategoryComponent,
+    EditUomComponent,
+    EditCustomerComponent,
+    AddStockComponent,
+    BilloptionsComponent,
+    SearchProductsPage,
+    AddItemFromCSVComponent,
+    ProductDetailComponent
+  ],
+  exports: [
+    EditProductModalComponent,
+    EditUOMModalComponent,
+    HeaderComponent,
+    ReceiptDetailPopoverComponent,
+    RefundQuantityModalComponent,
+    ProductQuantityModalComponent,
+    EditCategoryComponent,
+    EditUomComponent,
+    EditCustomerComponent,
+    AddStockComponent,
+    BilloptionsComponent,
+    SearchProductsPage,
+    AddItemFromCSVComponent,
+    ProductDetailComponent
+  ],
+  providers: [LocationService]
+})
+export class ComponentsModule {}
