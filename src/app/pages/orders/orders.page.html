@@ -35,9 +35,6 @@
   <!--Segment Button Container Start-->
   <div *ngIf="orders.length !== 0">
     <ion-segment (ionChange)="segmentChange($event)" [value]="currentPage" color="secondary">
-      <ion-segment-button value="all">
-        <ion-label>All</ion-label>
-      </ion-segment-button>
       <ion-segment-button value="delivery">
         <ion-label>Delivery</ion-label>
       </ion-segment-button>
@@ -63,7 +60,7 @@
               <p>Customer id : {{order.customerId}}</p>
               <p>Payment : {{order.payment.status}}</p>
               <p>Delivery Type : {{order.deliveryInfo.deliveryType}}</p>
-              <p>Delivery Charge : {{order.deliveryInfo.deliveryCharge}}</p>  
+              <p>Delivery Charge : {{order.deliveryInfo.deliveryCharge}}</p>    
             </ion-text>
           </ion-item>
       </ion-list>
@@ -79,7 +76,6 @@
 
   <ion-item>
     <ion-select slot="end" okText="Okay" cancelText="Dismiss" [(ngModel)]="selectedFilter">
-      <ion-select-option value="all" >All</ion-select-option>
       <ion-select-option value="paid">Paid</ion-select-option>
       <ion-select-option value="paid">Unpaid</ion-select-option>
     </ion-select>
