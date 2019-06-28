@@ -1,3 +1,4 @@
+import { OrderDetailsComponent } from './../../components/order-details/order-details.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QueryResourceService } from 'src/app/api/services';
 import { Order, OrderLine } from 'src/app/api/models';
@@ -11,9 +12,24 @@ import { OAuthService } from 'angular-oauth2-oidc';
 })
 export class OrdersPage implements OnInit {
 
-  orders: Order[] = [];
+  orders: Order[] = [
+    {
+      date: '7-9-19',
+      orderId:'1909090',
+      grandTotal:898,
+      payment: {
+        total: 90909,
+        status: 'success'
+      },
+      customerId:'9999',
+      deliveryInfo:{
+        startingTime:'12',
+        endTime: '3'
+      }
+    }
+  ];
 
-  currentPage = 'all';
+  currentPage = 'delivery';
 
   @ViewChild('slides') slides: IonSlides;
 
@@ -40,23 +56,23 @@ export class OrdersPage implements OnInit {
   }
 
   ngOnInit() {
-    
-    this.createLoader()
-    .then(() => {
-        this.loading.present();
-        this.oauthService.loadUserProfile()
-        .then((userData: any) => {
-         this.queryResourceService.findOrderLineByStoreIdUsingGET(userData.preferred_username)
-         .subscribe(data => {
-           console.log(data.content);
-           this.orders = data.content;
-           this.loading.dismiss();
-           this.showView = true;
-         } , err => {
-           this.loading.dismiss();
-         });
-        });    
-    })
+
+    // this.createLoader()
+    // .then(() => {
+    //     this.loading.present();
+    //     this.oauthService.loadUserProfile()
+    //     .then((userData: any) => {
+    //      this.queryResourceService.findOrderLineByStoreIdUsingGET(userData.preferred_username)
+    //      .subscribe(data => {
+    //        console.log(data.content);
+    //        this.orders = data.content;
+    //        this.loading.dismiss();
+    //        this.showView = true;
+    //      } , err => {
+    //        this.loading.dismiss();
+    //      });
+    //     });    
+    // })
   }
 
   slideChange() {
@@ -64,23 +80,30 @@ export class OrdersPage implements OnInit {
     this.slides.getActiveIndex().then(num => {
       index = num;
       if (index === 0) {
-        this.currentPage = 'all';
-      } else if (index === 1) {
         this.currentPage = 'delivery';
-      } else if (index === 2) {
+      } else if (index === 1) {
         this.currentPage = 'collections';
-      }
-    });
+      }   
+     });
   }
 
   segmentChange(ev) {
-    if (ev.detail.value === 'all') {
+    if (ev.detail.value === 'delivery') {
       this.slides.slideTo(0);
-    } else if (ev.detail.value === 'delivery') {
-      this.slides.slideTo(1);
     } else if (ev.detail.value === 'collections') {
-      this.slides.slideTo(2);
+      this.slides.slideTo(1);
     }
+  }
+
+  async showOrderDetails(o) {
+    const modal = await this.modalController.create(
+      {
+        component: OrderDetailsComponent,
+        componentProps: {order: o}
+      }
+    );
+
+    modal.present();
   }
 
 }

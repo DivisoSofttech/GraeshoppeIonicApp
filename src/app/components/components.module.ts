@@ -1,3 +1,4 @@
+import { OrderDetailsComponent } from './order-details/order-details.component';
 import { BilloptionsComponent } from './billoptions/billoptions.component';
 import { EditCustomerComponent } from './edit-customer/edit-customer.component';
 import { EditUomComponent } from './edit-uom/edit-uom.component';
@@ -17,6 +18,7 @@ import { SearchProductsPage } from './search-products/search-products.page';
 import { AddItemFromCSVComponent } from './add-item-from-csv/add-item-from-csv.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { LocationService } from '../services/location.service';
+
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule],
   declarations: [
@@ -33,7 +35,8 @@ import { LocationService } from '../services/location.service';
     BilloptionsComponent,
     SearchProductsPage,
     AddItemFromCSVComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    OrderDetailsComponent
   ],
   exports: [
     EditProductModalComponent,
@@ -49,7 +52,8 @@ import { LocationService } from '../services/location.service';
     BilloptionsComponent,
     SearchProductsPage,
     AddItemFromCSVComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    OrderDetailsComponent
   ],
   providers: [LocationService]
 })

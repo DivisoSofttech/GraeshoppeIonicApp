@@ -19,6 +19,10 @@ export class SignUpPage implements OnInit {
       baseUrl: 'http://35.196.86.249:8080/auth'
     });
     this.configureKeycloakAdmin();
+    this.kcAdminClient.users.find()
+    .then(data => {
+      console.log(data);
+    })
   }
 
   username: string;
