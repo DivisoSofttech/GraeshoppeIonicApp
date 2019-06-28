@@ -97,9 +97,10 @@ export class LocationService {
     console.log(latitude ,',', longitude)
     let latlng = {lat: latitude, lng: longitude};
     this.geocoder = new google.maps.Geocoder();
-    await this.geocoder.geocode({'location': latlng}, function(results) {
+    return await this.geocoder.geocode({'location': latlng}, function(results) {
       if (results[0]) {
-        console.log('Got Location Name' ,results);
+        console.log('uuuu',results)
+        return results;
       } else {
         console.log('No results found');
       }

@@ -1,3 +1,4 @@
+import { AddLocationComponent } from './add-location/add-location.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { BilloptionsComponent } from './billoptions/billoptions.component';
 import { EditCustomerComponent } from './edit-customer/edit-customer.component';
@@ -36,7 +37,8 @@ import { LocationService } from '../services/location.service';
     SearchProductsPage,
     AddItemFromCSVComponent,
     ProductDetailComponent,
-    OrderDetailsComponent
+    OrderDetailsComponent,
+    AddLocationComponent
   ],
   exports: [
     EditProductModalComponent,
@@ -53,7 +55,8 @@ import { LocationService } from '../services/location.service';
     SearchProductsPage,
     AddItemFromCSVComponent,
     ProductDetailComponent,
-    OrderDetailsComponent
+    OrderDetailsComponent,
+    AddLocationComponent
   ],
   providers: [LocationService]
 })

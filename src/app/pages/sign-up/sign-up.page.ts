@@ -13,16 +13,12 @@ import { KeycloakAdminClient } from 'keycloak-admin/lib/client';
 })
 export class SignUpPage implements OnInit {
 
-  constructor(private navCtrl: NavController, private toastController: ToastController, private oauthService: OAuthService, private commandService:CommandResourceService) {
+  constructor(private navCtrl: NavController, private toastController: ToastController, private oauthService: OAuthService, private commandService: CommandResourceService) {
     this.kcAdminClient = new KeycloakAdminClient();
     this.kcAdminClient.setConfig({
       baseUrl: 'http://35.196.86.249:8080/auth'
     });
     this.configureKeycloakAdmin();
-    this.kcAdminClient.users.find()
-    .then(data => {
-      console.log(data);
-    })
   }
 
   username: string;
@@ -64,12 +60,12 @@ export class SignUpPage implements OnInit {
         if (claims) { console.log(claims); }
         if (this.oauthService.hasValidAccessToken()) {
           this.presentToast('Signup successfully completed');
-          //this.navCtrl.navigateRoot('/sale');
+          // this.navCtrl.navigateRoot('/sale');
           this.commandService.createStoreUsingPOST({regNo: this.username}).subscribe(
-            data=>{
-              console.log("store created",data);
+            data => {
+              console.log('store created', data);
             }
-          )
+          );
         }
       }).catch((err: HttpErrorResponse) => {
         this.presentToast(err.error.error_description);

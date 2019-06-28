@@ -125,7 +125,7 @@
             </ion-row>
           </ion-item>
 
-          <ion-item *ngFor="let deliveryInfo of deliveryInfos;let i=index">
+          <ion-item *ngFor="let deliveryInfo of deliveryInfos;let i=index" lines="none" class="deliveryInfoItem">
 
             <ion-row class="delivery-info">
               <ion-col size="10">
@@ -168,16 +168,13 @@
         </ion-item-group>
         <ion-item>
           <ion-label position="floating">Add Location</ion-label>
-          <ion-input debounce="1500" (ionChange)="doPlaceSearch($event)" [(ngModel)]="placeName">
+          <ion-input debounce="1500" (ionFocus)="addLocationModal()">
           </ion-input>
           <button class="currentLocation" slot="end" item-right (click)="getCurrentLocation()">
               <ion-icon name="locate"></ion-icon>
            </button>
         </ion-item>
-        <ion-list no-margin class="placeSuggestion" *ngIf="places.length > 0">
-          <ion-item *ngFor="let place of places" (click)="decodeLatLongByPlaceId(place);">
-            {{place.description}}</ion-item>
-        </ion-list>
+ 
       </ion-col>
     </ion-row>
   </ion-grid>

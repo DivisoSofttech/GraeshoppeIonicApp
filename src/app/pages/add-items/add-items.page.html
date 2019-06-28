@@ -41,6 +41,10 @@
         <ion-input type="text" [(ngModel)]="product.name"></ion-input>
       </ion-item>
       <ion-item>
+          <ion-label position="floating">Description</ion-label>
+        <ion-textarea [(ngModel)]="product.description"></ion-textarea>
+      </ion-item>
+      <ion-item>
         <ion-label position="floating">Category</ion-label>
         <ion-select [(ngModel)]="product.categories[0].id">
           <ion-select-option *ngFor="let category of categories" value="{{category.id}}" required>{{category.name}}
