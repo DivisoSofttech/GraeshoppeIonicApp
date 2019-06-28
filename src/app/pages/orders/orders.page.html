@@ -49,18 +49,15 @@
   <ion-slides  #slides (ionSlideDidChange)="slideChange()" class="vertical-align-center">
     <ion-slide>
       <ion-list>
-          <ion-item lines="none" class="order" *ngFor="let order of orders">
-            <ion-text slot="start">
+          <ion-item lines="none" class="order" *ngFor="let order of orders" (click)="showOrderDetails(order)">
+            <ion-text slot="end">
               <p>Date : {{order.date}}</p>
-             <p> Order id : {{order.orderId}}</p>
-             <p>Number of products : {{order.grandTotal}}</p>
-             <p>Total Amount : {{order.payment.total}}</p>
+             <p>Amount : {{order.payment.total}}</p>
             </ion-text>
-            <ion-text slot="end" no-margin>
+            <ion-text slot="start" no-margin>
               <p>Customer id : {{order.customerId}}</p>
-              <p>Payment : {{order.payment.status}}</p>
-              <p>Delivery Type : {{order.deliveryInfo.deliveryType}}</p>
-              <p>Delivery Charge : {{order.deliveryInfo.deliveryCharge}}</p>    
+              <p>Name : {{order.payment.status}}</p>
+              <p>Address : {{order.deliveryInfo.deliveryType}}</p>
             </ion-text>
           </ion-item>
       </ion-list>
@@ -76,6 +73,7 @@
 
   <ion-item>
     <ion-select slot="end" okText="Okay" cancelText="Dismiss" [(ngModel)]="selectedFilter">
+      <ion-select-option value="all">All</ion-select-option>
       <ion-select-option value="paid">Paid</ion-select-option>
       <ion-select-option value="paid">Unpaid</ion-select-option>
     </ion-select>

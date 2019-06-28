@@ -1,3 +1,4 @@
+import { OrderDetailsComponent } from './../../components/order-details/order-details.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QueryResourceService } from 'src/app/api/services';
 import { Order, OrderLine } from 'src/app/api/models';
@@ -32,7 +33,7 @@ export class OrdersPage implements OnInit {
 
   @ViewChild('slides') slides: IonSlides;
 
-  selectedFilter: string = 'delivery';
+  selectedFilter: string = 'all';
 
   loading: HTMLIonLoadingElement;
 
@@ -92,6 +93,17 @@ export class OrdersPage implements OnInit {
     } else if (ev.detail.value === 'collections') {
       this.slides.slideTo(1);
     }
+  }
+
+  async showOrderDetails(o) {
+    const modal = await this.modalController.create(
+      {
+        component: OrderDetailsComponent,
+        componentProps: {order: o}
+      }
+    );
+
+    modal.present();
   }
 
 }
