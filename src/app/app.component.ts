@@ -1,6 +1,6 @@
+import { Platform, ToastController, NavController, MenuController } from '@ionic/angular';
 import { Component } from '@angular/core';
 
-import { Platform, NavController, ToastController, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthConfig } from 'angular-oauth2-oidc/auth.config';
@@ -90,6 +90,11 @@ export class AppComponent {
       title: 'Settings',
       url: '/settings',
       icon: 'settings'
+    },
+    {
+      title: 'Maintenance',
+      url: '/maintenance',
+      icon: 'hammer'
     },
     {
       title: 'About Us',

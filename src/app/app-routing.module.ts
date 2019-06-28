@@ -182,7 +182,8 @@ const routes: Routes = [
     loadChildren: './pages/stock-management/stock-management.module#StockManagementPageModule',
      canActivate: [AuthGuardService]
    },
-  { path: 'update-store', loadChildren: './pages/update-store/update-store.module#UpdateStorePageModule' }
+  { path: 'update-store', loadChildren: './pages/update-store/update-store.module#UpdateStorePageModule' },  { path: 'maintenance', loadChildren: './pages/maintenance/maintenance.module#MaintenancePageModule' }
+
 
 
 ];
