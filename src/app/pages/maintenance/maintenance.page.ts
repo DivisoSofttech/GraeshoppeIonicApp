@@ -70,10 +70,13 @@ export class MaintenancePage implements OnInit {
       realmRoles: [rol.id]
     }).then(data => {
       this.clear();
+      this.kcAdminClient.users.addRealmRoleMappings({id: data.id, roles: [{
+        id: rol.id,
+        name: rol.name
+      }]});
     }).catch(err => {
       console.log('Error creating user');
     });
-    // this.kcAdminClient.users.addRealmRoleMappings({})
   }
 
   clear() {
