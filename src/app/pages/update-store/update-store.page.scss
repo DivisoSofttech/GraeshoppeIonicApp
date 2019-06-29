@@ -8,15 +8,15 @@ ion-row.delivery-info {
     width: 50%;
 }
 
-.placeSuggestion {
-    position: absolute;
-    margin: auto;
-    left: 0;
-    right: 0;
-    top: 4vh;
-    z-index: 20000;
-    border: 1px solid #c7c2c2;
-}
+// .placeSuggestion {
+//     position: absolute;
+//     margin: auto;
+//     left: 0;
+//     right: 0;
+//     top: 4vh;
+//     z-index: 20000;
+//     border: 1px solid #c7c2c2;
+// }
 
 .profileLogo {
     margin: auto;
@@ -32,4 +32,8 @@ ion-row.delivery-info {
     background: transparent;
     position: relative;
     right: -6vw;
+}
+
+.deliveryInfoItem {
+    margin: 10px;
 }

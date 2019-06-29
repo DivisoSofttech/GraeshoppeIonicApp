@@ -1,3 +1,4 @@
+import { AddLocationComponent } from './../../components/add-location/add-location.component';
 import { LocationService } from './../../services/location.service';
 import { TypeDTO } from './../../api/models/type-dto';
 import { DeliveryInfoDTO } from './../../api/models/delivery-info-dto';
@@ -26,23 +27,21 @@ import { store } from '@angular/core/src/render3';
   styleUrls: ['./update-store.page.scss']
 })
 export class UpdateStorePage implements OnInit {
-  places = [];
-
-  placeName = ' ';
 
   store: StoreDTO = {};
-  private deliveryInfos: DeliveryInfoDTO[] = [];
-  private types: TypeDTO[] = [];
-  private isAddingNewDeliveryInfo = false;
-  private newDeliveryInfo: DeliveryInfoDTO = {};
-  private isDeliveryInfosShowing = false;
+  deliveryInfos: DeliveryInfoDTO[] = [];
+  types: TypeDTO[] = [];
+  isAddingNewDeliveryInfo = false;
+  newDeliveryInfo: DeliveryInfoDTO = {};
+  isDeliveryInfosShowing = false;
 
   // private storeName: string;
-  private storeRegNo: string;
-  private storeEmail: string;
+  storeRegNo: string;
+  storeEmail: string;
 
-  private fileToUpload: File;
-  private imageToDisplay: string;
+  fileToUpload: File;
+  imageToDisplay: string;
+  
   constructor(
     private queryService: QueryResourceService,
     private oauthService: OAuthService,
@@ -69,13 +68,6 @@ export class UpdateStorePage implements OnInit {
           .subscribe((data: StoreBundleDTO) => {
             console.log('received store', data);
             this.store = data.store;
-            if (this.store.location != undefined) {
-              console.log('Getting Current Location' , this.store.location);
-              this.locationService.getLocationName(
-                parseFloat(this.store.location.split(',')[0]),
-                parseFloat(this.store.location.split(',')[1])
-              );
-            }
             if (data.deliveryInfos) {
               this.deliveryInfos = data.deliveryInfos;
             }
@@ -273,40 +265,24 @@ export class UpdateStorePage implements OnInit {
   }
 
   async addLocationModal() {
-    // const modal = await this.modalController.create({
-    //   component: AddLocationComponent
-    // });
-
-    // modal.present();
-  }
-
-  doPlaceSearch(event) {
-    this.places = [];
-    console.log(event.detail.value);
-    const searchterm = event.detail.value;
-    if (searchterm === '' || searchterm === null) {
-      return;
-    }
-    this.locationService.getPredictions(searchterm).subscribe(res => {
-      console.log(res);
-      this.places = res;
+    const modal = await this.modalController.create({
+      component: AddLocationComponent,
+      componentProps: {cLocation: this.store.location}
     });
-  }
 
-  decodeLatLongByPlaceId(place) {
-    this.places = [];
-    this.locationService.geocodeAddress(place.place_id).then(latlon => {
-      this.placeName = place.description;
-      this.store.location = latlon[0] + ',' + latlon[1];
+    modal.present();
+    modal.onDidDismiss()
+    .then(data => {
+      this.store.location = data.data[0] + ',' + data.data[1];
+      console.log(this.store.location);
     });
   }
 
   getCurrentLocation() {
     this.locationService.getCurrentLocation()
-    .then(data => {
-      console.log(data);
+    .then((data:any) => {
       this.store.location = data[0] + ',' + data[1];
-    })
-
+    });
   }
+
 }

@@ -1,3 +1,4 @@
+import { AddLocationComponent } from './../../components/add-location/add-location.component';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -25,6 +26,6 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [UpdateStorePage],
-  entryComponents: []
+  entryComponents: [AddLocationComponent]
 })
 export class UpdateStorePageModule {}

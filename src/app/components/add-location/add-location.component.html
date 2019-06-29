@@ -1,0 +1,18 @@
+<ion-header no-border> 
+  <ion-toolbar>
+      <ion-item>
+          <ion-input debounce="1500" (ionChange)="doPlaceSearch($event)" placeholder="Search for Locations"
+          [(ngModel)]="placeName">
+          </ion-input>
+          <button class="currentLocation" slot="end" item-right (click)="getCurrentLocation()">
+              <ion-icon name="locate"></ion-icon>
+           </button>
+        </ion-item>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list no-margin class="placeSuggestion" *ngIf="places.length > 0">
+        <ion-item *ngFor="let place of places" (click)="decodeLatLongByPlaceId(place);">
+          {{place.description}}</ion-item>
+      </ion-list>
+</ion-content>
