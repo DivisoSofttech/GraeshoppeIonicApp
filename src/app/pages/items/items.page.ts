@@ -64,7 +64,7 @@ export class ItemsPage implements OnInit {
         if (value.data === true) {
           this.getproducts();
         }
-      })
+      });
   }
 
   async createItemFromCSVModal() {

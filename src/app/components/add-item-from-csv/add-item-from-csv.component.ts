@@ -43,11 +43,10 @@ export class AddItemFromCSVComponent implements OnInit {
     };
 
     freader.readAsDataURL(this.fileToUpload);
-
   }
 
   save() {
-    // this.commandResourceService.
+    // this.commandResourceService.loadProductsUsingPOST()
   }
 
 }

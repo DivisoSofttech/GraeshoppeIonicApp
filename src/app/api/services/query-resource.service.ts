@@ -55,7 +55,6 @@ class QueryResourceService extends __BaseService {
   static readonly findStockCurrentByProductIdUsingGETPath = '/api/query/findStockCurrentByProductId/{productId}/{storeId}';
   static readonly findStockCurrentDTOByProductIdUsingGETPath = '/api/query/findStockCurrentDTOByProductId/{productId}';
   static readonly findStockDiaryByProductIdUsingGETPath = '/api/query/findStockDiaryByProductId/{productId}/{storeId}';
-  static readonly loadProductsUsingGETPath = '/api/query/loadProducts';
   static readonly findOrderLineByStoreIdUsingGETPath = '/api/query/ordersbystoreId/{storeId}';
   static readonly findAllProductUsingGETPath = '/api/query/productByStoreId/{storeId}';
   static readonly exportProductsUsingGETPath = '/api/query/products/export';
@@ -877,43 +876,6 @@ class QueryResourceService extends __BaseService {
   findStockDiaryByProductIdUsingGET(params: QueryResourceService.FindStockDiaryByProductIdUsingGETParams): __Observable<StockDiary> {
     return this.findStockDiaryByProductIdUsingGETResponse(params).pipe(
       __map(_r => _r.body as StockDiary)
-    );
-  }
-
-  /**
-   * @param file file
-   */
-  loadProductsUsingGETResponse(file: Blob): __Observable<__StrictHttpResponse<null>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    __headers.append('Content-Type', 'multipart/form-data');
-    let __formData = new FormData();
-    __body = __formData;
-   if(file !== null && typeof file !== "undefined") { __formData.append('file', file as string | Blob);}
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/api/query/loadProducts`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<null>;
-      })
-    );
-  }
-  /**
-   * @param file file
-   */
-  loadProductsUsingGET(file: Blob): __Observable<null> {
-    return this.loadProductsUsingGETResponse(file).pipe(
-      __map(_r => _r.body as null)
     );
   }
 

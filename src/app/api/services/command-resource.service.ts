@@ -42,6 +42,7 @@ class CommandResourceService extends __BaseService {
   static readonly createDeliveryInfoUsingPOSTPath = '/api/command/delivery-infos';
   static readonly updateDeliveryInfoUsingPUTPath = '/api/command/delivery-infos';
   static readonly deleteDeliveryInfoUsingDELETEPath = '/api/command/delivery-infos/{id}';
+  static readonly loadProductsUsingPOSTPath = '/api/command/load-products';
   static readonly createProductCategoryUsingPOSTPath = '/api/command/productCategory';
   static readonly createProductUsingPOSTPath = '/api/command/products';
   static readonly updateProductUsingPUTPath = '/api/command/products';
@@ -434,6 +435,43 @@ class CommandResourceService extends __BaseService {
    */
   deleteDeliveryInfoUsingDELETE(id: number): __Observable<null> {
     return this.deleteDeliveryInfoUsingDELETEResponse(id).pipe(
+      __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * @param file file
+   */
+  loadProductsUsingPOSTResponse(file: Blob): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __headers.append('Content-Type', 'multipart/form-data');
+    let __formData = new FormData();
+    __body = __formData;
+   if(file !== null && typeof file !== "undefined") { __formData.append('file', file as string | Blob);}
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/api/command/load-products`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+  /**
+   * @param file file
+   */
+  loadProductsUsingPOST(file: Blob): __Observable<null> {
+    return this.loadProductsUsingPOSTResponse(file).pipe(
       __map(_r => _r.body as null)
     );
   }
