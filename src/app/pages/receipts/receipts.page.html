@@ -8,14 +8,22 @@
   </ion-header>
 
   <ion-content>
-
+      <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+          <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles" >
+          </ion-refresher-content>
+        </ion-refresher>
     <!-- <ion-item lines="none" class="border-bottom">
       <ion-icon name="search" class="search-icon"></ion-icon>
       <ion-input class="ion-margin-start" clearInput="true" placeholder="Enter reciept Number"></ion-input>
     </ion-item> -->
 
-    <ion-item lines="none" class="border-bottom">
-      <ion-label class="date">{{(sales[0]?.sale.date | slice:0:10)}}</ion-label>
+    <ion-item lines="none" class="border-bottom" >
+      <div *ngIf = "sales != null">
+        <ion-label class="date">{{(sales[0]?.sale.date | slice:0:10)}}</ion-label>
+      </div>
     </ion-item>
 
     <div *ngIf="sales?.length>0">

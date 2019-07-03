@@ -9,7 +9,13 @@
 </ion-header>
 
 <ion-content>
-
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles" >
+        </ion-refresher-content>
+      </ion-refresher>
   <ion-item lines="none" class="border-bottom">
     <ion-icon name="search" class="search-icon"></ion-icon>
     <ion-input class="ion-margin-start" clearInput="true" placeholder="Enter Order Number"></ion-input>
@@ -57,7 +63,6 @@
             <ion-text slot="start" no-margin>
               <p>Customer id : {{order.customerId}}</p>
               <p>Name : {{order.payment.status}}</p>
-              <p>Address : {{order.deliveryInfo.deliveryType}}</p>
             </ion-text>
           </ion-item>
       </ion-list>

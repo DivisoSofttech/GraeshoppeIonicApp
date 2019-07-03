@@ -105,5 +105,12 @@ export class OrdersPage implements OnInit {
 
     modal.present();
   }
-
+  doRefresh(event) {
+    console.log('Begin async operation');
+    this.ngOnInit();
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
 }

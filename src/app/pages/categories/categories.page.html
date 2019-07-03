@@ -5,6 +5,13 @@
     <ion-icon name="funnel" class="rightAlignIcon"></ion-icon>
 </ion-item> -->
 <ion-content padding>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles" >
+        </ion-refresher-content>
+      </ion-refresher>
   <ion-row>
     <ion-col *ngFor='let category of categories' size="6">
 

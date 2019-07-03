@@ -1,4 +1,11 @@
 <ion-content overflow-scroll="true">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles" >
+        </ion-refresher-content>
+      </ion-refresher>
   <ion-grid>
     <ion-row justify-content-center>
       <ion-col *ngFor="let stock of stockCurrent; let i = index" [attr.data-index]="i" (click)="addTicketLine(stock.product,stock)" >

@@ -36,6 +36,13 @@ export class RecentlyUsedPage implements OnInit {
     console.log('added Product Name' + product.name + ' Price ' + stockCurrent.sellPrice);
     this.cartService.addProduct(product, stockCurrent);
   }
-
+  doRefresh(event) {
+    console.log('Begin async operation');
+    this.ngOnInit();
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
 
 }

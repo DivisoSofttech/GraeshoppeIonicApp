@@ -3,26 +3,55 @@
     <ion-buttons>
       <ion-button (click)="dismiss()">
         <ion-icon name="close"></ion-icon>
+        <ion-title><strong>Order Details</strong></ion-title>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
 
-  <ion-item></ion-item>
+<ion-card>
+    <ion-toolbar color="danger">
+      <ion-card-title color="light" text-center>
+       <strong> Delivery Info </strong>
+      </ion-card-title>
+    </ion-toolbar>
+        <ion-card-content>
+          <ion-text>
+            <p> Customer Id : {{order.customerId}}</p>
+            <p> Order Id : {{order.orderId}}</p>
+            <p> date : {{order.date}}</p>
+            <p> Delivery Info : {{order.deliveryInfo.startingTime}} To {{order.deliveryInfo.endTime}}</p>
+            <p> Address : 1/321, pathripala</p>
+            <p> Payment  : {{order.payment.status}}</p>
+            <p> Grand Total : {{order.payment.total}}</p>
+          </ion-text>
+          <ion-card>
+            <ion-card-title color="primary" text-center padding>
+                <strong> Info </strong>
+              </ion-card-title>
+              <ion-card-content>
+                  <ion-text>
+                    <p>Put in my Door Step.!!</p>
+                  </ion-text>
+              </ion-card-content>
+          </ion-card>
+        </ion-card-content>
+      
+  <ion-footer class="pd-10">
+      <ion-item>
+          <ion-buttons slot="start">
+              <ion-button fill="outline">Cancel</ion-button>
+              <ion-button fill="outline">Accept</ion-button>
+            </ion-buttons>
+            <ion-buttons slot="end">
+              <ion-button>
+                Assign
+              </ion-button>
+            </ion-buttons>
+      </ion-item>
+    
+    </ion-footer>
+</ion-card>
 
 </ion-content>
-<ion-footer class="pd-10">
-  <ion-item>
-      <ion-buttons slot="start">
-          <ion-button fill="outline">Cancel</ion-button>
-          <ion-button fill="outline">Accept</ion-button>
-        </ion-buttons>
-        <ion-buttons slot="end">
-          <ion-button>
-            12
-          </ion-button>
-        </ion-buttons>
-  </ion-item>
-
-</ion-footer>

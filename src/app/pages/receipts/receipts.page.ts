@@ -96,5 +96,12 @@ export class ReceiptsPage implements OnInit {
       this.infiniteScroll.complete();
     }
   }
-
+  doRefresh(event) {
+    console.log('Begin async operation');
+    this.ngOnInit();
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
 }
