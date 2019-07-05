@@ -21,10 +21,14 @@
             <p> Customer Id : {{order.customerId}}</p>
             <p> Order Id : {{order.orderId}}</p>
             <p> date : {{order.date}}</p>
+            <div *ngIf = "order.deliveryInfo != null">
             <p> Delivery Info : {{order.deliveryInfo.startingTime}} To {{order.deliveryInfo.endTime}}</p>
-            <p> Address : 1/321, pathripala</p>
-            <p> Payment  : {{order.payment.status}}</p>
-            <p> Grand Total : {{order.payment.total}}</p>
+            <p> Address : {{order.deliveryInfo.deliveryAddress}}</p>
+            </div>
+            <div *ngIf = "order.payment != null">
+              <p> Payment  : {{order.payment.status}}</p>
+            </div>
+            <p> Grand Total : {{order.grandTotal}}</p>
           </ion-text>
           <ion-card>
             <ion-card-title color="primary" text-center padding>

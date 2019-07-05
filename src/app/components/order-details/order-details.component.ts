@@ -15,7 +15,10 @@ export class OrderDetailsComponent implements OnInit {
     private modalCtrl: ModalController
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.order);
+    
+  }
 
   dismiss() {
     this.modalCtrl.dismiss();
