@@ -20,15 +20,14 @@
           <ion-text>
             <p> Customer Id : {{order.customerId}}</p>
             <p> Order Id : {{order.orderId}}</p>
-            <p> date : {{order.date}}</p>
+            <p> Date : {{order.date | date:'short'}}</p>
             <div *ngIf = "order.deliveryInfo != null">
-            <p> Delivery Info : {{order.deliveryInfo.startingTime}} To {{order.deliveryInfo.endTime}}</p>
             <p> Address : {{order.deliveryInfo.deliveryAddress}}</p>
             </div>
             <div *ngIf = "order.payment != null">
               <p> Payment  : {{order.payment.status}}</p>
             </div>
-            <p> Grand Total : {{order.grandTotal}}</p>
+            <p> Grand Total : {{ '&#8364; '+(order.grandTotal | number:'1.1-2')}}</p>
           </ion-text>
           <ion-card>
             <ion-card-title color="primary" text-center padding>
@@ -36,7 +35,7 @@
               </ion-card-title>
               <ion-card-content>
                   <ion-text>
-                    <p>Put in my Door Step.!!</p>
+                    <p>Add Less Spice</p>
                   </ion-text>
               </ion-card-content>
           </ion-card>

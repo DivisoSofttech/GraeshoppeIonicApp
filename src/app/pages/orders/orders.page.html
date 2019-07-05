@@ -62,8 +62,8 @@
               <div *ngIf="order.payment != null">
                 <p>Status : {{order.payment.status}}</p>
               </div>
-              <p>Date : {{order.date}}</p>
-              <p>Amount : {{order.grandTotal}}</p>
+              <p>Date : {{order.date |  date:'short'}}</p>
+              <p>Amount : {{'&#8364; '+(order.grandTotal | number:'1.1-2')}}</p>
             </ion-text>
         </ion-card> 
       </ion-list>
