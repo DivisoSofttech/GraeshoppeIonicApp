@@ -7,6 +7,13 @@
       </ion-button>
     </ion-label>
   </ion-item> -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="arrow-dropdown"
+        pullingText="Pull to refresh"
+        refreshingSpinner="circles" >
+      </ion-refresher-content>
+    </ion-refresher>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button size="small">
       <ion-icon name="add"></ion-icon>

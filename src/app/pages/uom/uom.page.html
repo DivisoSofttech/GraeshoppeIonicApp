@@ -1,5 +1,12 @@
 <app-header></app-header>
 <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles" >
+        </ion-refresher-content>
+      </ion-refresher>
     <!-- <ion-item >
         <ion-icon *ngIf="accending" name="arrow-dropdown-circle" (click)="sort()"></ion-icon>  
         <ion-icon *ngIf="!accending" name="arrow-dropup-circle" (click)="sort()"></ion-icon>  

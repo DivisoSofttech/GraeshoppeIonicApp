@@ -12,22 +12,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 })
 export class OrdersPage implements OnInit {
 
-  orders: Order[] = [
-    {
-      date: '7-9-19',
-      orderId:'1909090',
-      grandTotal:898,
-      payment: {
-        total: 90909,
-        status: 'success'
-      },
-      customerId:'9999',
-      deliveryInfo:{
-        startingTime:'12',
-        endTime: '3'
-      }
-    }
-  ];
+  orders: Order[] = [];
 
   currentPage = 'delivery';
 
@@ -57,22 +42,26 @@ export class OrdersPage implements OnInit {
 
   ngOnInit() {
 
-    // this.createLoader()
-    // .then(() => {
-    //     this.loading.present();
-    //     this.oauthService.loadUserProfile()
-    //     .then((userData: any) => {
-    //      this.queryResourceService.findOrderLineByStoreIdUsingGET(userData.preferred_username)
-    //      .subscribe(data => {
-    //        console.log(data.content);
-    //        this.orders = data.content;
-    //        this.loading.dismiss();
-    //        this.showView = true;
-    //      } , err => {
-    //        this.loading.dismiss();
-    //      });
-    //     });    
-    // })
+    this.createLoader()
+    .then(() => {
+        this.loading.present();
+        this.oauthService.loadUserProfile()
+        .then((userData: any) => {
+          console.log("thuthukku",userData.preferred_username);
+          
+         this.queryResourceService.findOrderLineByStoreIdUsingGET({
+           storeId:userData.preferred_username
+         })
+         .subscribe(data => {
+           console.log(data.content);
+           this.orders = data.content;
+           this.loading.dismiss();
+           this.showView = true;
+         } , err => {
+           this.loading.dismiss();
+         });
+        });    
+    })
   }
 
   slideChange() {
@@ -105,5 +94,12 @@ export class OrdersPage implements OnInit {
 
     modal.present();
   }
-
+  doRefresh(event) {
+    console.log('Begin async operation');
+    this.ngOnInit();
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
 }

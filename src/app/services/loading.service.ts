@@ -16,10 +16,6 @@ export class LoadingService {
       spinner: "dots"
     });
 
-    await loading.present();
-
-    const { role, data } = await loading.onDidDismiss();
-
     console.log('Loading dismissed!');
     return loading;
   };

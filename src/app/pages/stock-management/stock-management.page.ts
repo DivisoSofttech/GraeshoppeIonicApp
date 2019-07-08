@@ -1,3 +1,4 @@
+import { LoadingService } from './../../services/loading.service';
 import { AddItemsPage } from './../add-items/add-items.page';
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
@@ -26,23 +27,34 @@ export class StockManagementPage implements OnInit {
   protected interval: any;
   selectedProduct: any;
   public searchTerm: any;
-
+  loadingElement: HTMLIonLoadingElement;
   username;
-
+  
   constructor(
     private oauthService: OAuthService,
     private modalController: ModalController,
     private queryResource: QueryResourceService,
     private file: File,
     private fileOpener: FileOpener,
-    private commandResourceService: CommandResourceService
+    private commandResourceService: CommandResourceService,
+    private loadingService: LoadingService 
   ) {}
 
   ngOnInit() {
-    this.oauthService.loadUserProfile().then((user: any) => {
-      this.username = user.preferred_username;
-    this.getAllStocks();
-    });
+    this.loadingService.presentLoading().then(data => {
+      this.loadingElement  = data;
+      console.log(data);
+      
+      this.loadingElement.present();
+      this.oauthService.loadUserProfile().then((user: any) => {
+        this.username = user.preferred_username;
+        this.getAllStocks();
+      }).catch(
+        err => {
+          this.loadingElement.dismiss();
+        }
+      );
+    })
   }
 
   getAllStocks() {
@@ -52,8 +64,11 @@ export class StockManagementPage implements OnInit {
       .getAllStockCurrentsUsingGET(this.params)
       .subscribe(result => {
         this.stock = result.content;
+      },
+      err=>{
+        this.loadingElement.dismiss();
       });
-  
+      this.loadingElement.dismiss();
   }
 
   async presentModal(item: StockCurrent) {

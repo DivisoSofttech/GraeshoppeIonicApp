@@ -61,5 +61,12 @@ export class UomPage implements OnInit {
     componentProps: {uom: uom}});
     await modal.present();
   }
-
+  doRefresh(event) {
+    console.log('Begin async operation');
+    this.ngOnInit();
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
 }

@@ -2,6 +2,9 @@ import { CommandResourceService } from 'src/app/api/services';
 import { CategoryDTO } from './../../api/models/category-dto';
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { ImageCompressService, IImage } from 'ng2-image-compress';
+import { RESIZE_OPTIONS } from 'src/app/image-resize-options';
 
 @Component({
   selector: 'app-add-categories',
@@ -15,12 +18,21 @@ export class AddCategoriesPage implements OnInit {
   fileToUpload: File;
 
   fileUrl = null;
-
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  isCropped = false;
   constructor(
     private modalController: ModalController,
     private commandResourceService: CommandResourceService
   ) { }
-
+  
+  
+  fileChangeEvent(event: any): void {
+      this.imageChangedEvent = event;
+  }
+  imageCropped(event: ImageCroppedEvent) {
+      this.croppedImage = event.base64;
+  }
   dismiss(force: boolean) {
     if (force) {
       this.modalController.dismiss();
@@ -28,7 +40,22 @@ export class AddCategoriesPage implements OnInit {
       this.modalController.dismiss({'newCategory' : this.category});
     }
   }
-
+  imageLoaded() {
+    // show cropper
+  }
+  cropperReady() {
+    // cropper ready
+  }
+  loadImageFailed() {
+    // show message
+  }
+  cropFinsh(event: ImageCroppedEvent) {
+    this.isCropped = true;
+    // console.log('crop finish iscropped ', this.isCropped, this.product.image != null );
+    // console.log('image isss>>>> ',this.product.image);
+    this.imageChangedEvent = '';
+    this.fileUrl = null;
+  }
   triggerUpload(ev: Event) {
     document.getElementById('image').click();
   }
@@ -61,8 +88,35 @@ export class AddCategoriesPage implements OnInit {
 
       this.fileUrl = ev.target.result;
     };
+    const images: Array<IImage> = [];
+
+    // Method which compresses the image and read by the filereader as blob
+    ImageCompressService.filesArrayToCompressedImageSourceEx(
+      [this.fileToUpload],
+      RESIZE_OPTIONS
+    ).then(observableImages => {
+      observableImages.subscribe(
+        image => {
+          images.push(image);
+        },
+        error => {
+          console.log('Error while converting');
+        },
+        () => {
+          // converts the encoded compressed file to blob for file reader to read
+          fetch(images.pop().compressedImage.imageDataUrl).then(data => {
+            data.blob().then(blob => {
+              console.log('blob', blob);
+              freader.readAsDataURL(blob);
+            });
+          });
+        }
+      );
+    });
+    this.fileChangeEvent(event);
 
     freader.readAsDataURL(this.fileToUpload);
   }
+  
 
 }

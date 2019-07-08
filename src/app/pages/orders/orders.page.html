@@ -9,7 +9,13 @@
 </ion-header>
 
 <ion-content>
-
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingSpinner="circles" >
+        </ion-refresher-content>
+      </ion-refresher>
   <ion-item lines="none" class="border-bottom">
     <ion-icon name="search" class="search-icon"></ion-icon>
     <ion-input class="ion-margin-start" clearInput="true" placeholder="Enter Order Number"></ion-input>
@@ -49,21 +55,20 @@
   <ion-slides  #slides (ionSlideDidChange)="slideChange()" class="vertical-align-center">
     <ion-slide>
       <ion-list>
-          <ion-item lines="none" class="order" *ngFor="let order of orders" (click)="showOrderDetails(order)">
-            <ion-text slot="end">
-              <p>Date : {{order.date}}</p>
-             <p>Amount : {{order.payment.total}}</p>
-            </ion-text>
-            <ion-text slot="start" no-margin>
+          <ion-card class="order" *ngFor="let order of orders" (click)="showOrderDetails(order)">
+            <ion-text>
+              <p>Order id : {{order.orderId}}</p>
               <p>Customer id : {{order.customerId}}</p>
-              <p>Name : {{order.payment.status}}</p>
-              <p>Address : {{order.deliveryInfo.deliveryType}}</p>
+              <div *ngIf="order.payment != null">
+                <p>Status : {{order.payment.status}}</p>
+              </div>
+              <p>Date : {{order.date |  date:'short'}}</p>
+              <p>Amount : {{'&#8364; '+(order.grandTotal | number:'1.1-2')}}</p>
             </ion-text>
-          </ion-item>
+        </ion-card> 
       </ion-list>
     </ion-slide>
-    <ion-slide>2</ion-slide>
-    <ion-slide>3</ion-slide>
+    <ion-slide></ion-slide>
   </ion-slides>
   <!--Order List Container End-->
 
