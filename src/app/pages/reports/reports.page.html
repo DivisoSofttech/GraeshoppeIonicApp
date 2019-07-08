@@ -1,22 +1,71 @@
+
 <ion-header>
   <ion-toolbar color="danger">
-    <ion-buttons>
-      <ion-menu-button slot="start"></ion-menu-button>
-      <ion-title><strong>Reports</strong></ion-title>
-      <ion-icon name="notifications" class="larger"></ion-icon>
-    </ion-buttons>
+      <ion-menu-button slot="start" auto-hide="false"></ion-menu-button>
+      <ion-title>Reports</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <ion-img src="/assets/report.jpeg"></ion-img>
-  <br>
-  <ion-icon name="filing"></ion-icon><ion-label>Sales by Customer</ion-label>
-  <br><br>
-  <ion-icon name="filing"></ion-icon><ion-label>Inventory List</ion-label>
-  <br><br>
-  <ion-icon name="filing"></ion-icon><ion-label>Top 10 Sale</ion-label>
-  <br><br>
-  <ion-icon name="filing"></ion-icon><ion-label>Current Stock</ion-label>
-  
+<ion-grid>
+  <ion-row>
+    <ion-col class="vertical-align-center column" text-center (click)="customerReportModal()">
+      <ion-grid>
+        <ion-row >
+          <ion-col text-center>
+            <ion-icon name="people"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center>
+    <p>Customer</p>
+  </ion-col>
+  </ion-row>
+  </ion-grid>
+</ion-col>
+    <ion-col class="vertical-align-center column" text-center (click)="productReportModal()">
+      <ion-grid>
+        <ion-row >
+          <ion-col text center>
+     <ion-icon name="logo-buffer"></ion-icon>
+    </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+      <p>Products</p>
+    </ion-col>
+    </ion-row>
+      </ion-grid>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="vertical-align-center column" text-center (click)="saleReportModal()">
+      <ion-grid>
+        <ion-row>
+          <ion-col text-center>
+              <ion-icon name="logo-usd"></ion-icon>
+          </ion-col>
+        </ion-row>
+          <ion-row>
+              <ion-col text-center>
+              <p>Sales</p>
+              </ion-col>
+  </ion-row>
+  </ion-grid>
+    </ion-col>
+    <ion-col class="vertical-align-center column" text-center (click)="stockReportModal()">
+      <ion-grid>
+        <ion-row>
+          <ion-col text center>
+      <ion-icon name="basket"></ion-icon>
+    </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col text-center>
+      <p>Stock</p>
+          </ion-col>
+    </ion-row>
+    </ion-grid>
+    </ion-col>
+  </ion-row>
+</ion-grid>
 </ion-content>

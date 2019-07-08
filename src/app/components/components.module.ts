@@ -19,6 +19,10 @@ import { SearchProductsPage } from './search-products/search-products.page';
 import { AddItemFromCSVComponent } from './add-item-from-csv/add-item-from-csv.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { LocationService } from '../services/location.service';
+import { SalesReportComponent } from './sales-report/sales-report.component';
+import { StockReportComponent } from './stock-report/stock-report.component';
+import { ProductReportComponent } from './product-report/product-report.component';
+import { CustomerReportComponent } from './customer-report/customer-report.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule],
@@ -38,7 +42,11 @@ import { LocationService } from '../services/location.service';
     AddItemFromCSVComponent,
     ProductDetailComponent,
     OrderDetailsComponent,
-    AddLocationComponent
+    AddLocationComponent,
+    SalesReportComponent,
+    StockReportComponent,
+    ProductReportComponent,
+    CustomerReportComponent
   ],
   exports: [
     EditProductModalComponent,
@@ -56,7 +64,11 @@ import { LocationService } from '../services/location.service';
     AddItemFromCSVComponent,
     ProductDetailComponent,
     OrderDetailsComponent,
-    AddLocationComponent
+    AddLocationComponent,
+    SalesReportComponent,
+    StockReportComponent,
+    ProductReportComponent,
+    CustomerReportComponent
   ],
   providers: [LocationService]
 })
