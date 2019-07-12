@@ -29,6 +29,7 @@ export class CategoriesListPage implements OnInit {
 
     this.loading = await this.loadingController.create({
       spinner: 'circles',
+      duration: 2000,
       translucent: true,
       cssClass: 'loading'
     });

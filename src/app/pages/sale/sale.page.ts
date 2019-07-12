@@ -66,7 +66,7 @@ export class SalePage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       header: 'Graeshoppe Cart  ',
       buttons: [{
-        text: this.numberOfItems + ' Items                    ' + this.total,
+        text: this.numberOfItems + ' Items ' + this.total,
         icon: 'cart',
         handler: () => {
           console.log('Take photo clicked');
