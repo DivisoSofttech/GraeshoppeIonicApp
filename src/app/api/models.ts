@@ -1,4 +1,5 @@
 export { Address } from './models/address';
+export { Banner } from './models/banner';
 export { Barcode } from './models/barcode';
 export { BarcodeType } from './models/barcode-type';
 export { Category } from './models/category';
@@ -48,6 +49,7 @@ export { StockDiaryDTO } from './models/stock-diary-dto';
 export { StockLine } from './models/stock-line';
 export { StockLineDTO } from './models/stock-line-dto';
 export { Store } from './models/store';
+export { StoreAddress } from './models/store-address';
 export { StoreBundleDTO } from './models/store-bundle-dto';
 export { StoreDTO } from './models/store-dto';
 export { Tax } from './models/tax';

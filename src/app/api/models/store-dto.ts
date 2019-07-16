@@ -1,16 +1,20 @@
 /* tslint:disable */
 export interface StoreDTO {
-  info?: string;
+  locationName?: string;
   closingTime?: string;
   email?: string;
   id?: number;
   image?: string;
   imageContentType?: string;
-  contactNo?: number;
+  info?: string;
   location?: string;
+  contactNo?: number;
+  maxDeliveryTime?: string;
+  minAmount?: number;
   name?: string;
   openingTime?: string;
   propreitorId?: number;
   regNo?: string;
+  storeAddressId?: number;
   totalRating?: number;
 }

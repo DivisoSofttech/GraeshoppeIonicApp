@@ -61,6 +61,7 @@ export class SignUpPage implements OnInit {
         if (this.oauthService.hasValidAccessToken()) {
           this.presentToast('Signup successfully completed');
           // this.navCtrl.navigateRoot('/sale');
+          console.log(this.username);
           this.commandService.createStoreUsingPOST({regNo: this.username}).subscribe(
             data => {
               console.log('store created', data);
