@@ -21,6 +21,7 @@ import {
   BarcodeScanResult
 } from '@ionic-native/barcode-scanner/ngx';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-add-items',
@@ -34,6 +35,7 @@ export class AddItemsPage implements OnInit {
     private commandResourceService: CommandResourceService,
     private queryResourceService: QueryResourceService,
     private http: HttpClient,
+    private oauthService: OAuthService,
     private barcodeScanner: BarcodeScanner,
     private loadingController: LoadingController,
   ) {}
@@ -46,7 +48,6 @@ export class AddItemsPage implements OnInit {
     reference: '',
     categories: [
       {
-        id: 0,
         description: '',
         image: '',
         imageContentType: '',
@@ -70,15 +71,19 @@ export class AddItemsPage implements OnInit {
   imageChangedEvent: any = '';
 
   ngOnInit() {
-    console.log('>>>>>>>>>>>', this.product.image != null);
-    this.queryResourceService
-      .findAllCategoriesWithOutImageUsingGET({})
+    
+    this.oauthService.loadUserProfile()
+    .then((user:any) => {
+      this.queryResourceService
+      .findAllCategoriesUsingGET(user.preferred_username)
       .subscribe(result => {
         this.categories = result;
+        console.log('51251515>>',result);
       });
     this.queryResourceService.findAllUomUsingGET({}).subscribe(result => {
       this.uoms = result;
     });
+    })
   }
 
   async createLoader() {
