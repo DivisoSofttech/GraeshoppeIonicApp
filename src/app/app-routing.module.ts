@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuardService } from './pages/security';
 import { HeaderComponent } from './components/header/header.component';
+import { RestaurantComponent } from './components/restaurant/restaurant.component';
 
 const routes: Routes = [
   {
@@ -182,9 +183,14 @@ const routes: Routes = [
     loadChildren: './pages/stock-management/stock-management.module#StockManagementPageModule',
      canActivate: [AuthGuardService]
    },
-  { path: 'update-store', loadChildren: './pages/update-store/update-store.module#UpdateStorePageModule' },  { path: 'maintenance', loadChildren: './pages/maintenance/maintenance.module#MaintenancePageModule' }
+  { path: 'update-store', loadChildren: './pages/update-store/update-store.module#UpdateStorePageModule' },
+  { path: 'maintenance', loadChildren: './pages/maintenance/maintenance.module#MaintenancePageModule' },
 
 
+  {
+    path:'restaurant',
+    component: RestaurantComponent
+  }
 
 ];
 

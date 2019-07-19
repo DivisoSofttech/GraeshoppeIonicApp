@@ -23,9 +23,11 @@ import { SalesReportComponent } from './sales-report/sales-report.component';
 import { StockReportComponent } from './stock-report/stock-report.component';
 import { ProductReportComponent } from './product-report/product-report.component';
 import { CustomerReportComponent } from './customer-report/customer-report.component';
+import { RestaurantComponent } from './restaurant/restaurant.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule],
+  imports: [CommonModule, FormsModule, IonicModule, RouterModule],
   declarations: [
     EditProductModalComponent,
     EditUOMModalComponent,
@@ -46,7 +48,8 @@ import { CustomerReportComponent } from './customer-report/customer-report.compo
     SalesReportComponent,
     StockReportComponent,
     ProductReportComponent,
-    CustomerReportComponent
+    CustomerReportComponent,
+    RestaurantComponent
   ],
   exports: [
     EditProductModalComponent,
@@ -68,7 +71,8 @@ import { CustomerReportComponent } from './customer-report/customer-report.compo
     SalesReportComponent,
     StockReportComponent,
     ProductReportComponent,
-    CustomerReportComponent
+    CustomerReportComponent,
+    RestaurantComponent
   ],
   providers: [LocationService]
 })

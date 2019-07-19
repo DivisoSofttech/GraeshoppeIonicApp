@@ -11,18 +11,12 @@
 
   <ion-list>
     <div *ngFor="let topLevelSettings of settingsModel.settings; let i=index">
-      <ion-item (click)="clickSettings(i)">
+      <ion-item (click)="openSetting(topLevelSettings)">
         <ion-icon [name]="topLevelSettings?.iconName"></ion-icon>
         <ion-label margin>{{topLevelSettings?.name}}</ion-label>
         <ion-icon name="arrow-forward" *ngIf="!topLevelSettings?.isSelected && topLevelSettings?.subSettings" slot="end" mode="ios"></ion-icon>
         <ion-icon name="arrow-down" *ngIf="topLevelSettings?.isSelected && topLevelSettings?.subSettings" mode="ios" slot="end"></ion-icon>
       </ion-item>
-      <ion-list *ngIf="topLevelSettings?.isSelected && topLevelSettings?.subSettings" class="left-space">
-      <ion-item padding-left margin-left *ngFor="let secondLevelSettings of topLevelSettings?.subSettings" [routerLink]="secondLevelSettings?.url">
-        <ion-icon [name]="secondLevelSettings?.iconName"></ion-icon>
-        <ion-label margin class>{{secondLevelSettings?.name}}</ion-label>
-      </ion-item>
-    </ion-list>
     </div>
   </ion-list>
   <!--   <ion-item lines="none">

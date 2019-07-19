@@ -42,7 +42,7 @@ class QueryResourceService extends __BaseService {
   static readonly findContactByIdUsingGETPath = '/api/query/contacts/{id}';
   static readonly exportCustomersUsingGETPath = '/api/query/customers/export';
   static readonly findCustomerByIdUsingGETPath = '/api/query/customers/{id}';
-  static readonly findAllCategoriesWithOutImageUsingGETPath = '/api/query/findAllCategoriesWithOutImage';
+  static readonly findAllCategoriesWithOutImageUsingGETPath = '/api/query/findAllCategoriesWithOutImage/{storeId}';
   static readonly findAllCategoriesUsingGETPath = '/api/query/findAllCateogories/{storeId}';
   static readonly findAllCustomersUsingGETPath = '/api/query/findAllCustomer/{searchTerm}';
   static readonly findAllCustomersWithoutSearchUsingGETPath = '/api/query/findAllCustomers';
@@ -191,26 +191,17 @@ class QueryResourceService extends __BaseService {
   }
 
   /**
-   * @param params The `QueryResourceService.FindAllCategoriesWithOutImageUsingGETParams` containing the following parameters:
-   *
-   * - `sort`: sort
-   *
-   * - `size`: size
-   *
-   * - `page`: page
-   *
+   * @param storeId storeId
    * @return OK
    */
-  findAllCategoriesWithOutImageUsingGETResponse(params: QueryResourceService.FindAllCategoriesWithOutImageUsingGETParams): __Observable<__StrictHttpResponse<Array<CategoryDTO>>> {
+  findAllCategoriesWithOutImageUsingGETResponse(storeId: string): __Observable<__StrictHttpResponse<Array<CategoryDTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
-    if (params.size != null) __params = __params.set('size', params.size.toString());
-    if (params.page != null) __params = __params.set('page', params.page.toString());
+
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/query/findAllCategoriesWithOutImage`,
+      this.rootUrl + `/api/query/findAllCategoriesWithOutImage/${storeId}`,
       __body,
       {
         headers: __headers,
@@ -226,18 +217,11 @@ class QueryResourceService extends __BaseService {
     );
   }
   /**
-   * @param params The `QueryResourceService.FindAllCategoriesWithOutImageUsingGETParams` containing the following parameters:
-   *
-   * - `sort`: sort
-   *
-   * - `size`: size
-   *
-   * - `page`: page
-   *
+   * @param storeId storeId
    * @return OK
    */
-  findAllCategoriesWithOutImageUsingGET(params: QueryResourceService.FindAllCategoriesWithOutImageUsingGETParams): __Observable<Array<CategoryDTO>> {
-    return this.findAllCategoriesWithOutImageUsingGETResponse(params).pipe(
+  findAllCategoriesWithOutImageUsingGET(storeId: string): __Observable<Array<CategoryDTO>> {
+    return this.findAllCategoriesWithOutImageUsingGETResponse(storeId).pipe(
       __map(_r => _r.body as Array<CategoryDTO>)
     );
   }
@@ -1935,27 +1919,6 @@ class QueryResourceService extends __BaseService {
 }
 
 module QueryResourceService {
-
-  /**
-   * Parameters for findAllCategoriesWithOutImageUsingGET
-   */
-  export interface FindAllCategoriesWithOutImageUsingGETParams {
-
-    /**
-     * sort
-     */
-    sort?: Array<string>;
-
-    /**
-     * size
-     */
-    size?: number;
-
-    /**
-     * page
-     */
-    page?: number;
-  }
 
   /**
    * Parameters for findAllCustomersUsingGET

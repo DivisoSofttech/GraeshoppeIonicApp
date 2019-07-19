@@ -6,20 +6,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { DateService } from './../../date/date.service';
 import { RESIZE_OPTIONS } from './../../image-resize-options';
 import { ImageCompressService } from 'ng2-image-compress';
-import {
-  NavController,
-  ToastController,
-  ModalController
-} from '@ionic/angular';
+import { NavController,ToastController,ModalController } from '@ionic/angular';
 import { OAuthService } from 'angular-oauth2-oidc';
-import {
-  QueryResourceService,
-  CommandResourceService
-} from 'src/app/api/services';
+import { QueryResourceService,CommandResourceService } from 'src/app/api/services';
 import { Component, OnInit } from '@angular/core';
 import { StoreBundleDTO, StoreDTO } from 'src/app/api/models';
-import { Environment } from '@ionic-native/google-maps';
-import { store } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-update-store',

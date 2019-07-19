@@ -1,0 +1,35 @@
+<ion-header>
+    <ion-toolbar color="danger">
+      <ion-title>Restaurant</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content *ngIf="storeModel.store != undefined">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="full">
+              <img  class="profileLogo image" *ngIf="storeModel.store.store" src="data:{{storeModel.store.store.imageContentType}};base64,{{storeModel.store.store.image}}">
+            <ion-text margin >
+              <h1 *ngIf="storeModel.store" >  {{storeModel.store.store.name}}</h1>
+            </ion-text>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+            <ion-card   (click)="openSetting(option.url)" *ngFor="let option of options">
+              <ion-card-content>
+                  <ion-card-title 
+                >{{option.name}}</ion-card-title>
+              </ion-card-content>
+              </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+  
+   

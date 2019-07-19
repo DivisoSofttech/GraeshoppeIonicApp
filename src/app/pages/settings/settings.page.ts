@@ -1,6 +1,11 @@
-import { NavController } from '@ionic/angular';
+import { NavController, ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import { SettingsModel } from './settings';
+import { SettingsModel, Settings } from './settings';
+import { RestaurantComponent } from 'src/app/components/restaurant/restaurant.component';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { QueryResourceService } from 'src/app/api/services';
+import { StoreBundleDTO, Store } from 'src/app/api/models';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-settings',
@@ -14,19 +19,14 @@ export class SettingsPage implements OnInit {
       {
         name: "Printer",
         iconName: "print",
-        isSelected: false
+        isSelected: false,
+        url: '/printer'
       },
       {
         name: "General",
         iconName: "settings",
         isSelected: false,
-        subSettings: [
-          {
-            name: "Update Store Info",
-            url: "/update-store",
-            iconName: "create"
-          }
-        ]
+        url: '/restaurant'
       }
     ]
   };
@@ -34,20 +34,18 @@ export class SettingsPage implements OnInit {
   constructor(private navctrl: NavController) { }
 
   ngOnInit() {
-    console.log(this.settingsModel);
   }
 
-  clickSettings(index: number) {
-    this.settingsModel.settings[index].isSelected = !this.settingsModel.settings[index].isSelected;
-    if (!this.settingsModel.settings[index].subSettings) {
-      (this.settingsModel.settings[index].url) ? this.navctrl.navigateForward(this.settingsModel.settings[index].url) : this.navctrl.navigateForward("/settings");
-    }
-
-  }
 
   hideSettings(index: number) {
     this.settingsModel.settings[index].isSelected = false;
   }
+
+  openSetting(cmp: Settings) {
+    this.navctrl.navigateForward(cmp.url)
+  }
+
+
 
 
 }
