@@ -42,8 +42,8 @@ class QueryResourceService extends __BaseService {
   static readonly findContactByIdUsingGETPath = '/api/query/contacts/{id}';
   static readonly exportCustomersUsingGETPath = '/api/query/customers/export';
   static readonly findCustomerByIdUsingGETPath = '/api/query/customers/{id}';
-  static readonly findAllCategoriesWithOutImageUsingGETPath = '/api/query/findAllCategoriesWithOutImage/{storeId}';
-  static readonly findAllCategoriesUsingGETPath = '/api/query/findAllCateogories/{storeId}';
+  static readonly findAllCategoriesWithOutImageUsingGETPath = '/api/query/findAllCategoriesWithOutImage';
+  static readonly findAllCategoriesUsingGETPath = '/api/query/findAllCateogories';
   static readonly findAllCustomersUsingGETPath = '/api/query/findAllCustomer/{searchTerm}';
   static readonly findAllCustomersWithoutSearchUsingGETPath = '/api/query/findAllCustomers';
   static readonly findAllProductsByCategoryIdUsingGETPath = '/api/query/findAllProductByCategoryId/{categoryId}/{storeId}';
@@ -191,17 +191,26 @@ class QueryResourceService extends __BaseService {
   }
 
   /**
-   * @param storeId storeId
+   * @param params The `QueryResourceService.FindAllCategoriesWithOutImageUsingGETParams` containing the following parameters:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `page`: Page number of the requested page
+   *
    * @return OK
    */
-  findAllCategoriesWithOutImageUsingGETResponse(storeId: string): __Observable<__StrictHttpResponse<Array<CategoryDTO>>> {
+  findAllCategoriesWithOutImageUsingGETResponse(params: QueryResourceService.FindAllCategoriesWithOutImageUsingGETParams): __Observable<__StrictHttpResponse<Array<CategoryDTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/query/findAllCategoriesWithOutImage/${storeId}`,
+      this.rootUrl + `/api/query/findAllCategoriesWithOutImage`,
       __body,
       {
         headers: __headers,
@@ -217,27 +226,43 @@ class QueryResourceService extends __BaseService {
     );
   }
   /**
-   * @param storeId storeId
+   * @param params The `QueryResourceService.FindAllCategoriesWithOutImageUsingGETParams` containing the following parameters:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `page`: Page number of the requested page
+   *
    * @return OK
    */
-  findAllCategoriesWithOutImageUsingGET(storeId: string): __Observable<Array<CategoryDTO>> {
-    return this.findAllCategoriesWithOutImageUsingGETResponse(storeId).pipe(
+  findAllCategoriesWithOutImageUsingGET(params: QueryResourceService.FindAllCategoriesWithOutImageUsingGETParams): __Observable<Array<CategoryDTO>> {
+    return this.findAllCategoriesWithOutImageUsingGETResponse(params).pipe(
       __map(_r => _r.body as Array<CategoryDTO>)
     );
   }
 
   /**
-   * @param storeId storeId
+   * @param params The `QueryResourceService.FindAllCategoriesUsingGETParams` containing the following parameters:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `page`: Page number of the requested page
+   *
    * @return OK
    */
-  findAllCategoriesUsingGETResponse(storeId: string): __Observable<__StrictHttpResponse<Array<CategoryDTO>>> {
+  findAllCategoriesUsingGETResponse(params: QueryResourceService.FindAllCategoriesUsingGETParams): __Observable<__StrictHttpResponse<Array<CategoryDTO>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-
+    (params.sort || []).forEach(val => {if (val != null) __params = __params.append('sort', val.toString())});
+    if (params.size != null) __params = __params.set('size', params.size.toString());
+    if (params.page != null) __params = __params.set('page', params.page.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/query/findAllCateogories/${storeId}`,
+      this.rootUrl + `/api/query/findAllCateogories`,
       __body,
       {
         headers: __headers,
@@ -253,11 +278,18 @@ class QueryResourceService extends __BaseService {
     );
   }
   /**
-   * @param storeId storeId
+   * @param params The `QueryResourceService.FindAllCategoriesUsingGETParams` containing the following parameters:
+   *
+   * - `sort`: Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+   *
+   * - `size`: Size of a page
+   *
+   * - `page`: Page number of the requested page
+   *
    * @return OK
    */
-  findAllCategoriesUsingGET(storeId: string): __Observable<Array<CategoryDTO>> {
-    return this.findAllCategoriesUsingGETResponse(storeId).pipe(
+  findAllCategoriesUsingGET(params: QueryResourceService.FindAllCategoriesUsingGETParams): __Observable<Array<CategoryDTO>> {
+    return this.findAllCategoriesUsingGETResponse(params).pipe(
       __map(_r => _r.body as Array<CategoryDTO>)
     );
   }
@@ -1919,6 +1951,48 @@ class QueryResourceService extends __BaseService {
 }
 
 module QueryResourceService {
+
+  /**
+   * Parameters for findAllCategoriesWithOutImageUsingGET
+   */
+  export interface FindAllCategoriesWithOutImageUsingGETParams {
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     */
+    sort?: Array<string>;
+
+    /**
+     * Size of a page
+     */
+    size?: number;
+
+    /**
+     * Page number of the requested page
+     */
+    page?: number;
+  }
+
+  /**
+   * Parameters for findAllCategoriesUsingGET
+   */
+  export interface FindAllCategoriesUsingGETParams {
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     */
+    sort?: Array<string>;
+
+    /**
+     * Size of a page
+     */
+    size?: number;
+
+    /**
+     * Page number of the requested page
+     */
+    page?: number;
+  }
 
   /**
    * Parameters for findAllCustomersUsingGET

@@ -75,7 +75,7 @@ import { ProductsNamePipe } from './products-name.pipe';
     AddUomPageModule,
     DashboardPageModule,
     ChartsModule,
-    ApiModule.forRoot({rootUrl: 'http://34.73.191.107:9080'})
+    ApiModule.forRoot({rootUrl: 'http://34.74.142.114:9080'})
 
 
   ],

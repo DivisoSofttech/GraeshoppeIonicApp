@@ -71,19 +71,15 @@ export class AddItemsPage implements OnInit {
   imageChangedEvent: any = '';
 
   ngOnInit() {
-    
-    this.oauthService.loadUserProfile()
-    .then((user:any) => {
-      this.queryResourceService
-      .findAllCategoriesUsingGET(user.preferred_username)
+    console.log('>>>>>>>>>>>', this.product.image != null);
+    this.queryResourceService
+      .findAllCategoriesWithOutImageUsingGET({})
       .subscribe(result => {
         this.categories = result;
-        console.log('51251515>>',result);
       });
     this.queryResourceService.findAllUomUsingGET({}).subscribe(result => {
       this.uoms = result;
     });
-    })
   }
 
   async createLoader() {
