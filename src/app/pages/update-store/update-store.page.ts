@@ -67,7 +67,7 @@ export class UpdateStorePage implements OnInit {
       });
       /*       this.queryService.findStoreByRegNoUsingGET({ regNo: username }).subscribe(
               data => {
-                console.log(data.content);
+                console.log(data.content);TypeDTO
                 if((data.content.length>0)){
                   this.store = data.content[0];
                 }
@@ -92,6 +92,17 @@ export class UpdateStorePage implements OnInit {
     );
     this.store.regNo = this.storeRegNo;
     this.store.email = this.storeEmail;
+    let ids: number[];
+    this.types.forEach(element => {
+      this.commandservice.createTypeUsingPOST(element).subscribe(
+        res => {
+          ids.push(res.id);
+        }
+      )
+    });
+    ids.forEach(element => {
+      this.commandservice.createDeliveryInfoUsingPOST({typeId: element, storeId: this.store.id})
+    });
     // this.store.name = this.storeName;
     if (this.store.id) {
       this.commandservice.updateStoreUsingPUT(this.store).subscribe(
@@ -274,6 +285,29 @@ export class UpdateStorePage implements OnInit {
     .then((data:any) => {
       this.store.location = data[0] + ',' + data[1];
     });
+  }
+
+  addAType(type: string) {
+    const typeDTO: TypeDTO = {name: type};
+    this.types.push(typeDTO);
+    console.log(this.types);
+  }
+
+  removeAType(type: string) {
+    this.types.forEach(typeDTO => {
+      if(typeDTO.name === type) {
+        this.types.splice(this.types.indexOf(typeDTO),1);
+      }
+    });
+    console.log(this.types);
+  }
+
+  checkBoxChange(event: any, value: string) {
+    if (event.detail.checked) {
+      this.addAType(value)
+    } else {
+      this.removeAType(value);
+    }
   }
 
 }
